@@ -106,6 +106,8 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
             </span>
           </div>
         </div>
+
+        {/* status selector */}
         <div className='relative flex-shrink-0'>
           <select
             value={application.status}
@@ -115,7 +117,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
                 e.target.value as Application["status"]
               )
             }
-            className={`appearance-none px-3 py-1 pr-8 rounded-full text-sm font-medium border cursor-pointer ${getStatusColor(
+            className={`appearance-none px-3 py-1 pr-8 rounded-full text-xs font-medium border cursor-pointer ${getStatusColor(
               application.status
             )} focus:outline-none`}
           >

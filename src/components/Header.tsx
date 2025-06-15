@@ -8,7 +8,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ currentProfile, onProfileChange }) => {
   return (
-    <header className='flex justify-between items-center px-6 py-2.5 bg-white dark:bg-[#1F2937] flex-shrink-0 border-b border-gray-100 dark:border-[#374151]'>
+    <header className='flex justify-between items-center px-5 py-2 bg-white dark:bg-[#1F2937] flex-shrink-0 border-b border-gray-100 dark:border-[#374151]'>
+      {/* Logo */}
       <div className='flex items-center gap-1'>
         <svg width='12' height='16' viewBox='0 0 12 14' fill='none'>
           <path
@@ -20,14 +21,14 @@ const Header: React.FC<HeaderProps> = ({ currentProfile, onProfileChange }) => {
           />
         </svg>
 
-        <span className='font-semibold text-lg font-sans text-gray-900 dark:text-[#E3E3E3]'>
+        <span className='font-semibold text-lg font-inter text-gray-900 dark:text-[#E3E3E3]'>
           JobMate AI
         </span>
       </div>
 
       {/* Selector + Profile */}
       <div className='flex items-center gap-2'>
-        <div className='profile-selector relative'>
+        <div className='profile-selector relative '>
           <select
             value={currentProfile}
             onChange={(e) => onProfileChange(e.target.value)}
