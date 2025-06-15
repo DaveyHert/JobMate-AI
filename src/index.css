@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+/*utility tailwind style  */
+
+.btn-primary {
+  @apply px-4  transition;
+}
+
+
+/* Light mode */
+:root {
+  --scroll-thumb: #bebebe; /* gray-300 */
+  --scroll-track: #52525b;
+}
+/* Dark mode */
+body.dark {
+  --scroll-thumb: red; /* zinc-600 */
+  --scroll-track: #434345
+}
+
+
+/* Scrollbar base */
+/* .custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+ */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb);
+  border-radius: 8px;
+}
