@@ -2,15 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 /*utility tailwind style  */
 
 .btn-primary {
-  @apply px-4  transition;
+  @apply flex flex-col items-center gap-3 px-4 py-2 rounded-[10px] text-[#5E636E] dark:text-[#B1B1B1] bg-[#F8FAFF]  dark:bg-[#2C3236] border-2 border-[#DCE3EF] dark:border-[#1D1E21] hover:border-purple-300 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed;
 }
-
+/* className='bg-white border-2 border-purple-200 rounded-2xl p-4 flex flex-col items-center gap-3 hover:border-purple-300 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed  btn-primary' */
 
 /* Light mode */
 :root {
@@ -20,9 +17,8 @@
 /* Dark mode */
 body.dark {
   --scroll-thumb: red; /* zinc-600 */
-  --scroll-track: #434345
+  --scroll-track: #434345;
 }
-
 
 /* Scrollbar base */
 /* .custom-scrollbar {

@@ -35,43 +35,43 @@ const QuickActions: React.FC<QuickActionsProps> = ({
       label: "Auto Fill Form",
       onClick: onAutoFill,
       disabled: isLoading,
-      iconColor: "text-purple-600",
-      iconBg: "bg-[#BFDBFE]",
+      iconColor: "text-[#1C4ED8]",
+      iconBg: "bg-[#BFDBFE] dark:bg-[#152245]",
     },
     {
       icon: FileText,
       label: "Generate Cover Letter",
       onClick: onGenerateCoverLetter,
-      iconColor: "text-green-600",
-      iconBg: "bg-[#C3F7D2]",
+      iconColor: "text-[#3BA44F]",
+      iconBg: "bg-[#C3F7D2] dark:bg-[#122A29]",
     },
     {
       icon: Target,
       label: "Analyze Job Fit",
       onClick: onAnalyzeJobFit,
-      iconColor: "text-orange-600",
-      iconBg: "bg-[#FED7AA]",
+      iconColor: "text-[#C2410B]",
+      iconBg: "bg-[#FED7AA] dark:bg-[#302120]",
     },
     {
       icon: Target,
       label: "Track This Application",
       onClick: onTrackApplication,
       disabled: isLoading,
-      iconColor: "text-red-600",
+      iconColor: "text-[#B91C1C]",
       iconBg: "bg-[#FCA5A5]",
     },
     {
       icon: PenTool,
       label: "Tailor Resume",
       onClick: onTailorResume,
-      iconColor: "text-purple-600",
+      iconColor: "text-[#7E22CE]",
       iconBg: "bg-[#E9D5FF]",
     },
     {
       icon: Brain,
       label: "Generate Answer",
       onClick: onGenerateAnswer,
-      iconColor: "text-blue-600",
+      iconColor: "text-[#0E7490]",
       iconBg: "bg-[#A5F3FC]",
     },
   ];
@@ -88,15 +88,15 @@ const QuickActions: React.FC<QuickActionsProps> = ({
             key={index}
             onClick={action.onClick}
             disabled={action.disabled}
-            className='btn-primary '
+            className='btn-primary'
           >
             <div
-              className={`flex items-center justify-center p-1.5 rounded-full  ${action.iconBg}`}
+              className={` w-8 h-8 flex items-center justify-center p-1.5 rounded-full  ${action.iconBg}`}
               style={{ boxShadow: "inset 0px 1px 3px rgba(0, 0, 0, 0.1)" }}
             >
-              <action.icon className={`w-5 h-5  ${action.iconColor}`} />
+              <action.icon className={`w-8 h-8  ${action.iconColor}`} />
             </div>
-            <span className='text-xs block my-1.5 font-medium'>
+            <span className='text-xs block my-1 font-medium'>
               {action.label}
             </span>
           </button>

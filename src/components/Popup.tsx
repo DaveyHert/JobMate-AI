@@ -16,6 +16,9 @@ import {
   Wand2,
 } from "lucide-react";
 import AIFeatures from "./AIFeatures";
+import BottomNavigation from "./BottomNavigation";
+import QuickActions from "./QuickActions";
+import Header from "./Header";
 
 interface Application {
   id: number;
@@ -37,41 +40,6 @@ interface PopupData {
   weeklyGoal: WeeklyGoal;
   currentProfile: string;
 }
-
-// Bottom Navigation Component - moved outside to avoid any scope issues
-const BottomNavigation: React.FC<{
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  openDashboard: () => void;
-}> = ({ activeTab, setActiveTab, openDashboard }) => (
-  <div className='flex bg-white border-t border-gray-100 flex-shrink-0'>
-    {[
-      { key: "home", icon: Home, label: "Home" },
-      { key: "applications", icon: BarChart, label: "Applications" },
-      {
-        key: "dashboard",
-        icon: BarChart3,
-        label: "Dashboard",
-        action: openDashboard,
-      },
-      { key: "profile", icon: User, label: "Profile" },
-      { key: "settings", icon: Settings, label: "Settings" },
-    ].map((item) => (
-      <button
-        key={item.key}
-        onClick={item.action || (() => setActiveTab(item.key))}
-        className={`flex-1 flex flex-col items-center gap-2 py-4 transition-all ${
-          activeTab === item.key
-            ? "text-blue-600"
-            : "text-gray-400 hover:text-gray-600"
-        }`}
-      >
-        <item.icon className='w-5 h-5' />
-        <span className='text-xs font-medium'>{item.label}</span>
-      </button>
-    ))}
-  </div>
-);
 
 const Popup: React.FC = () => {
   const [data, setData] = useState<PopupData>({
@@ -693,117 +661,28 @@ const Popup: React.FC = () => {
   return (
     <div className='w-[580px] h-[600px] bg-gray-50 overflow-hidden flex flex-col'>
       {/* Header */}
-      <header className='flex justify-between items-center px-6 py-4 bg-white dark:bg-[#1F2937]  flex-shrink-0'>
-        <div className='flex items-center gap-2'>
-          <svg width='12' height='16' viewBox='0 0 12 14' fill='none'>
-            <path
-              fill-rule='evenodd'
-              clip-rule='evenodd'
-              d='M6 0.0833334H12V4.52777V8.97223H6V13.4167H0V8.97223V4.52777H6V0.0833334Z'
-              fill='currentColor'
-              className='fill-[#0D141C] dark:fill-[#E3E3E3]'
-            />
-          </svg>
-
-          <span className='font-semibold text-xl text-gray-900 dark:text-[#E3E3E3]'>
-            JobMate AI
-          </span>
-        </div>
-        <div className='flex items-center gap-2 '>
-          <div className='relative'>
-            <select
-              value={data.currentProfile}
-              onChange={(e) =>
-                setData({ ...data, currentProfile: e.target.value })
-              }
-              className='appearance-none bg-[#F8FAFF] dark:bg-[#2C3236] border border-[#D1D5DB] dark:border-[#1D1E21] rounded px-4 py-1 pr-10 text-sm font-normal text-[#0C0A09] dark:text-[#F3F4F6]  cursor-pointer hover:bg-[#f5f5f5] dark:hover:bg-[#434345]'
-            >
-              <option value='product-manager'>Product Manager</option>
-              <option value='software-engineer'>Software Engineer</option>
-              <option value='designer'>Designer</option>
-            </select>
-            <ChevronDown className='absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#4B5563] dark:text-[#D1D5DB] pointer-events-none' />
-          </div>
-          <img
-            src='https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&fit=crop&crop=face'
-            alt='Profile'
-            className='w-10 h-10 rounded-full border border-2 border-red-600'
-          />
-        </div>
-      </header>
+      <Header
+        currentProfile={data.currentProfile}
+        onProfileChange={(profile) =>
+          setData({ ...data, currentProfile: profile })
+        }
+      />
 
       {/* Content - Scrollable area between header and bottom nav */}
       <div className='flex-1 bg-[#F7F7FD] dark:bg-[#111827] custom-scrollbar overflow-y-auto min-h-0'>
         <div className='px-2.5 pt-2 '>
           {/* Quick Actions */}
+          <QuickActions
+            onAutoFill={handleAutoFill}
+            onGenerateCoverLetter={handleGenerateCoverLetter}
+            onAnalyzeJobFit={handleAnalyzeJobFit}
+            onTrackApplication={handleTrackApplication}
+            onGenerateAnswer={handleGenerateAnswer}
+            onTailorResume={handleTailorResume}
+            isLoading={isLoading}
+          />
+
           <div className='mb-2'>
-            <h3 className='text-base font-medium mb-4 text-[#343435] dark:text-[#F3F4F6] relative'>
-              Quick Actions
-            </h3>
-            <div className='grid grid-cols-3 gap-4 mb-6 bg-white dark:bg-[#1F2937] border dark:border-[#374151]  rounded-[10px] px-3 py-4'>
-              <button
-                onClick={handleAutoFill}
-                disabled={isLoading}
-                className='bg-white border-2 border-purple-200 rounded-2xl p-4 flex flex-col items-center gap-3 hover:border-purple-300 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed  btn-primary'
-              >
-                <Eye className='w-6 h-6 text-purple-600' />
-                <span className='text-sm font-medium text-gray-700'>
-                  Auto Fill Form
-                </span>
-              </button>
-
-              <button
-                onClick={handleGenerateCoverLetter}
-                className='bg-white border-2 border-green-200 rounded-2xl p-4 flex flex-col items-center gap-3 hover:border-green-300 transition-all duration-200 shadow-sm'
-              >
-                <FileText className='w-6 h-6 text-green-600' />
-                <span className='text-sm font-medium text-gray-700'>
-                  Generate Cover Letter
-                </span>
-              </button>
-
-              <button
-                onClick={handleAnalyzeJobFit}
-                className='bg-white border-2 border-orange-200 rounded-2xl p-4 flex flex-col items-center gap-3 hover:border-orange-300 transition-all duration-200 shadow-sm'
-              >
-                <Target className='w-6 h-6 text-orange-600' />
-                <span className='text-sm font-medium text-gray-700'>
-                  Analyze Job Fit
-                </span>
-              </button>
-
-              <button
-                onClick={handleTrackApplication}
-                disabled={isLoading}
-                className='bg-white border-2 border-red-200 rounded-2xl p-4 flex flex-col items-center gap-3 hover:border-red-300 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed'
-              >
-                <Target className='w-6 h-6 text-red-600' />
-                <span className='text-sm font-medium text-gray-700'>
-                  Track This Application
-                </span>
-              </button>
-
-              <button
-                onClick={handleTailorResume}
-                className='bg-white border-2 border-purple-200 rounded-2xl p-4 flex flex-col items-center gap-3 hover:border-purple-300 transition-all duration-200 shadow-sm'
-              >
-                <PenTool className='w-6 h-6 text-purple-600' />
-                <span className='text-sm font-medium text-gray-700'>
-                  Tailor Resume
-                </span>
-              </button>
-
-              <button
-                onClick={handleGenerateAnswer}
-                className='bg-white border-2 border-blue-200 rounded-2xl p-4 flex flex-col items-center gap-3 hover:border-blue-300 transition-all duration-200 shadow-sm'
-              >
-                <Brain className='w-6 h-6 text-blue-600' />
-                <span className='text-sm font-medium text-gray-700'>
-                  Generate Answer
-                </span>
-              </button>
-            </div>
-
             {/* Weekly Goal */}
             <div className='bg-white rounded-2xl p-5 mb-6 shadow-sm border border-gray-100'>
               <div className='flex justify-between items-center mb-3'>
