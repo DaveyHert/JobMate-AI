@@ -1,25 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import AIFeatures from "./AIFeatures";
 import BottomNavigation from "./BottomNavigation";
-import QuickActions from "./QuickActions";
 import Header from "./Header";
 import LoadSpinner from "./LoadSpinner";
-import ApplicationCard from "./ApplicationCard";
-import { Application } from "../models/models";
+import ApplicationsTab from "./application/ApplicationTab";
+import HomeTab from "./home/HomeTab";
 import { getDynamicFilterCounts } from "../utils/getDynamicFilterCounts";
-import ApplicationsTab from "./ApplicationTab";
-import Home from "./home/Home";
-
-interface WeeklyGoal {
-  current: number;
-  target: number;
-}
-
-interface PopupData {
-  applications: Application[];
-  weeklyGoal: WeeklyGoal;
-  currentProfile: string;
-}
+import { PopupData, Application } from "../models/models";
 
 const STATUSES = [
   "applied",
@@ -54,10 +41,6 @@ function Popup() {
 
   const filteredApplications = data.applications.filter(
     (app) => statusFilter === "all" || app.status === statusFilter
-  );
-
-  const goalPercentage = Math.round(
-    (data.weeklyGoal.current / data.weeklyGoal.target) * 100
   );
 
   const getMockApplications = (): Application[] => {
@@ -224,152 +207,6 @@ function Popup() {
     }
   };
 
-  const handleAutoFill = async () => {
-    setIsLoading(true);
-    try {
-      if (typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.query) {
-        const [tab] = await chrome.tabs.query({
-          active: true,
-          currentWindow: true,
-        });
-        const response = await chrome.tabs.sendMessage(tab.id!, {
-          action: "autoFill",
-        });
-
-        if (response?.success) {
-          showNotification("Form auto-filled successfully!", "success");
-        } else {
-          showNotification("No fillable fields found on this page", "warning");
-        }
-      } else {
-        showNotification(
-          "Auto-fill is only available in Chrome extension mode",
-          "warning"
-        );
-      }
-    } catch (error) {
-      showNotification("Auto-fill failed. Please try again.", "error");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGenerateCoverLetter = () => {
-    setShowAIFeature("cover-letter");
-  };
-
-  const handleAnalyzeJobFit = () => {
-    setShowAIFeature("job-fit");
-  };
-
-  const handleTrackApplication = async () => {
-    setIsLoading(true);
-    try {
-      if (typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.query) {
-        const [tab] = await chrome.tabs.query({
-          active: true,
-          currentWindow: true,
-        });
-        const response = await chrome.tabs.sendMessage(tab.id!, {
-          action: "extractJobInfo",
-        });
-
-        if (response) {
-          const newApp: Application = {
-            id: Date.now(),
-            title: response.title,
-            company: response.company,
-            source: response.source.includes("linkedin")
-              ? "linkedin"
-              : response.source.includes("indeed")
-              ? "indeed"
-              : response.source.includes("greenhouse")
-              ? "greenhouse"
-              : response.source.includes("lever")
-              ? "lever"
-              : "other",
-            status: "applied",
-            dateApplied: new Date().toISOString(),
-            url: response.url,
-          };
-
-          const updatedApps = [newApp, ...data.applications];
-          const updatedData = {
-            ...data,
-            applications: updatedApps,
-            weeklyGoal: {
-              ...data.weeklyGoal,
-              current: data.weeklyGoal.current + 1,
-            },
-          };
-          setData(updatedData);
-
-          // Save to storage if available
-          if (
-            typeof chrome !== "undefined" &&
-            chrome.storage &&
-            chrome.storage.local
-          ) {
-            try {
-              const result = await chrome.storage.local.get(["jobMateData"]);
-              const existingData = result.jobMateData || {};
-              await chrome.storage.local.set({
-                jobMateData: {
-                  ...existingData,
-                  applications: updatedApps,
-                  weeklyGoal: updatedData.weeklyGoal,
-                },
-              });
-            } catch (error) {
-              console.error("Error saving to storage:", error);
-            }
-          }
-
-          showNotification("Application tracked successfully!", "success");
-        }
-      } else {
-        showNotification(
-          "Application tracking is only available in Chrome extension mode",
-          "warning"
-        );
-      }
-    } catch (error) {
-      showNotification(
-        "Failed to track application. Please try again.",
-        "error"
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleTailorResume = () => {
-    setShowAIFeature("resume-tailor");
-  };
-
-  const handleGenerateAnswer = () => {
-    setShowAIFeature("answer-generator");
-  };
-
-  const showNotification = (
-    message: string,
-    type: "success" | "error" | "warning" | "info"
-  ) => {
-    const notification = document.createElement("div");
-    notification.className = `fixed top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-white text-sm font-medium z-50 ${
-      type === "success"
-        ? "bg-green-500"
-        : type === "error"
-        ? "bg-red-500"
-        : type === "warning"
-        ? "bg-yellow-500"
-        : "bg-blue-500"
-    }`;
-    notification.textContent = message;
-    document.body.appendChild(notification);
-    setTimeout(() => notification.remove(), 3000);
-  };
-
   const openDashboard = () => {
     if (typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.create) {
       chrome.tabs.create({ url: chrome.runtime.getURL("dashboard.html") });
@@ -423,69 +260,17 @@ function Popup() {
 
       {/* Content - Scrollable area between header and bottom nav */}
 
+      {/* Home Tab */}
       {activeTab === "home" && (
-        <div className='flex-1 custom-scrollbar overflow-y-auto min-h-0'>
-          <div className='px-2.5 pt-2 '>
-            {/* Quick Actions */}
-            <QuickActions
-              onAutoFill={handleAutoFill}
-              onGenerateCoverLetter={handleGenerateCoverLetter}
-              onAnalyzeJobFit={handleAnalyzeJobFit}
-              onTrackApplication={handleTrackApplication}
-              onGenerateAnswer={handleGenerateAnswer}
-              onTailorResume={handleTailorResume}
-              isLoading={isLoading}
-            />
-
-            {/* Weekly Goal */}
-            <div className='Weekly-goal'>
-              <div className='bg-white dark:bg-[#1F2937] rounded-lg py-3 px-5 mb-3.5 shadow-sm border border-gray-100 dark:border-[#374151]'>
-                <div className='flex justify-between items-center mb-1'>
-                  <span className='inline-block mb-1 text-sm text-gray-600 dark:text-[#9CA3AF] font-inter '>
-                    Weekly Goal: {data.weeklyGoal.current}/
-                    {data.weeklyGoal.target} jobs
-                  </span>
-                  <span className='text-sm font-semibold text-[#2563EB]'>
-                    {goalPercentage}%
-                  </span>
-                </div>
-                <div className='w-full bg-gray-200 rounded-full h-2.5'>
-                  <div
-                    className='bg-[#2563EB] h-2.5 rounded-full transition-all duration-300'
-                    style={{ width: `${goalPercentage}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Recent Applications */}
-              <div className='flex justify-between items-center mb-2'>
-                <h3 className='text-base font-medium text-gray-900 dark:text-[#F3F4F6] font-poppins'>
-                  Recent applications
-                </h3>
-                <button
-                  onClick={() => setActiveTab("applications")}
-                  className='text-xs text-[#2563EB] hover:text-purple-700 font-medium'
-                >
-                  View All
-                </button>
-              </div>
-
-              {/* Applications List */}
-
-              <div className='space-y-4 pb-4'>
-                {data.applications.slice(0, 5).map((app) => (
-                  <ApplicationCard
-                    application={app}
-                    onStatusChange={updateApplicationStatus}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        <HomeTab
+          data={data}
+          setActiveTab={setActiveTab}
+          handleStatusChange={updateApplicationStatus}
+          setActiveAIFeature={setShowAIFeature}
+          setData={setData}
+        />
       )}
-
-      {/* <Home /> */}
+      {/* Application Tab */}
       {activeTab === "applications" && (
         <ApplicationsTab
           filterCounts={filterCounts}
@@ -495,6 +280,7 @@ function Popup() {
           statusFilter={statusFilter}
         />
       )}
+
       {/* Bottom Navigation - ALWAYS RENDERED */}
       <BottomNavigation
         activeTab={activeTab}

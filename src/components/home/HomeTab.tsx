@@ -1,25 +1,29 @@
 import { useState } from "react";
 import QuickActions from "../QuickActions";
 import ApplicationCard from "../ApplicationCard";
-import { Application, WeeklyGoal } from "../../models/models";
-
-interface PopupData {
-  applications: Application[];
-  weeklyGoal: WeeklyGoal;
-}
+import { Application, ApplicationStatus, PopupData } from "../../models/models";
 
 interface Home {
   data: PopupData;
+  handleStatusChange: (id: number, status: ApplicationStatus) => Promise<void>;
+  setActiveTab: (tab: string) => void;
+  setActiveAIFeature: (feature: string) => void;
+  setData: (updatedData: PopupData) => void;
 }
 
-function Home({
+function HomeTab({
   data,
   handleStatusChange,
-  onTriggerAiFeature,
-  onTabChange,
+  setActiveAIFeature,
+  setActiveTab,
   setData,
-}: any) {
+}: Home) {
   const [isLoading, setIsLoading] = useState(false);
+
+  // calculate target goal percentage
+  const goalPercentage = Math.round(
+    (data.weeklyGoal.current / data.weeklyGoal.target) * 100
+  );
 
   const handleTrackApplication = async () => {
     setIsLoading(true);
@@ -130,16 +134,12 @@ function Home({
   };
 
   const handleGenerateCoverLetter = () => {
-    onTriggerAiFeature("cover-letter");
+    setActiveAIFeature("cover-letter");
   };
 
   const handleAnalyzeJobFit = () => {
-    onTriggerAiFeature("job-fit");
+    setActiveAIFeature("job-fit");
   };
-
-  const goalPercentage = Math.round(
-    (data.weeklyGoal.current / data.weeklyGoal.target) * 100
-  );
 
   const showNotification = (
     message: string,
@@ -161,11 +161,11 @@ function Home({
   };
 
   const handleTailorResume = () => {
-    onTriggerAiFeature("resume-tailor");
+    setActiveAIFeature("resume-tailor");
   };
 
   const handleGenerateAnswer = () => {
-    onTriggerAiFeature("answer-generator");
+    setActiveAIFeature("answer-generator");
   };
 
   return (
@@ -202,12 +202,12 @@ function Home({
 
         {/* Recent Applications */}
         <div className='flex justify-between items-center mb-4'>
-          <h3 className='text-base font-medium text-gray-900'>
+          <h3 className='text-base font-medium text-gray-900 dark:text-[#F3F4F6]'>
             Recent applications
           </h3>
           <button
-            onClick={() => onTabChange("applications")}
-            className='text-sm text-purple-600 hover:text-purple-700 font-medium'
+            onClick={() => setActiveTab("applications")}
+            className='text-xs text-[#2563EB] hover:text-purple-700 font-medium'
           >
             View All
           </button>
@@ -227,4 +227,4 @@ function Home({
     </div>
   );
 }
-export default Home;
+export default HomeTab;

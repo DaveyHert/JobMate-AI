@@ -1,6 +1,6 @@
-import { Application, ApplicationStatus } from "../models/models";
-import ApplicationCard from "./ApplicationCard";
-import { capitalizeFirstChar } from "../utils/capitalizeFirstChar";
+import { Application, ApplicationStatus } from "../../models/models";
+import ApplicationCard from "../ApplicationCard";
+import { capitalizeFirstChar } from "../../utils/capitalizeFirstChar";
 import { Search } from "lucide-react";
 
 interface ApplicationTab {
@@ -30,18 +30,24 @@ function ApplicationsTab({
 
         {/* Filter Tabs */}
         <div
-          className='flex mb-1 p-1 rounded-[10px] border dark:border-[#1D1E21] dark:bg-[#374151]'
+          className='flex mb-1 p-1 rounded-[10px] bg-[#F0ECF7] border dark:border-[#1D1E21] dark:bg-[#374151]'
           style={{ boxShadow: "inset 0px 0px 15px rgba(0, 0, 0, 0.06)" }}
         >
           {Object.entries(filterCounts).map(([status, count]) => (
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
-              className={`px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all font-inter ${
+              className={`py-1.5 px-[7px] rounded-lg text-xs font-medium whitespace-nowrap transition-all font-inter ${
                 statusFilter === status
-                  ? "bg-gray-900 text-gray-900 dark:bg-[#F8FAFF]"
+                  ? "bg-white text-gray-900 dark:bg-[#F8FAFF]"
                   : " text-gray-600 dark:text-[#9CA3AF] hover:text-gray-200"
               }`}
+              style={{
+                boxShadow:
+                  statusFilter === status
+                    ? "0px 0px 4px rgba(0, 0, 0, 0.25)"
+                    : "",
+              }}
             >
               {capitalizeFirstChar(status)} <span>({count})</span>
             </button>
