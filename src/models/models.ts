@@ -31,12 +31,39 @@ export interface PopupData {
 }
 
 export interface UserProfile {
+  personalInfo: {
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+    linkedIn: string;
+    website: string;
+    github: string;
+  };
   professional: {
     currentTitle: string;
-    experience: string[];
-    skills: string[];
+    company?: string;
+    yearsOfExperience: number;
+    workExperience: string[];
+    skills?: string[];
+    salary: string;
+    salaryMin: string;
+    salaryMax: string;
+    availability: string;
+    workAuthorization: string;
+    preferredLocation: string;
   };
-  preferences: {
+  documents: {
+    resumeUrl: string;
+    coverLetterUrl: string;
+  };
+  preferences?: {
     jobTypes: string[];
     locations: string[];
     salaryRange: string;

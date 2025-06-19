@@ -1,1 +1,1 @@
-import{c as s,j as e,r}from"./assets/index-BjCX9qk6.js";import{D as t}from"./assets/Dashboard-aJL-A1RY.js";s(document.getElementById("root")).render(e.jsx(r.StrictMode,{children:e.jsx(t,{})}));
+import{c as e,j as s,r,d as t}from"./assets/index-Dtbgi_dK.js";e(document.getElementById("root")).render(s.jsx(r.StrictMode,{children:s.jsx(t,{})}));

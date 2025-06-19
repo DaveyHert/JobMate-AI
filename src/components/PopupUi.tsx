@@ -7,6 +7,8 @@ import ApplicationsTab from "./application/ApplicationTab";
 import HomeTab from "./home/HomeTab";
 import { getDynamicFilterCounts } from "../utils/getDynamicFilterCounts";
 import { PopupData, Application } from "../models/models";
+import { useNavigate } from "react-router-dom";
+import { getMockData } from "../utils/getMockData";
 
 const STATUSES = [
   "applied",
@@ -17,7 +19,7 @@ const STATUSES = [
   "withdrawn",
 ];
 
-function Popup() {
+function PopupUi() {
   const [data, setData] = useState<PopupData>({
     applications: [],
     weeklyGoal: { current: 5, target: 10 },
@@ -28,6 +30,7 @@ function Popup() {
   const [showAIFeature, setShowAIFeature] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const isInDevMode = process.env.NODE_ENV === "development";
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadData();
@@ -43,132 +46,11 @@ function Popup() {
     (app) => statusFilter === "all" || app.status === statusFilter
   );
 
-  const getMockApplications = (): Application[] => {
-    return [
-      {
-        id: 1,
-        title: "Director of Engineering",
-        company: "Narvar",
-        source: "indeed",
-        status: "applied",
-        dateApplied: new Date().toISOString(),
-        url: "https://careers.narvar.com",
-      },
-      {
-        id: 2,
-        title: "Director of Engineering",
-        company: "Narvar",
-        source: "greenhouse",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 1 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.narvar.com",
-      },
-      {
-        id: 3,
-        title: "Frontend Engineer",
-        company: "Stripe",
-        source: "workable",
-        status: "offer",
-        dateApplied: new Date(
-          Date.now() - 2 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://stripe.com/jobs",
-      },
-      {
-        id: 4,
-        title: "Director of Engineering",
-        company: "Narvar",
-        source: "lever",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 3 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.narvar.com",
-      },
-      {
-        id: 5,
-        title: "Senior Product Engineering Manager",
-        company: "Slack",
-        source: "greenhouse",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 4 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://slack.com/careers",
-      },
-      {
-        id: 6,
-        title: "Principal Frontend Engineer",
-        company: "AirBnB",
-        source: "lever",
-        status: "interviewing",
-        dateApplied: new Date(
-          Date.now() - 5 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.airbnb.com",
-      },
-      {
-        id: 7,
-        title: "Director of Engineering",
-        company: "X",
-        source: "lever",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 6 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.x.com",
-      },
-      {
-        id: 8,
-        title: "Frontend Engineer",
-        company: "Google",
-        source: "lever",
-        status: "rejected",
-        dateApplied: new Date(
-          Date.now() - 7 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.google.com",
-      },
-      {
-        id: 9,
-        title: "Director of Engineering",
-        company: "Mimi",
-        source: "lever",
-        status: "rejected",
-        dateApplied: new Date(
-          Date.now() - 8 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.mimi.com",
-      },
-      {
-        id: 10,
-        title: "Design Engineer",
-        company: "Figma",
-        source: "lever",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 9 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.figma.com",
-      },
-      {
-        id: 11,
-        title: "Director of Engineering",
-        company: "Apple",
-        source: "indeed",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 10 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.apple.com",
-      },
-    ];
-  };
+  const { mockApplications } = getMockData();
 
   const loadData = async () => {
     try {
+      setIsLoading(true);
       if (
         typeof chrome !== "undefined" &&
         chrome.storage &&
@@ -177,8 +59,7 @@ function Popup() {
         const result = await chrome.storage.local.get(["jobMateData"]);
         if (result.jobMateData) {
           setData({
-            applications:
-              result.jobMateData.applications || getMockApplications(),
+            applications: result.jobMateData.applications || mockApplications,
             weeklyGoal: result.jobMateData.weeklyGoal || {
               current: 5,
               target: 10,
@@ -190,20 +71,23 @@ function Popup() {
         }
       }
 
-      const mockApps = getMockApplications();
       setData({
-        applications: mockApps,
+        applications: mockApplications,
         weeklyGoal: { current: 5, target: 10 },
         currentProfile: "product-manager",
       });
     } catch (error) {
       console.error("Error loading data:", error);
-      const mockApps = getMockApplications();
+      const mockApps = mockApplications;
       setData({
         applications: mockApps,
         weeklyGoal: { current: 5, target: 10 },
         currentProfile: "product-manager",
       });
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   };
 
@@ -211,7 +95,8 @@ function Popup() {
     if (typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.create) {
       chrome.tabs.create({ url: chrome.runtime.getURL("dashboard.html") });
     } else {
-      window.location.href = "/dashboard.html";
+      // window.location.href = "/dashboard.html";
+      navigate("/dashboard");
     }
   };
 
@@ -304,4 +189,4 @@ function Popup() {
   );
 }
 
-export default Popup;
+export default PopupUi;
