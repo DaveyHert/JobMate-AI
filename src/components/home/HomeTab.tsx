@@ -1,7 +1,8 @@
 import { useState } from "react";
 import QuickActions from "../QuickActions";
-import ApplicationCard from "../ApplicationCard";
+import ApplicationCard from "../application/ApplicationCard";
 import { Application, ApplicationStatus, PopupData } from "../../models/models";
+import TargetGoal from "../TargetGoal";
 
 interface Home {
   data: PopupData;
@@ -19,11 +20,6 @@ function HomeTab({
   setData,
 }: Home) {
   const [isLoading, setIsLoading] = useState(false);
-
-  // calculate target goal percentage
-  const goalPercentage = Math.round(
-    (data.weeklyGoal.current / data.weeklyGoal.target) * 100
-  );
 
   const handleTrackApplication = async () => {
     setIsLoading(true);
@@ -167,7 +163,7 @@ function HomeTab({
   const handleGenerateAnswer = () => {
     setActiveAIFeature("answer-generator");
   };
-
+  console.log(data);
   return (
     <div className='flex-1  custom-scrollbar overflow-y-auto scroll-smooth min-h-0'>
       <div className='px-2.5 pt-2'>
@@ -182,26 +178,10 @@ function HomeTab({
         />
 
         {/* Weekly Goal */}
-        <div className='bg-white dark:bg-[#1F2937] rounded-2xl py-3 px-5 mb-3.5 shadow-sm border border-gray-100 dark:border-[#374151]'>
-          <div className='flex justify-between items-center mb-1'>
-            <span className='text-sm text-gray-600'>
-              Weekly Goal: {data.weeklyGoal.current}/{data.weeklyGoal.target}{" "}
-              jobs
-            </span>
-            <span className='text-sm font-semibold text-blue-600'>
-              {goalPercentage}%
-            </span>
-          </div>
-          <div className='w-full bg-gray-200 rounded-full h-2.5'>
-            <div
-              className='bg-[#2563EB] h-2.5 rounded-full transition-all duration-300'
-              style={{ width: `${goalPercentage}%` }}
-            />
-          </div>
-        </div>
+        <TargetGoal weeklyGoal={data.weeklyGoal} />
 
         {/* Recent Applications */}
-        <div className='flex justify-between items-center mb-4'>
+        <div className='flex justify-between items-center mb-2'>
           <h3 className='text-base font-medium text-gray-900 dark:text-[#F3F4F6]'>
             Recent applications
           </h3>
@@ -214,7 +194,7 @@ function HomeTab({
         </div>
 
         {/* Recent Applications List */}
-        <div className='space-y-4 pb-4'>
+        <div className='space-y-2 pb-4'>
           {data.applications.slice(0, 4).map((app: Application) => (
             <ApplicationCard
               key={app.id}

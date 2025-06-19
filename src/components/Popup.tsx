@@ -248,7 +248,7 @@ function Popup() {
 
   return (
     <div
-      className={`${isInDevMode ? "w-[580px] h-[700px] relative" : "w-dvw h-dvh"} bg-[#F7F7FD] dark:bg-[#111827]  overflow-hidden flex flex-col pb-[65px]`} // prettier-ignore
+      className={`${isInDevMode ? "w-[580px] h-[700px] relative" : "w-dvw h-dvh"} bg-[#F7F7FD] dark:bg-[#111827]  overflow-hidden flex flex-col pb-[58px]`} // prettier-ignore
     >
       {/* Header */}
       <Header
@@ -270,6 +270,7 @@ function Popup() {
           setData={setData}
         />
       )}
+
       {/* Application Tab */}
       {activeTab === "applications" && (
         <ApplicationsTab

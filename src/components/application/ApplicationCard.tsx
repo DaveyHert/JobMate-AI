@@ -1,8 +1,8 @@
 import React from "react";
 import { Calendar, ChevronDown } from "lucide-react";
-import { getStatusColor } from "../utils/getStatusColor";
-import { formatDate } from "../utils/dateHelpers";
-import { Application } from "../models/models";
+import { getStatusColor } from "../../utils/getStatusColor";
+import { formatDate } from "../../utils/dateHelpers";
+import { Application } from "../../models/models";
 
 interface ApplicationCardProps {
   application: Application;
