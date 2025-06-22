@@ -27,41 +27,59 @@ export interface WeeklyGoal {
 export interface PopupData {
   applications: Application[];
   weeklyGoal: WeeklyGoal;
+  profiles?: UserProfile[];
   currentProfile: string;
 }
 
+interface PersonalInfo {
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+}
+
+interface ProfessionalInfo {
+  role: string;
+  yearsOfExperience: number;
+  workExperience: WorkExperience[];
+  skills?: string[];
+  salary?: string;
+  salaryMin?: string;
+  salaryMax?: string;
+  availability?: string;
+  workAuthorization?: string;
+  preferredLocation?: string;
+  linkedIn: string;
+  website: string;
+  github: string;
+}
+export interface WorkExperience {
+  id: string;
+  jobTitle: string; // e.g., "Frontend Developer"
+  company: string; // e.g., "Google"
+  location?: string; // e.g., "Remote" or "San Francisco, CA"
+  startDate: string; // e.g., "2022-01" (or "January 2022")
+  endDate?: string; // optional if currently working
+  isCurrent?: boolean;
+  responsibilities: string[]; // bullet points of tasks/achievements
+  technologies?: string[]; // (React, Node.js, etc.)
+}
+
 export interface UserProfile {
-  personalInfo: {
-    firstName: string;
-    lastName: string;
-    fullName: string;
-    email: string;
-    phone: string;
-    address: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-    linkedIn: string;
-    website: string;
-    github: string;
-  };
-  professional: {
-    currentTitle: string;
-    company?: string;
-    yearsOfExperience: number;
-    workExperience: string[];
-    skills?: string[];
-    salary: string;
-    salaryMin: string;
-    salaryMax: string;
-    availability: string;
-    workAuthorization: string;
-    preferredLocation: string;
-  };
+  id: string;
+  name: string; // e.g. "Product Designer", "Frontend Dev"
+  isActive: boolean;
+  personalInfo: PersonalInfo;
+  professionalInfo: ProfessionalInfo;
   documents: {
-    resumeUrl: string;
-    coverLetterUrl: string;
+    resumeUrl?: string;
+    coverLetterUrl?: string;
   };
   preferences?: {
     jobTypes: string[];

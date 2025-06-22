@@ -3,16 +3,8 @@
   "name": "JobMate AI+",
   "version": "1.0.0",
   "description": "AI-powered job application assistant with smart autofill, tracking, and resume optimization",
-  "permissions": [
-    "activeTab",
-    "storage",
-    "scripting",
-    "tabs"
-  ],
-  "host_permissions": [
-    "https://*/*",
-    "http://*/*"
-  ],
+  "permissions": ["activeTab", "storage", "scripting", "tabs", "contextMenus"],
+  "host_permissions": ["https://*/*", "http://*/*"],
   "background": {
     "service_worker": "background/background.js",
     "type": "module"

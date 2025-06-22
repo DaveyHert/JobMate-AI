@@ -1,0 +1,13 @@
+export { default as AddIcon } from "./AddIcon";
+export { default as AiPenIcon } from "./AiPenIcon";
+export { default as ArrowDownIcon } from "./ArrowDownIcon";
+export { default as BarchartIcon } from "./BarchartIcon";
+export { default as BrainIcon } from "./BrainIcon";
+export { default as BriefIcon } from "./BriefIcon";
+export { default as FileIcon } from "./FileIcon";
+export { default as FormSparkleIcon } from "./FormSparkleIcon";
+export { default as GearIcon } from "./GearIcon";
+export { default as HomeIcon } from "./HomeIcon";
+export { default as MagicStars } from "./MagicStars";
+export { default as ProfileIcon } from "./ProfileIcon";
+export { default as TargetIcon } from "./TargetIcon";

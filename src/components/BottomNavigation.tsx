@@ -1,6 +1,10 @@
-import React from "react";
-
-import { Home, BarChart, BarChart3, User, Settings } from "lucide-react";
+import {
+  BarchartIcon,
+  BriefIcon,
+  GearIcon,
+  HomeIcon,
+  ProfileIcon,
+} from "../assets/icons";
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -14,16 +18,16 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   openDashboard,
 }) => {
   const navigationItems = [
-    { key: "home", icon: Home, label: "Home" },
-    { key: "applications", icon: BarChart, label: "Applications" },
+    { key: "home", icon: HomeIcon, label: "Home" },
+    { key: "applications", icon: BriefIcon, label: "Applications" },
     {
       key: "dashboard",
-      icon: BarChart3,
+      icon: BarchartIcon,
       label: "Dashboard",
       action: openDashboard,
     },
-    { key: "profile", icon: User, label: "Profile" },
-    { key: "settings", icon: Settings, label: "Settings" },
+    { key: "profile", icon: ProfileIcon, label: "Profile" },
+    { key: "settings", icon: GearIcon, label: "Settings" },
   ];
 
   return (

@@ -1,5 +1,12 @@
 import React from "react";
-import { Eye, Target, PenTool, Brain, FileText } from "lucide-react";
+import {
+  AddIcon,
+  AiPenIcon,
+  FormSparkleIcon,
+  TargetIcon,
+  FileIcon,
+  BrainIcon,
+} from "../assets/icons";
 
 interface QuickAction {
   icon: React.ElementType;
@@ -31,7 +38,7 @@ const QuickActions: React.FC<QuickActionsProps> = ({
 }) => {
   const actions: QuickAction[] = [
     {
-      icon: Eye,
+      icon: FormSparkleIcon,
       label: "Auto Fill Form",
       onClick: onAutoFill,
       disabled: isLoading,
@@ -39,21 +46,21 @@ const QuickActions: React.FC<QuickActionsProps> = ({
       iconBg: "bg-[#BFDBFE] dark:bg-[#152245]",
     },
     {
-      icon: FileText,
+      icon: FileIcon,
       label: "Generate Cover Letter",
       onClick: onGenerateCoverLetter,
       iconColor: "text-[#3BA44F]",
       iconBg: "bg-[#C3F7D2] dark:bg-[#122A29]",
     },
     {
-      icon: Target,
+      icon: TargetIcon,
       label: "Analyze Job Fit",
       onClick: onAnalyzeJobFit,
       iconColor: "text-[#C2410B]",
       iconBg: "bg-[#FED7AA] dark:bg-[#302120]",
     },
     {
-      icon: Target,
+      icon: AddIcon,
       label: "Track This Application",
       onClick: onTrackApplication,
       disabled: isLoading,
@@ -61,14 +68,14 @@ const QuickActions: React.FC<QuickActionsProps> = ({
       iconBg: "bg-[#FCA5A5]",
     },
     {
-      icon: PenTool,
+      icon: AiPenIcon,
       label: "Tailor Resume",
       onClick: onTailorResume,
       iconColor: "text-[#7E22CE]",
       iconBg: "bg-[#E9D5FF]",
     },
     {
-      icon: Brain,
+      icon: BrainIcon,
       label: "Generate Answer",
       onClick: onGenerateAnswer,
       iconColor: "text-[#0E7490]",
@@ -91,10 +98,10 @@ const QuickActions: React.FC<QuickActionsProps> = ({
             className='btn-primary'
           >
             <div
-              className={` w-8 h-8 flex items-center justify-center p-1.5 rounded-full  ${action.iconBg}`}
+              className={`w-8 h-8 p-[4.5px] flex items-center justify-center rounded-full  ${action.iconBg}`}
               style={{ boxShadow: "inset 0px 1px 3px rgba(0, 0, 0, 0.1)" }}
             >
-              <action.icon className={`w-8 h-8  ${action.iconColor}`} />
+              <action.icon className={`w-6 h-6  ${action.iconColor}`} />
             </div>
             <span className='text-xs block my-1 font-medium'>
               {action.label}

@@ -1,11 +1,5 @@
-import {
-  // MemoryRouter,
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-} from "react-router-dom";
-import PopupUi from "./components/PopupUi";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Popup from "./components/Popup";
 import Dashboard from "./components/Dashboard";
 
 function App() {
@@ -43,9 +37,9 @@ function App() {
         )}
 
         <Routes>
-          <Route path='/' element={<PopupUi />} />
-          <Route path='/popup' element={<PopupUi />} />
-          <Route path='/popup.html' element={<PopupUi />} />
+          <Route path='/' element={<Popup />} />
+          <Route path='/popup' element={<Popup />} />
+          <Route path='/popup.html' element={<Popup />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/dashboard.html' element={<Dashboard />} />
         </Routes>
