@@ -1,0 +1,1012 @@
+[
+  {
+    "name":"LinkedIn Jobs",
+    "url":"https:\/\/www.linkedin.com\/jobs",
+    "region":"Global",
+    "industry_sector":"All industries",
+    "platform_type":"General Job Board",
+    "listing_types":"Full\u2011time, part\u2011time, contract, internship, remote",
+    "description":"Largest professional networking site with extensive global job listings",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Indeed",
+    "url":"https:\/\/www.indeed.com",
+    "region":"Global (strong US focus)",
+    "industry_sector":"All industries",
+    "platform_type":"General Job Board \/ Aggregator",
+    "listing_types":"Full\u2011time, part\u2011time, freelance, internship, remote",
+    "description":"Aggregates postings from company sites, boards and staffing agencies",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Glassdoor",
+    "url":"https:\/\/www.glassdoor.com\/Job\/index.htm",
+    "region":"Global (US\u2011centric)",
+    "industry_sector":"All industries",
+    "platform_type":"General Job Board & Employer Reviews",
+    "listing_types":"Full\u2011time, contract, internship, remote",
+    "description":"Combines job ads with salary data and employee reviews",
+    "source":"turn0search1"
+  },
+  {
+    "name":"ZipRecruiter",
+    "url":"https:\/\/www.ziprecruiter.com",
+    "region":"Global (US primary)",
+    "industry_sector":"All industries",
+    "platform_type":"General Job Board \/ Aggregator",
+    "listing_types":"Full\u2011time, part\u2011time, contract",
+    "description":"AI\u2011driven matching of resumes to employer posts",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Monster",
+    "url":"https:\/\/www.monster.com",
+    "region":"Global",
+    "industry_sector":"All industries",
+    "platform_type":"General Job Board",
+    "listing_types":"Full\u2011time, part\u2011time, contract",
+    "description":"Legacy job board with global reach",
+    "source":"turn0search1"
+  },
+  {
+    "name":"CareerBuilder",
+    "url":"https:\/\/www.careerbuilder.com",
+    "region":"Global (US focus)",
+    "industry_sector":"All industries",
+    "platform_type":"General Job Board",
+    "listing_types":"Full\u2011time, part\u2011time, contract",
+    "description":"Large database plus resume\u2011building tools",
+    "source":"turn0search1"
+  },
+  {
+    "name":"SimplyHired",
+    "url":"https:\/\/www.simplyhired.com",
+    "region":"Global",
+    "industry_sector":"All industries",
+    "platform_type":"General Aggregator",
+    "listing_types":"Full\u2011time, part\u2011time, contract",
+    "description":"Aggregates millions of listings from across the web",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Google for Jobs",
+    "url":"https:\/\/careers.google.com\/jobs\/results\/",
+    "region":"Global",
+    "industry_sector":"All industries",
+    "platform_type":"Search Aggregator Layer",
+    "listing_types":"Varies (pulls from partner sites)",
+    "description":"Google\u2019s embedded search feature surfaces jobs from many boards",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Job.com",
+    "url":"https:\/\/www.job.com",
+    "region":"Global",
+    "industry_sector":"All industries",
+    "platform_type":"General Job Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Blockchain\u2011enabled recruiting marketplace",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Snagajob",
+    "url":"https:\/\/www.snagajob.com",
+    "region":"United States",
+    "industry_sector":"Hourly & retail",
+    "platform_type":"General Hourly Board",
+    "listing_types":"Part\u2011time, shift, full\u2011time hourly",
+    "description":"Largest platform for hourly work in the US",
+    "source":"turn0search9"
+  },
+  {
+    "name":"Ladders",
+    "url":"https:\/\/www.theladders.com",
+    "region":"United States",
+    "industry_sector":"$100K+ professional roles",
+    "platform_type":"Premium Job Board",
+    "listing_types":"Full\u2011time, executive",
+    "description":"High\u2011salary roles ($100k+) across industries",
+    "source":"turn0search9"
+  },
+  {
+    "name":"Dice",
+    "url":"https:\/\/www.dice.com",
+    "region":"United States",
+    "industry_sector":"Technology & IT",
+    "platform_type":"Tech Job Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Specialized board for tech professionals",
+    "source":"turn0search5"
+  },
+  {
+    "name":"Craigslist Jobs",
+    "url":"https:\/\/geo.craigslist.org\/iso\/us",
+    "region":"United States (city\u2011level)",
+    "industry_sector":"All industries",
+    "platform_type":"Classifieds \/ Local Board",
+    "listing_types":"Full\u2011time, part\u2011time, gig",
+    "description":"Local classifieds with job listings per metro area",
+    "source":"turn1search7"
+  },
+  {
+    "name":"EURES",
+    "url":"https:\/\/ec.europa.eu\/eures",
+    "region":"Europe (EU\/EEA)",
+    "industry_sector":"All industries",
+    "platform_type":"Government Job Board",
+    "listing_types":"Full\u2011time, seasonal, internship",
+    "description":"European Commission job mobility portal",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Totaljobs",
+    "url":"https:\/\/www.totaljobs.com",
+    "region":"United Kingdom",
+    "industry_sector":"All industries",
+    "platform_type":"General UK Board",
+    "listing_types":"Full\u2011time, part\u2011time, contract",
+    "description":"One of UK\u2019s biggest job sites",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Reed.co.uk",
+    "url":"https:\/\/www.reed.co.uk",
+    "region":"United Kingdom",
+    "industry_sector":"All industries",
+    "platform_type":"General UK Board",
+    "listing_types":"Full\u2011time, part\u2011time, contract",
+    "description":"Long\u2011standing UK board with courses & career advice",
+    "source":"turn0search1"
+  },
+  {
+    "name":"StepStone",
+    "url":"https:\/\/www.stepstone.de",
+    "region":"Europe (Germany core)",
+    "industry_sector":"All industries",
+    "platform_type":"General EU Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Major European board active in 20+ countries",
+    "source":"turn0search1"
+  },
+  {
+    "name":"IrishJobs",
+    "url":"https:\/\/www.irishjobs.ie",
+    "region":"Ireland",
+    "industry_sector":"All industries",
+    "platform_type":"General",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Largest job site in Ireland",
+    "source":"turn0search1"
+  },
+  {
+    "name":"WeAreDevelopers",
+    "url":"https:\/\/wearedevelopers.com\/jobs",
+    "region":"Europe",
+    "industry_sector":"Software engineering",
+    "platform_type":"Tech Niche Board",
+    "listing_types":"Full\u2011time, remote",
+    "description":"European dev\u2011focused board & conference",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Naukri",
+    "url":"https:\/\/www.naukri.com",
+    "region":"India",
+    "industry_sector":"All industries",
+    "platform_type":"General India Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"India\u2019s largest job marketplace",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Shine",
+    "url":"https:\/\/www.shine.com",
+    "region":"India",
+    "industry_sector":"All industries",
+    "platform_type":"General India Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Indian board with salary insights",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Mynavi",
+    "url":"https:\/\/www.mynavi.jp",
+    "region":"Japan",
+    "industry_sector":"All industries",
+    "platform_type":"General Japan Board",
+    "listing_types":"Full\u2011time, contract, graduate",
+    "description":"Leading Japanese recruitment portal",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Seek",
+    "url":"https:\/\/www.seek.com.au",
+    "region":"Australia & New\u00a0Zealand",
+    "industry_sector":"All industries",
+    "platform_type":"General ANZ Board",
+    "listing_types":"Full\u2011time, part\u2011time, contract",
+    "description":"Dominant board for Australia\/NZ roles",
+    "source":"turn0search1"
+  },
+  {
+    "name":"JobStreet",
+    "url":"https:\/\/www.jobstreet.com",
+    "region":"Southeast Asia",
+    "industry_sector":"All industries",
+    "platform_type":"General SEA Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Top board in Malaysia, Philippines, Singapore",
+    "source":"turn0search1"
+  },
+  {
+    "name":"JobsDB",
+    "url":"https:\/\/www.jobsdb.com",
+    "region":"Hong\u00a0Kong & SE\u00a0Asia",
+    "industry_sector":"All industries",
+    "platform_type":"General",
+    "listing_types":"Full\u2011time, part\u2011time",
+    "description":"Popular across HK, Thailand & Indonesia",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Computrabajo",
+    "url":"https:\/\/www.computrabajo.com",
+    "region":"Latin America",
+    "industry_sector":"All industries",
+    "platform_type":"General",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Top Spanish\u2011speaking LATAM board",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Bumeran",
+    "url":"https:\/\/www.bumeran.com.ar",
+    "region":"Latin America (ARG, MEX, PER)",
+    "industry_sector":"All industries",
+    "platform_type":"General",
+    "listing_types":"Full\u2011time",
+    "description":"Key board across several LATAM countries",
+    "source":"turn0search1"
+  },
+  {
+    "name":"OCCMundial",
+    "url":"https:\/\/www.occ.com.mx",
+    "region":"Mexico",
+    "industry_sector":"All industries",
+    "platform_type":"General",
+    "listing_types":"Full\u2011time",
+    "description":"Largest Mexican job board",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Bayt",
+    "url":"https:\/\/www.bayt.com",
+    "region":"Middle East & North Africa",
+    "industry_sector":"All industries",
+    "platform_type":"General MEA Board",
+    "listing_types":"Full\u2011time",
+    "description":"Leading Middle\u2011East career platform",
+    "source":"turn0search1"
+  },
+  {
+    "name":"GulfTalent",
+    "url":"https:\/\/www.gulftalent.com",
+    "region":"Gulf Co\u2011operation Council",
+    "industry_sector":"All industries",
+    "platform_type":"General GCC Board",
+    "listing_types":"Full\u2011time",
+    "description":"Premium roles across GCC countries",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Jobberman",
+    "url":"https:\/\/www.jobberman.com",
+    "region":"Nigeria & Ghana",
+    "industry_sector":"All industries",
+    "platform_type":"General Africa Board",
+    "listing_types":"Full\u2011time",
+    "description":"West Africa\u2019s biggest board",
+    "source":"turn0search1"
+  },
+  {
+    "name":"BrighterMonday",
+    "url":"https:\/\/www.brightermonday.co.ke",
+    "region":"Kenya, Uganda, Tanzania",
+    "industry_sector":"All industries",
+    "platform_type":"General Africa Board",
+    "listing_types":"Full\u2011time",
+    "description":"East Africa\u2019s largest job portal",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Careers24",
+    "url":"https:\/\/www.careers24.com",
+    "region":"South Africa",
+    "industry_sector":"All industries",
+    "platform_type":"General",
+    "listing_types":"Full\u2011time",
+    "description":"Long\u2011running South African board",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Remote OK",
+    "url":"https:\/\/remoteok.com",
+    "region":"Global",
+    "industry_sector":"Tech & knowledge work",
+    "platform_type":"Remote\u2011Only Board",
+    "listing_types":"Full\u2011time, contract, freelance",
+    "description":"#1 tagged remote jobs board",
+    "source":"turn1search0"
+  },
+  {
+    "name":"We Work Remotely",
+    "url":"https:\/\/weworkremotely.com",
+    "region":"Global",
+    "industry_sector":"Tech, marketing, customer support",
+    "platform_type":"Remote\u2011Only Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Oldest remote\u2011first board",
+    "source":"turn1search0"
+  },
+  {
+    "name":"FlexJobs",
+    "url":"https:\/\/www.flexjobs.com",
+    "region":"Global",
+    "industry_sector":"All industries",
+    "platform_type":"Remote & Flexible Work Board",
+    "listing_types":"Full\u2011time, part\u2011time, freelance",
+    "description":"Curated, ad\u2011free remote and flexible jobs",
+    "source":"turn0search9"
+  },
+  {
+    "name":"Remotive",
+    "url":"https:\/\/remotive.com\/remote-jobs",
+    "region":"Global",
+    "industry_sector":"Tech, marketing, ops",
+    "platform_type":"Remote\u2011Only Board & Community",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Remote work community with newsletter",
+    "source":"turn1search0"
+  },
+  {
+    "name":"Jobspresso",
+    "url":"https:\/\/jobspresso.co",
+    "region":"Global",
+    "industry_sector":"Tech, marketing, support",
+    "platform_type":"Remote\u2011Only Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Expert\u2011curated remote roles",
+    "source":"turn0search9"
+  },
+  {
+    "name":"Working Nomads",
+    "url":"https:\/\/www.workingnomads.com\/jobs",
+    "region":"Global",
+    "industry_sector":"Tech & digital",
+    "platform_type":"Remote\u2011Only Aggregator",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Aggregates remote listings and emails daily digest",
+    "source":"turn0search9"
+  },
+  {
+    "name":"Remote.co",
+    "url":"https:\/\/remote.co\/remote-jobs",
+    "region":"Global",
+    "industry_sector":"All industries",
+    "platform_type":"Remote\u2011Only Board",
+    "listing_types":"Full\u2011time, part\u2011time",
+    "description":"Operated by FlexJobs with Q&A resources",
+    "source":"turn0search9"
+  },
+  {
+    "name":"Wellfound (AngelList Talent)",
+    "url":"https:\/\/wellfound.com\/jobs",
+    "region":"Global",
+    "industry_sector":"Startups, tech",
+    "platform_type":"Startup Job Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Largest startup job marketplace",
+    "source":"turn0search5"
+  },
+  {
+    "name":"F6S Jobs",
+    "url":"https:\/\/www.f6s.com\/jobs",
+    "region":"Global",
+    "industry_sector":"Startups",
+    "platform_type":"Startup Job Board",
+    "listing_types":"Full\u2011time, founder, contract",
+    "description":"Early\u2011stage startup community job board",
+    "source":"turn0search2"
+  },
+  {
+    "name":"Work at a Startup (YC)",
+    "url":"https:\/\/www.workatastartup.com",
+    "region":"Global",
+    "industry_sector":"YC startups",
+    "platform_type":"Startup Job Board",
+    "listing_types":"Full\u2011time, internship",
+    "description":"Y Combinator talent marketplace",
+    "source":"turn1search1"
+  },
+  {
+    "name":"Startup.jobs",
+    "url":"https:\/\/startup.jobs",
+    "region":"Global",
+    "industry_sector":"Startups",
+    "platform_type":"Startup Job Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Roles at high\u2011growth startups worldwide",
+    "source":"turn0search5"
+  },
+  {
+    "name":"Built\u00a0In",
+    "url":"https:\/\/builtin.com\/jobs",
+    "region":"United States (city hubs)",
+    "industry_sector":"Tech startups",
+    "platform_type":"Local Startup Hubs",
+    "listing_types":"Full\u2011time",
+    "description":"City\u2011based communities for US tech (NY, SF, etc.)",
+    "source":"turn0search9"
+  },
+  {
+    "name":"Hired",
+    "url":"https:\/\/hired.com",
+    "region":"Global",
+    "industry_sector":"Tech & product",
+    "platform_type":"Talent Marketplace",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Reverse\u2011auction style matching for tech talent",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Crunchboard",
+    "url":"https:\/\/jobs.techcrunch.com",
+    "region":"Global",
+    "industry_sector":"Tech",
+    "platform_type":"Tech Job Board",
+    "listing_types":"Full\u2011time",
+    "description":"TechCrunch\u2019s job board for startups",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Dribbble Jobs",
+    "url":"https:\/\/dribbble.com\/jobs",
+    "region":"Global",
+    "industry_sector":"Design & creative",
+    "platform_type":"Niche Design Board",
+    "listing_types":"Full\u2011time, freelance, remote",
+    "description":"Design community jobs board",
+    "source":"turn0search5"
+  },
+  {
+    "name":"Behance Job Board",
+    "url":"https:\/\/www.behance.net\/joblist",
+    "region":"Global",
+    "industry_sector":"Design & creative",
+    "platform_type":"Portfolio + Jobs",
+    "listing_types":"Full\u2011time, freelance",
+    "description":"Adobe Behance creative roles",
+    "source":"turn0search5"
+  },
+  {
+    "name":"Coroflot",
+    "url":"https:\/\/www.coroflot.com\/jobs",
+    "region":"Global",
+    "industry_sector":"Design",
+    "platform_type":"Design Job Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Industrial & graphic design roles",
+    "source":"turn0search5"
+  },
+  {
+    "name":"Krop",
+    "url":"https:\/\/www.krop.com\/creative-jobs",
+    "region":"Global",
+    "industry_sector":"Design & tech",
+    "platform_type":"Creative Job Board",
+    "listing_types":"Full\u2011time, freelance",
+    "description":"Portfolio hosting plus creative jobs",
+    "source":"turn0search5"
+  },
+  {
+    "name":"DesignJobsBoard",
+    "url":"https:\/\/designjobsboard.com",
+    "region":"United Kingdom \/ Global",
+    "industry_sector":"Design",
+    "platform_type":"Design Job Board",
+    "listing_types":"Full\u2011time, freelance",
+    "description":"Curated UK\u2011led design roles",
+    "source":"turn0search5"
+  },
+  {
+    "name":"Authentic Jobs",
+    "url":"https:\/\/authenticjobs.com",
+    "region":"Global",
+    "industry_sector":"Web design & development",
+    "platform_type":"Tech\u2011Design Board",
+    "listing_types":"Full\u2011time, contract, freelance",
+    "description":"Long\u2011running board for designers & devs",
+    "source":"turn0search5"
+  },
+  {
+    "name":"Web3.career",
+    "url":"https:\/\/web3.career",
+    "region":"Global",
+    "industry_sector":"Web3 \/ blockchain",
+    "platform_type":"Niche Job Board",
+    "listing_types":"Full\u2011time, remote, contract",
+    "description":"#1 Web3 job board",
+    "source":"turn0search3"
+  },
+  {
+    "name":"CryptoJobsList",
+    "url":"https:\/\/cryptojobslist.com",
+    "region":"Global",
+    "industry_sector":"Crypto",
+    "platform_type":"Niche Job Board",
+    "listing_types":"Full\u2011time, contract, freelance",
+    "description":"Largest crypto\u2011jobs aggregator",
+    "source":"turn0search3"
+  },
+  {
+    "name":"Remote3",
+    "url":"https:\/\/remote3.co",
+    "region":"Global",
+    "industry_sector":"Web3",
+    "platform_type":"Remote Web3 Board",
+    "listing_types":"Full\u2011time, remote",
+    "description":"Remote\u2011only blockchain roles",
+    "source":"turn0search7"
+  },
+  {
+    "name":"Ethlance",
+    "url":"https:\/\/ethlance.com",
+    "region":"Global",
+    "industry_sector":"Web3",
+    "platform_type":"Decentralized Freelance",
+    "listing_types":"Freelance, contract",
+    "description":"Ethereum\u2011based gig marketplace",
+    "source":"turn0search3"
+  },
+  {
+    "name":"DAOjobs",
+    "url":"https:\/\/daojobs.io",
+    "region":"Global",
+    "industry_sector":"DAOs & Web3",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, part\u2011time, bounty",
+    "description":"Opportunities in decentralized organizations",
+    "source":"turn0search3"
+  },
+  {
+    "name":"LaborX",
+    "url":"https:\/\/laborx.com",
+    "region":"Global",
+    "industry_sector":"Crypto freelancing",
+    "platform_type":"Freelance Marketplace",
+    "listing_types":"Freelance, contract",
+    "description":"Smart\u2011contract powered gigs",
+    "source":"turn0search3"
+  },
+  {
+    "name":"EngineerJobs",
+    "url":"https:\/\/www.engineerjobs.com",
+    "region":"United States & Canada",
+    "industry_sector":"Engineering",
+    "platform_type":"Niche Engineering Board",
+    "listing_types":"Full\u2011time",
+    "description":"Database of engineering positions",
+    "source":"turn0search5"
+  },
+  {
+    "name":"Kaggle Jobs Board",
+    "url":"https:\/\/www.kaggle.com\/jobs",
+    "region":"Global",
+    "industry_sector":"Data science",
+    "platform_type":"Community Job Board",
+    "listing_types":"Full\u2011time, internship",
+    "description":"Data science & ML roles for Kaggle community",
+    "source":"turn0search5"
+  },
+  {
+    "name":"DataJobs.com",
+    "url":"https:\/\/datajobs.com",
+    "region":"United States",
+    "industry_sector":"Data science & analytics",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time",
+    "description":"Early data\u2011science dedicated board",
+    "source":"turn0search5"
+  },
+  {
+    "name":"Health eCareers",
+    "url":"https:\/\/www.healthecareers.com",
+    "region":"United States",
+    "industry_sector":"Healthcare",
+    "platform_type":"Niche Healthcare Board",
+    "listing_types":"Full\u2011time, locum",
+    "description":"Clinical & non\u2011clinical healthcare roles",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Nurse.com Jobs",
+    "url":"https:\/\/www.nurse.com\/jobs",
+    "region":"United States",
+    "industry_sector":"Nursing",
+    "platform_type":"Nursing Board",
+    "listing_types":"Full\u2011time, travel nurse",
+    "description":"Top US nursing job site",
+    "source":"turn0search1"
+  },
+  {
+    "name":"DocCafe",
+    "url":"https:\/\/www.doccafe.com",
+    "region":"United States",
+    "industry_sector":"Physicians",
+    "platform_type":"Medical Board",
+    "listing_types":"Full\u2011time, locum",
+    "description":"Physician, NP & PA positions",
+    "source":"turn0search1"
+  },
+  {
+    "name":"PharmiWeb Jobs",
+    "url":"https:\/\/www.pharmiweb.jobs",
+    "region":"Europe",
+    "industry_sector":"Pharma & biotech",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Life\u2011sciences careers across EU & UK",
+    "source":"turn0search1"
+  },
+  {
+    "name":"HigherEdJobs",
+    "url":"https:\/\/www.higheredjobs.com",
+    "region":"United States",
+    "industry_sector":"Higher education",
+    "platform_type":"Academic Job Board",
+    "listing_types":"Faculty, admin, staff",
+    "description":"Largest US higher\u2011ed job board",
+    "source":"turn1search2"
+  },
+  {
+    "name":"Chronicle Vitae",
+    "url":"https:\/\/chroniclevitae.com\/job_search",
+    "region":"United States",
+    "industry_sector":"Higher education",
+    "platform_type":"Academic Job Board",
+    "listing_types":"Faculty, admin",
+    "description":"Jobs + career hub from Chronicle of Higher Ed",
+    "source":"turn1search2"
+  },
+  {
+    "name":"AcademicJobsOnline",
+    "url":"https:\/\/academicjobsonline.org",
+    "region":"Global",
+    "industry_sector":"Academia & research",
+    "platform_type":"Academic Board",
+    "listing_types":"Faculty, postdoc",
+    "description":"International academic hiring platform",
+    "source":"turn1search2"
+  },
+  {
+    "name":"Times Higher Education Jobs",
+    "url":"https:\/\/www.timeshighereducation.com\/unijobs",
+    "region":"Global",
+    "industry_sector":"Higher education",
+    "platform_type":"Academic Board",
+    "listing_types":"Faculty, admin",
+    "description":"THE\u2019s global university job portal",
+    "source":"turn1search2"
+  },
+  {
+    "name":"USAJobs",
+    "url":"https:\/\/www.usajobs.gov",
+    "region":"United States",
+    "industry_sector":"Federal government",
+    "platform_type":"Government Board",
+    "listing_types":"Full\u2011time, internship, Pathways",
+    "description":"Official US federal employment portal",
+    "source":"turn1search6"
+  },
+  {
+    "name":"NHS Jobs",
+    "url":"https:\/\/www.jobs.nhs.uk",
+    "region":"United Kingdom",
+    "industry_sector":"Healthcare \/ public sector",
+    "platform_type":"Government Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"National Health Service recruitment site",
+    "source":"turn0search1"
+  },
+  {
+    "name":"EU Careers (EPSO)",
+    "url":"https:\/\/epso.europa.eu\/en\/job-opportunities",
+    "region":"Europe",
+    "industry_sector":"EU institutions",
+    "platform_type":"Government Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"European Personnel Selection Office",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Job Bank Canada",
+    "url":"https:\/\/www.jobbank.gc.ca",
+    "region":"Canada",
+    "industry_sector":"Federal government & all industries",
+    "platform_type":"Government Board",
+    "listing_types":"Full\u2011time, part\u2011time, seasonal",
+    "description":"Government of Canada\u2019s labour portal",
+    "source":"turn0search1"
+  },
+  {
+    "name":"UN Careers",
+    "url":"https:\/\/careers.un.org",
+    "region":"Global",
+    "industry_sector":"International civil service",
+    "platform_type":"IGO Job Board",
+    "listing_types":"Fixed\u2011term, consultancy",
+    "description":"United Nations recruitment portal",
+    "source":"turn0search1"
+  },
+  {
+    "name":"eFinancialCareers",
+    "url":"https:\/\/www.efinancialcareers.com",
+    "region":"Global",
+    "industry_sector":"Finance & fintech",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Banking & finance roles worldwide",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Wall Street Oasis Jobs",
+    "url":"https:\/\/www.wallstreetoasis.com\/jobs",
+    "region":"United States",
+    "industry_sector":"Finance",
+    "platform_type":"Community Job Board",
+    "listing_types":"Full\u2011time, internship",
+    "description":"Finance community jobs",
+    "source":"turn0search1"
+  },
+  {
+    "name":"CFA Institute Career Center",
+    "url":"https:\/\/careercenter.cfainstitute.org",
+    "region":"Global",
+    "industry_sector":"Investment & finance",
+    "platform_type":"Professional Org Board",
+    "listing_types":"Full\u2011time",
+    "description":"Roles requiring CFA charter",
+    "source":"turn0search1"
+  },
+  {
+    "name":"LawCrossing",
+    "url":"https:\/\/www.lawcrossing.com",
+    "region":"United States",
+    "industry_sector":"Legal",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Comprehensive legal jobs database",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Idealist",
+    "url":"https:\/\/www.idealist.org\/en\/jobs",
+    "region":"Global",
+    "industry_sector":"Nonprofit & NGOs",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, internship, volunteer",
+    "description":"Social\u2011impact and NGO careers",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Devex Jobs",
+    "url":"https:\/\/www.devex.com\/jobs",
+    "region":"Global",
+    "industry_sector":"International development",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, contract, consultancy",
+    "description":"Development and humanitarian jobs",
+    "source":"turn0search1"
+  },
+  {
+    "name":"CharityJob",
+    "url":"https:\/\/www.charityjob.co.uk",
+    "region":"United Kingdom",
+    "industry_sector":"Charity & nonprofit",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, part\u2011time",
+    "description":"UK charity sector roles",
+    "source":"turn0search1"
+  },
+  {
+    "name":"ReliefWeb Jobs",
+    "url":"https:\/\/reliefweb.int\/jobs",
+    "region":"Global",
+    "industry_sector":"Humanitarian",
+    "platform_type":"Niche Board \/ UN OCHA",
+    "listing_types":"Full\u2011time, contract, volunteer",
+    "description":"Humanitarian & emergency response vacancies",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Upwork",
+    "url":"https:\/\/www.upwork.com",
+    "region":"Global",
+    "industry_sector":"All digital",
+    "platform_type":"Freelance Marketplace",
+    "listing_types":"Freelance, contract",
+    "description":"Largest global freelance marketplace",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Freelancer.com",
+    "url":"https:\/\/www.freelancer.com",
+    "region":"Global",
+    "industry_sector":"All digital",
+    "platform_type":"Freelance Marketplace",
+    "listing_types":"Freelance, contract",
+    "description":"Competitive bidding freelance site",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Fiverr",
+    "url":"https:\/\/www.fiverr.com",
+    "region":"Global",
+    "industry_sector":"All digital",
+    "platform_type":"Gig Marketplace",
+    "listing_types":"Micro\u2011freelance gigs",
+    "description":"Project\u2011based freelance services",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Toptal",
+    "url":"https:\/\/www.toptal.com",
+    "region":"Global",
+    "industry_sector":"Tech & design",
+    "platform_type":"Elite Freelance Marketplace",
+    "listing_types":"Freelance, contract",
+    "description":"Vetted top\u20113% freelancers network",
+    "source":"turn0search1"
+  },
+  {
+    "name":"PeoplePerHour",
+    "url":"https:\/\/www.peopleperhour.com",
+    "region":"Global",
+    "industry_sector":"Digital services",
+    "platform_type":"Freelance Marketplace",
+    "listing_types":"Freelance, contract",
+    "description":"UK\u2011based freelance jobs platform",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Guru",
+    "url":"https:\/\/www.guru.com",
+    "region":"Global",
+    "industry_sector":"Digital services",
+    "platform_type":"Freelance Marketplace",
+    "listing_types":"Freelance, contract",
+    "description":"Long\u2011running freelance site",
+    "source":"turn0search1"
+  },
+  {
+    "name":"99designs",
+    "url":"https:\/\/99designs.com",
+    "region":"Global",
+    "industry_sector":"Design",
+    "platform_type":"Design Contest Marketplace",
+    "listing_types":"Freelance",
+    "description":"Crowdsourced design projects & gigs",
+    "source":"turn0search5"
+  },
+  {
+    "name":"r\/forhire",
+    "url":"https:\/\/www.reddit.com\/r\/forhire",
+    "region":"Global",
+    "industry_sector":"All industries",
+    "platform_type":"Reddit Community",
+    "listing_types":"Freelance, remote, full\u2011time",
+    "description":"User\u2011posted jobs & gigs subreddit",
+    "source":"turn1search7"
+  },
+  {
+    "name":"r\/remotejobs",
+    "url":"https:\/\/www.reddit.com\/r\/remotejobs",
+    "region":"Global",
+    "industry_sector":"All industries",
+    "platform_type":"Reddit Community",
+    "listing_types":"Remote full\u2011time & contract",
+    "description":"Subreddit focused on remote roles",
+    "source":"turn1search7"
+  },
+  {
+    "name":"Hacker News \u2013 Who\u2019s Hiring",
+    "url":"https:\/\/news.ycombinator.com\/submitted?id=whoshiring",
+    "region":"Global",
+    "industry_sector":"Tech",
+    "platform_type":"Community Thread",
+    "listing_types":"Full\u2011time, contract, remote",
+    "description":"Monthly community job thread on HN",
+    "source":"turn1search7"
+  },
+  {
+    "name":"Reactiflux #jobs",
+    "url":"https:\/\/www.reactiflux.com",
+    "region":"Global",
+    "industry_sector":"Front\u2011end dev",
+    "platform_type":"Slack Community Channel",
+    "listing_types":"Full\u2011time, freelance",
+    "description":"Slack community\u2019s job channel",
+    "source":"turn1search7"
+  },
+  {
+    "name":"Designer Hangout \u2013 Jobs",
+    "url":"https:\/\/designerhangout.co",
+    "region":"Global",
+    "industry_sector":"UX & design",
+    "platform_type":"Slack Community Job Board",
+    "listing_types":"Full\u2011time, freelance, remote",
+    "description":"Private UX Slack with job listings",
+    "source":"turn1search7"
+  },
+  {
+    "name":"Work With Indies",
+    "url":"https:\/\/workwithindies.com\/jobs",
+    "region":"Global",
+    "industry_sector":"Indie game dev",
+    "platform_type":"Community Job Board & Discord",
+    "listing_types":"Full\u2011time, freelance, revenue\u2011share",
+    "description":"Indie game job board & Discord",
+    "source":"turn1search11"
+  },
+  {
+    "name":"Mind the Product Jobs",
+    "url":"https:\/\/jobs.mindtheproduct.com",
+    "region":"Global",
+    "industry_sector":"Product management",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, contract",
+    "description":"Product management community jobs",
+    "source":"turn0search1"
+  },
+  {
+    "name":"Conservation Job Board",
+    "url":"https:\/\/www.conservationjobboard.com",
+    "region":"United States \/ Global",
+    "industry_sector":"Environmental & wildlife",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, seasonal",
+    "description":"Enviro & conservation careers",
+    "source":"turn0search1"
+  },
+  {
+    "name":"TeamWorkOnline",
+    "url":"https:\/\/www.teamworkonline.com",
+    "region":"United States",
+    "industry_sector":"Sports & live events",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, seasonal",
+    "description":"Professional sports industry jobs",
+    "source":"turn0search1"
+  },
+  {
+    "name":"HCareers",
+    "url":"https:\/\/www.hcareers.com",
+    "region":"United States \/ Canada",
+    "industry_sector":"Hospitality",
+    "platform_type":"Niche Board",
+    "listing_types":"Full\u2011time, hourly",
+    "description":"Hotel & restaurant careers board",
+    "source":"turn0search1"
+  },
+  {
+    "name":"WithRapha",
+    "url":"https:\/\/www.withrapha.com",
+    "region":"United States (global roles)",
+    "industry_sector":"All industries",
+    "platform_type":"Recruiting Platform (audio assessments)",
+    "listing_types":"Full\u2011time",
+    "description":"Culture\u2011fit focused recruiting platform",
+    "source":"turn0search0"
+  }
+]

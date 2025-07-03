@@ -1,6 +1,7 @@
-import { mockApplications } from "../data/mockApplications";
-import { mockProfiles, defaultUserProfile } from "../data/mockProfiles";
+import rawMockApplications from "../data/mockApplications.json";
+import rawMockProfiles from "../data/mockProfiles.json";
+import rawDefaultUserProfile from "../data/defaultUserProfile.json";
 
 export function getMockData() {
-  return { mockApplications, mockProfiles, defaultUserProfile };
+  return { rawMockApplications, rawMockProfiles, rawDefaultUserProfile };
 }

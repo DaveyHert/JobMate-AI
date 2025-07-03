@@ -15,6 +15,7 @@
     "install:deps": "npm install && echo 'Dependencies installed successfully!'"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -33,7 +34,7 @@
     "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
     "postcss": "^8.4.35",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^3.4.17",
     "terser": "^5.24.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",

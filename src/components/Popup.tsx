@@ -7,6 +7,7 @@ import ApplicationsTab from "./application/ApplicationTab";
 import HomeTab from "./home/HomeTab";
 import { getDynamicFilterCounts } from "../utils/getDynamicFilterCounts";
 import { PopupData, Application } from "../models/models";
+import { useNavigate } from "react-router-dom";
 
 const STATUSES = [
   "applied",
@@ -20,7 +21,7 @@ const STATUSES = [
 function Popup() {
   const [data, setData] = useState<PopupData>({
     applications: [],
-    weeklyGoal: { current: 5, target: 10 },
+    weeklyGoal: { current: 5, target: 20 },
     currentProfile: "product-manager",
   });
   const [activeTab, setActiveTab] = useState("home");
@@ -28,6 +29,7 @@ function Popup() {
   const [showAIFeature, setShowAIFeature] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const isInDevMode = process.env.NODE_ENV === "development";
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadData();
@@ -211,7 +213,7 @@ function Popup() {
     if (typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.create) {
       chrome.tabs.create({ url: chrome.runtime.getURL("dashboard.html") });
     } else {
-      window.location.href = "/dashboard.html";
+      navigate("/dashboard.html");
     }
   };
 

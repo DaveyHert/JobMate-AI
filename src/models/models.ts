@@ -6,8 +6,9 @@ export interface Application {
   source: string;
   status: ApplicationStatus;
   dateApplied: string;
+  history?: StatusEventLog[];
   notes?: string;
-  jobType?: "fulltime" | "contract" | "gig";
+  jobType?: JobType;
   jobBrief?: string;
 }
 
@@ -19,6 +20,13 @@ export type ApplicationStatus =
   | "ghosted"
   | "withdrawn";
 
+interface StatusEventLog {
+  status: ApplicationStatus;
+  date: string; // ISO timestamp of the change
+}
+//  – Every status change pushes a new {status, date} object onto `history. We NEVER delete events, so historical analytics remain intact.
+
+export type JobType = "fulltime" | "contract" | "gig";
 export interface WeeklyGoal {
   current: number;
   target: number;
@@ -42,12 +50,16 @@ interface PersonalInfo {
   state: string;
   zipCode: string;
   country: string;
+  linkedIn: string;
+  website: string;
+  github: string;
 }
 
 interface ProfessionalInfo {
   role: string;
   yearsOfExperience: number;
-  workExperience: WorkExperience[];
+  workExperience?: WorkExperience[];
+  company?: string;
   skills?: string[];
   salary?: string;
   salaryMin?: string;
@@ -55,9 +67,6 @@ interface ProfessionalInfo {
   availability?: string;
   workAuthorization?: string;
   preferredLocation?: string;
-  linkedIn: string;
-  website: string;
-  github: string;
 }
 export interface WorkExperience {
   id: string;
@@ -73,7 +82,7 @@ export interface WorkExperience {
 
 export interface UserProfile {
   id: string;
-  name: string; // e.g. "Product Designer", "Frontend Dev"
+  label: string; // e.g. "Product Designer", "Frontend Dev"
   isActive: boolean;
   personalInfo: PersonalInfo;
   professionalInfo: ProfessionalInfo;
@@ -86,4 +95,34 @@ export interface UserProfile {
     locations: string[];
     salaryRange: string;
   };
+}
+
+interface WeeklyPercentageChange {
+  applied: number | null;
+  interviews: number | null;
+  companies: number | null;
+}
+
+interface WeeklyLastWeek {
+  applied: number;
+  interviews: number;
+  companies: number;
+}
+
+interface WeeklyChange {
+  /** absolute counts this week */
+  applied: number;
+  interviews: number;
+  companies: number /** response‑rate delta in percentage‑points */;
+  responseRate: number /** absolute counts for previous week */;
+  lastWeek: WeeklyLastWeek /** relative % change for counts (nullable when baseline = 0) */;
+  percentageChange: WeeklyPercentageChange;
+}
+
+export interface DashboardStats {
+  totalApplied: number;
+  totalInterviews: number;
+  totalCompanies: number;
+  responseRate: number; // lifetime %
+  weeklyChange: WeeklyChange;
 }

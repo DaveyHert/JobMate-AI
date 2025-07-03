@@ -1,0 +1,35 @@
+{
+  "id": "1",
+  "label": "Frontend Developer",
+  "isActive": true,
+  "personalInfo": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "fullName": "John Doe",
+    "email": "john.doe@email.com",
+    "phone": "(555) 123-4567",
+    "address": "123 Main Street",
+    "city": "San Francisco",
+    "state": "CA",
+    "zipCode": "94102",
+    "country": "United States",
+    "linkedIn": "https://linkedin.com/in/johndoe",
+    "website": "https://johndoe.dev",
+    "github": "https://github.com/johndoe"
+  },
+  "professionalInfo": {
+    "role": "Senior Software Engineer",
+    "yearsOfExperience": 5,
+    "company": "Tech Corp",
+    "salary": "$120,000",
+    "salaryMin": "$110,000",
+    "salaryMax": "$130,000",
+    "availability": "Immediately",
+    "workAuthorization": "US Citizen",
+    "preferredLocation": "San Francisco, CA"
+  },
+  "documents": {
+    "resumeUrl": "/resume.pdf",
+    "coverLetterUrl": "/cover-letter.pdf"
+  }
+}
