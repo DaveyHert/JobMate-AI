@@ -31,7 +31,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   ];
 
   return (
-    <div className='absolute bottom-0 left-0 right-0 bg-white dark:bg-[#122031] border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex justify-between items-center'>
+    <div className='absolute bottom-0 left-0 right-0 bg-foreground border-t border-border-col px-6 py-3 flex justify-between items-center'>
       {navigationItems.map((item) => (
         <button
           key={item.key}
@@ -40,9 +40,9 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
               ? item.action
               : () => setActiveTab(item.key)
           }
-          className={`flex flex-col items-center gap-1 ${
+          className={`flex flex-col items-center gap-1 cursor-pointer ${
             activeTab === item.key
-              ? "text-blue-600"
+              ? "text-accent"
               : "text-gray-400 hover:text-gray-600"
           }`}
         >

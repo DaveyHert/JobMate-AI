@@ -147,7 +147,7 @@ class NotificationManager {
       iconSpan.textContent = icon;
       iconSpan.style.cssText = `
         font-size: 16px;
-        flex-shrink: 0;
+        shrink: 0;
       `;
       notification.appendChild(iconSpan);
     }

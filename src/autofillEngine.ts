@@ -642,7 +642,7 @@ export class AutoFillEngine {
   private triggerEvents(element: HTMLElement): void {
     element.dispatchEvent(new Event('input', { bubbles: true }));
     element.dispatchEvent(new Event('change', { bubbles: true }));
-    element.dispatchEvent(new Event('blur', { bubbles: true }));
+    element.dispatchEvent(new Event('blur-sm', { bubbles: true }));
   }
 
   public getDetectedFields(): { [key: string]: string } {

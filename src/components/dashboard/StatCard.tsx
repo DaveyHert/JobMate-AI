@@ -28,7 +28,7 @@ export const StatCard: React.FC<StatCardProps> = ({
   const ArrowIcon = isPositive ? ArrowUpRight : ArrowDownRight;
 
   return (
-    <div className='bg-white dark:bg-[#1F2937] border border-gray-200 dark:border-[#374151] rounded-xl p-6 relative text-white'>
+    <div className='bg-foreground  border dark:border-border-col rounded-xl p-6 relative text-white'>
       <h3 className='text-gray-600  text-sm font-medium dark:text-white/80 mb-4'>
         {label}
       </h3>

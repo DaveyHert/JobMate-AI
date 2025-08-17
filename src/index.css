@@ -1,35 +1,132 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-inter: Inter, sans-serif;
+  --font-poppins: Poppins, sans-serif;
+
+  /* Neutral palette */
+  --color-background: #f3f4f6;
+  --color-foreground: #ffff;
+  --color-card: #ffffff;
+  --color-border-col: #e5e7eb;
+  --color-button-col: #f8faff;
+  --color-button-hov: #eef0ff;
+  --color-muted: #c5c8ff;
+  --color-accent: #5750f1;
+  --color-accent-soft: #f3f3fe;
+  /* Brand */
+  --color-primary-50: #eef0ff;
+  --color-primary-100: #dadcff;
+  --color-primary-200: #c5c8ff;
+  --color-primary-300: #a7a9ff;
+  --color-primary-400: #8c8cff;
+  --color-primary-500: #5a5fe1;
+  --color-primary-600: #474ac4;
+  --color-primary-700: #3836a0;
+  --color-primary-800: #28267b;
+  --color-primary-900: #1c1a55;
+  /* Semantic */
+  --color-success-500: #22c55e;
+  --color-warning-500: #f5a524;
+  --color-danger-500: #ef4444;
+  --color-info-500: #3b82f6;
+
+  /* text */
+  --color-primary-text: #111827;
+  --color-secondary-text: #8b8b8b;
+  --color-inverted-text: #ffffff;
+  --color-link-text: #5a5fe1; /* same as --color-primary-500 */
+}
+
+/* @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *)); */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark {
+  --color-background: #06101e;
+  --color-foreground: #122031;
+  --color-card: #18243a;
+  --color-button-col: #1f2a37;
+  --color-button-hov: #2a3746;
+  --color-border-col: #222f3f;
+  --color-muted: #94a3b8;
+
+  --color-accent: #5750f1;
+  --color-accent-soft: #f3f3fe;
+
+  --color-primary-text: #f3f4f6;
+  --color-secondary-text: #9ca3af;
+  --color-inverted-text: #ffffff;
+  --color-link-text: #5a5fe1; /* same as --color-primary-500 */
+
+  --color-primary-50: #2b2f77;
+  --color-primary-100: #3b3f9f;
+  --color-primary-200: #4b4fc5;
+  --color-primary-300: #5a5fe1;
+  --color-primary-400: #6c6fff;
+  --color-primary-500: #7c80ff;
+  --color-primary-600: #9093ff;
+  --color-primary-700: #a4a6ff;
+  --color-primary-800: #c1c2ff;
+  --color-primary-900: #d8d9ff;
+  --color-success-500: #20bf78;
+  --color-warning-500: #f5b94c;
+  --color-danger-500: #f87171;
+  --color-info-500: #60a5fa;
+}
+
+/* Scrollbar */
+/* :root {
+  --scroll-thumb: #bebebe;
+  --scroll-track: #52525b;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --scroll-thumb: red;
+    --scroll-track: #434345;
+  }
+} */
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 /*utility tailwind style  */
 
 .btn-primary {
-  @apply flex flex-col items-center gap-3 px-4 py-2 rounded-[10px] text-[#5E636E] dark:text-[#B1B1B1] bg-[#F8FAFF]  dark:bg-[#2C3236] border-2 border-[#DCE3EF] dark:border-[#1D1E21] hover:border-purple-300 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply flex flex-col items-center gap-3 px-4 py-2 rounded-[10px] text-[#5E636E] dark:text-[#B1B1B1] bg-button-col border-2 border-border-col hover:border-muted transition-all duration-200 shadow-xs disabled:opacity-50 hover:bg-button-hov cursor-pointer;
 }
 
 .btn-secondary {
-  @apply w-full flex items-center gap-3 p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg dark:border-[#374151] dark:bg-[#374151] dark:hover:bg-gray-600  text-gray-700 dark:text-[#F3F4F6] transition-all;
+  @apply w-full flex items-center gap-2 p-2 bg-button-col hover:bg-button-hov border border-border-col rounded-lg text-sm text-gray-700 dark:text-[#F3F4F6] transition-all cursor-pointer;
 }
-/* className='bg-white border-2 border-purple-200 rounded-2xl p-4 flex flex-col items-center gap-3 hover:border-purple-300 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed  btn-primary' */
 
 /* Light mode */
 :root {
-  --scroll-thumb: #bebebe; /* gray-300 */
+  --scroll-thumb: #bebebe;
   --scroll-track: #52525b;
 }
 /* Dark mode */
-body.dark {
-  --scroll-thumb: red; /* zinc-600 */
+.dark {
+  --scroll-thumb: var(--color-accent-soft);
   --scroll-track: #434345;
 }
 
-/* Scrollbar base */
-/* .custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-}
- */
+/* Scrollbar  */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }

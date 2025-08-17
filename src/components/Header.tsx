@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ currentProfile, onProfileChange }) => {
   return (
-    <header className='flex justify-between items-center px-5 py-2 bg-white dark:bg-[#1F2937] flex-shrink-0 border-b border-gray-100 dark:border-[#374151]'>
+    <header className='flex justify-between items-center px-5 py-2 bg-foreground shrink-0 border-b border-border-col'>
       {/* Logo */}
       <div className='flex items-center gap-1'>
         <svg width='12' height='16' viewBox='0 0 12 14' fill='none'>
@@ -32,13 +32,13 @@ const Header: React.FC<HeaderProps> = ({ currentProfile, onProfileChange }) => {
           <select
             value={currentProfile}
             onChange={(e) => onProfileChange(e.target.value)}
-            className='appearance-none bg-[#F8FAFF] dark:bg-[#2C3236] border border-[#D1D5DB] dark:border-[#1D1E21] rounded px-4 py-1 pr-10 text-sm font-normal text-[#0C0A09] dark:text-[#F3F4F6] cursor-pointer hover:bg-[#f5f5f5] dark:hover:bg-[#434345]'
+            className='appearance-none bg-button-col border border-border-col rounded-sm px-4 py-1 pr-10 text-sm font-normal text-primary-text cursor-pointer hover:bg-button-hov'
           >
             <option value='product-manager'>Product Manager</option>
             <option value='software-engineer'>Software Engineer</option>
             <option value='designer'>Designer</option>
           </select>
-          <ChevronDown className='absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#4B5563] dark:text-[#D1D5DB] pointer-events-none' />
+          <ChevronDown className='absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-primary-text pointer-events-none' />
         </div>
 
         <div className='w-10 h-10 rounded-full border-2 border-[#D1D5DB] dark:border-[#1D1E21] overflow-hidden'>

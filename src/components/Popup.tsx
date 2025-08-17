@@ -25,7 +25,7 @@ function Popup() {
     currentProfile: "product-manager",
   });
   const [activeTab, setActiveTab] = useState("home");
-  const [statusFilter, setStatusFilter] = useState("applied");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [showAIFeature, setShowAIFeature] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const isInDevMode = process.env.NODE_ENV === "development";

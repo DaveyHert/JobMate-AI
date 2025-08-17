@@ -388,7 +388,7 @@ ${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInf
             {result && (
               <div className="space-y-6">
                 {/* Fit Score */}
-                <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg p-6">
+                <div className="bg-linear-to-r from-orange-50 to-orange-100 rounded-lg p-6">
                   <div className="text-center">
                     <div className="text-4xl font-bold text-orange-600 mb-2">{result.score}%</div>
                     <div className="text-lg font-medium text-gray-900">Job Fit Score</div>
@@ -465,7 +465,7 @@ ${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInf
                   <div className="space-y-2">
                     {result.recommendations.map((rec: string, index: number) => (
                       <div key={index} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
+                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 shrink-0" />
                         <span className="text-sm text-gray-700">{rec}</span>
                       </div>
                     ))}
@@ -571,7 +571,7 @@ ${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInf
                   <div className="space-y-2">
                     {result.experienceAdjustments.map((adjustment: string, index: number) => (
                       <div key={index} className="flex items-start gap-3 p-3 bg-orange-50 rounded-lg">
-                        <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0" />
+                        <div className="w-2 h-2 bg-orange-600 rounded-full mt-2 shrink-0" />
                         <span className="text-sm text-gray-700">{adjustment}</span>
                       </div>
                     ))}
@@ -586,7 +586,7 @@ ${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInf
                   <div className="space-y-2">
                     {result.keywordOptimization.map((keyword: string, index: number) => (
                       <div key={index} className="flex items-start gap-3 p-3 bg-purple-50 rounded-lg">
-                        <div className="w-2 h-2 bg-purple-600 rounded-full mt-2 flex-shrink-0" />
+                        <div className="w-2 h-2 bg-purple-600 rounded-full mt-2 shrink-0" />
                         <span className="text-sm text-gray-700">{keyword}</span>
                       </div>
                     ))}

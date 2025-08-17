@@ -165,7 +165,7 @@ function HomeTab({
   };
   console.log(data);
   return (
-    <div className='flex-1  custom-scrollbar overflow-y-auto scroll-smooth min-h-0'>
+    <div className='flex-1  custom-scrollbar overflow-y-auto scroll-smooth min-h-0 bg-background'>
       <div className='px-2.5 pt-2'>
         <QuickActions
           onAutoFill={handleAutoFill}
@@ -187,7 +187,7 @@ function HomeTab({
           </h3>
           <button
             onClick={() => setActiveTab("applications")}
-            className='text-xs text-[#2563EB] hover:text-purple-700 font-medium'
+            className='text-xs text-accent hover:text-muted font-medium cursor-pointer'
           >
             View All
           </button>

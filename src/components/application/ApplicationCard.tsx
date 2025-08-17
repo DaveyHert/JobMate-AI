@@ -85,16 +85,16 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
 
   return (
     <div
-      className='bg-white dark:bg-[#1F2937] rounded-lg px-2 py-3.5 hover:shadow-sm transition-all border border-gray-100 dark:border-[#1F2937] font-poppins '
+      className='bg-foreground rounded-lg px-2 py-3.5 hover:shadow-xs transition-all border border-border-col font-poppins '
       style={{ boxShadow: "box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.15)" }}
     >
       <div className='flex items-center gap-4'>
         {getCompanyLogo(application.company)}
         <div className='flex-1 min-w-0'>
-          <div className='text-sm font-medium text-gray-900 dark:text-[#F3F4F6] mb-1'>
+          <div className='text-sm font-medium text-primary-text mb-1'>
             {application.title} at {application.company}
           </div>
-          <div className='flex items-center gap-4 text-xs text-gray-500'>
+          <div className='flex items-center gap-4 text-xs text-secondary-text'>
             <span className='flex items-center gap-1'>
               <span>{getSourceIcon(application.source)}</span>
               {application.source}
@@ -108,7 +108,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
         </div>
 
         {/* status selector */}
-        <div className='relative flex-shrink-0'>
+        <div className='relative shrink-0'>
           <select
             value={application.status}
             onChange={(e) =>
@@ -119,7 +119,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
             }
             className={`appearance-none px-3 py-1 pr-8 rounded-full text-xs font-medium border cursor-pointer ${getStatusColor(
               application.status
-            )} focus:outline-none`}
+            )} focus:outline-hidden`}
           >
             <option value='applied'>Applied</option>
             <option value='interviewing'>Interviewing</option>

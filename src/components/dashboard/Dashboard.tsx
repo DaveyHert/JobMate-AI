@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   Briefcase,
   Building,
@@ -6,7 +6,6 @@ import {
   ExternalLink,
   PenLine,
   PieChart,
-  Plus,
   X,
   Calendar,
   ChevronDown,
@@ -22,12 +21,17 @@ import {
   JobType,
   DashboardStats,
 } from "../../models/models";
+import { AddIcon } from "../../assets/icons";
 
 import QuickActions from "./QuickActions";
 import Header from "./Header";
 import { formatDate } from "../../utils/dateHelpers";
 import { calculateStats } from "../../helpers/calculateStats";
 import { StatsGrid } from "./StatsGrid";
+import drawChart from "../../utils/drawChart";
+import { getStatusColor } from "../../utils/getStatusColor";
+import ApplicationStatusFilter from "../application/ApplicationStatusFilter";
+import { getDynamicFilterCounts } from "../../utils/getDynamicFilterCounts";
 
 const initialStats: DashboardStats = {
   totalApplied: 0,
@@ -47,6 +51,15 @@ const initialStats: DashboardStats = {
     },
   },
 };
+
+const STATUSES = [
+  "applied",
+  "interviewing",
+  "rejected",
+  "offer",
+  "ghosted",
+  "withdrawn",
+];
 
 const Dashboard: React.FC = () => {
   const [applications, setApplications] = useState<Application[]>([]);
@@ -82,7 +95,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     if (applications.length > 0 && chartView === "timeline") {
-      drawChart();
+      drawChart(canvasRef, timeRange, applications);
     }
   }, [applications, chartView, timeRange]);
 
@@ -140,183 +153,6 @@ const Dashboard: React.FC = () => {
       "#ef4444",
     ];
     return colors[index % colors.length];
-  };
-
-  const getChartData = () => {
-    const data = [];
-    const now = new Date();
-
-    if (timeRange === "today") {
-      for (let i = 6; i >= 0; i--) {
-        const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
-        const dayStart = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate()
-        );
-        const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
-
-        const dayApps = applications.filter((app) => {
-          const appDate = new Date(app.dateApplied);
-          return appDate >= dayStart && appDate < dayEnd;
-        });
-
-        const dayInterviews = dayApps.filter(
-          (app) => app.status === "interviewing" || app.status === "offer"
-        );
-
-        data.push({
-          week: `${date.getMonth() + 1}/${date.getDate()}`,
-          applications: dayApps.length,
-          interviews: dayInterviews.length,
-        });
-      }
-    } else if (timeRange === "week") {
-      for (let i = 6; i >= 0; i--) {
-        const weekStart = new Date(now.getTime() - i * 7 * 24 * 60 * 60 * 1000);
-        const weekEnd = new Date(weekStart.getTime() + 7 * 24 * 60 * 60 * 1000);
-
-        const weekApps = applications.filter((app) => {
-          const appDate = new Date(app.dateApplied);
-          return appDate >= weekStart && appDate < weekEnd;
-        });
-
-        const weekInterviews = weekApps.filter(
-          (app) => app.status === "interviewing" || app.status === "offer"
-        );
-
-        data.push({
-          week: `${weekStart.getMonth() + 1}/${weekStart.getDate()}`,
-          applications: weekApps.length,
-          interviews: weekInterviews.length,
-        });
-      }
-    } else if (timeRange === "month") {
-      for (let i = 5; i >= 0; i--) {
-        const monthStart = new Date(now.getFullYear(), now.getMonth() - i, 1);
-        const monthEnd = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
-
-        const monthApps = applications.filter((app) => {
-          const appDate = new Date(app.dateApplied);
-          return appDate >= monthStart && appDate < monthEnd;
-        });
-
-        const monthInterviews = monthApps.filter(
-          (app) => app.status === "interviewing" || app.status === "offer"
-        );
-
-        const monthNames = [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ];
-
-        data.push({
-          week: monthNames[monthStart.getMonth()],
-          applications: monthApps.length,
-          interviews: monthInterviews.length,
-        });
-      }
-    }
-
-    return data;
-  };
-
-  const drawChart = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const data = getChartData();
-    const maxValue = Math.max(...data.map((d) => d.applications), 1);
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const padding = 30;
-    const chartWidth = canvas.width - padding * 2;
-    const chartHeight = canvas.height - padding * 2;
-    const barWidth = chartWidth / data.length;
-
-    // Draw grid lines
-    ctx.strokeStyle = "#e5e7eb";
-    ctx.lineWidth = 1;
-    for (let i = 0; i <= 4; i++) {
-      const y = padding + (chartHeight / 4) * i;
-      ctx.beginPath();
-      ctx.moveTo(padding, y);
-      ctx.lineTo(canvas.width - padding, y);
-      ctx.stroke();
-    }
-
-    // Draw bars
-    data.forEach((item, index) => {
-      const barHeight = (item.applications / maxValue) * chartHeight;
-      const x = padding + index * barWidth + barWidth * 0.25;
-      const y = canvas.height - padding - barHeight;
-      const width = barWidth * 0.5;
-
-      // Applications bar
-      ctx.fillStyle = "#989AFF";
-      ctx.fillRect(x, y, width, barHeight);
-
-      // Interviews bar (overlay)
-      if (item.interviews > 0) {
-        const interviewHeight = (item.interviews / maxValue) * chartHeight;
-        const interviewY = canvas.height - padding - interviewHeight;
-        ctx.fillStyle = "#6366F1";
-        ctx.fillRect(x, interviewY, width, interviewHeight);
-      }
-
-      // Labels
-      ctx.fillStyle = "#6b7280";
-      ctx.font =
-        '10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      ctx.textAlign = "center";
-      ctx.fillText(item.week, x + width / 2, canvas.height - padding + 15);
-
-      // Values
-      if (item.applications > 0) {
-        ctx.fillStyle = "#374151";
-        ctx.font =
-          'bold 10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillText(item.applications.toString(), x + width / 2, y - 5);
-      }
-    });
-
-    // Draw axes
-    ctx.strokeStyle = "#d1d5db";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(padding, padding);
-    ctx.lineTo(padding, canvas.height - padding);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(padding, canvas.height - padding);
-    ctx.lineTo(canvas.width - padding, canvas.height - padding);
-    ctx.stroke();
-
-    // Y-axis labels
-    ctx.fillStyle = "#6b7280";
-    ctx.font =
-      '10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-    ctx.textAlign = "right";
-    for (let i = 0; i <= 4; i++) {
-      const value = Math.round((maxValue / 4) * (4 - i));
-      const y = padding + (chartHeight / 4) * i + 3;
-      ctx.fillText(value.toString(), padding - 5, y);
-    }
   };
 
   const addApplication = async () => {
@@ -471,6 +307,12 @@ const Dashboard: React.FC = () => {
     (app) => statusFilter === "all" || app.status === statusFilter
   );
 
+  // Calculate filter counts
+  const filterCounts = useMemo(
+    () => getDynamicFilterCounts(applications, STATUSES),
+    [applications]
+  );
+
   const getSourceDisplayName = (source: string): string => {
     const sourceMap: { [key: string]: string } = {
       linkedin: "LinkedIn",
@@ -504,17 +346,6 @@ const Dashboard: React.FC = () => {
     return colors[hash % colors.length];
   };
 
-  const getStatusColor = (status: string): string => {
-    const statusColors: { [key: string]: string } = {
-      applied: "bg-green-100 text-green-700 border-green-200",
-      interviewing: "bg-blue-100 text-blue-700 border-blue-200",
-      rejected: "bg-red-100 text-red-700 border-red-200",
-      offer: "bg-yellow-100 text-yellow-700 border-yellow-200",
-      ghosted: "bg-gray-100 text-gray-700 border-gray-200",
-    };
-    return statusColors[status] || statusColors.applied;
-  };
-
   const getJobTypeColor = (jobType: string): string => {
     const jobTypeColors: { [key: string]: string } = {
       fulltime: "bg-blue-50 text-blue-700 border-blue-200",
@@ -534,7 +365,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gray-50 dark:bg-[#111827]'>
+    <div className='min-h-screen bg-background'>
       <div className='max-w-7xl mx-auto p-6'>
         {/* Header */}
         <Header />
@@ -543,61 +374,35 @@ const Dashboard: React.FC = () => {
         <StatsGrid stats={stats} />
 
         {/* Main Content */}
-        <div className='grid grid-cols-1 lg:grid-cols-5 gap-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-9 gap-6'>
           {/* Applications List */}
-          <div className='lg:col-span-3'>
-            <div className='bg-white rounded-xl border border-gray-200 p-6'>
+          <div className='lg:col-span-6'>
+            <div className='bg-foreground rounded-xl border border-border-col p-6'>
               <div className='flex justify-between items-center mb-6'>
-                <h2 className='text-xl font-semibold text-gray-900'>
+                <h2 className='text-xl font-semibold text-primary-text'>
                   Recent Applications
                 </h2>
                 <button
                   onClick={() => setShowAddModal(true)}
-                  className='px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-medium transition-all flex items-center gap-2'
+                  className='px-3 py-2 bg-accent hover:bg-indigo-700 rounded-4xl text-white font-medium text-sm transition-all flex items-center gap-1'
                 >
-                  <Plus className='w-4 h-4' />
+                  <AddIcon className='w-4 h-4 text-white' />
                   Add Application
                 </button>
               </div>
 
               {/* Filter Tabs */}
-              <div className='flex gap-2 mb-6'>
-                {[
-                  { key: "all", label: `All (${statusCounts.all})` },
-                  {
-                    key: "applied",
-                    label: `Applied (${statusCounts.applied})`,
-                  },
-                  {
-                    key: "interviewing",
-                    label: `Interviewing (${statusCounts.interviewing})`,
-                  },
-                  {
-                    key: "rejected",
-                    label: `Rejected (${statusCounts.rejected})`,
-                  },
-                  {
-                    key: "ghosted",
-                    label: `Ghosted (${statusCounts.ghosted})`,
-                  },
-                ].map((tab) => (
-                  <button
-                    key={tab.key}
-                    onClick={() => setStatusFilter(tab.key)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                      statusFilter === tab.key
-                        ? "bg-indigo-100 text-indigo-700 border border-indigo-200"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200"
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
+              <div className='mb-6'>
+                <ApplicationStatusFilter
+                  statusFilter={statusFilter}
+                  filterCounts={filterCounts}
+                  setStatusFilter={setStatusFilter}
+                />
               </div>
 
               {/* Applications */}
               <div
-                className='space-y-3 overflow-y-auto'
+                className='space-y-3 overflow-y-auto custom-scrollbar'
                 style={{ maxHeight: "calc(100vh - 400px)" }}
               >
                 {filteredApplications.length === 0 ? (
@@ -612,7 +417,7 @@ const Dashboard: React.FC = () => {
                   filteredApplications.map((app) => (
                     <div
                       key={app.id}
-                      className='bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-all'
+                      className='bg-foreground border border-border-col rounded-xl overflow-hidden hover:shadow-md transition-all.  '
                     >
                       <div
                         className='p-4 cursor-pointer'
@@ -622,15 +427,15 @@ const Dashboard: React.FC = () => {
                           <div
                             className={`w-12 h-12 rounded-full ${getCompanyColor(
                               app.company
-                            )} flex items-center justify-center text-white font-semibold text-lg flex-shrink-0`}
+                            )} flex items-center justify-center text-white font-semibold text-lg shrink-0 bg-background`}
                           >
                             {getCompanyInitial(app.company)}
                           </div>
                           <div className='flex-1 min-w-0'>
-                            <div className='text-base font-semibold text-gray-900 mb-1'>
+                            <div className='text-base font-semibold text-primary-text mb-1'>
                               {app.title}
                             </div>
-                            <div className='text-sm text-gray-700 mb-2'>
+                            <div className='text-sm text-secondary-text mb-2'>
                               {app.company}
                             </div>
                             <div className='flex items-center gap-4 text-xs text-gray-500'>
@@ -657,7 +462,7 @@ const Dashboard: React.FC = () => {
                             </div>
                           </div>
                           <div
-                            className='relative flex-shrink-0'
+                            className='relative shrink-0'
                             onClick={(e) => e.stopPropagation()}
                           >
                             <select
@@ -667,7 +472,7 @@ const Dashboard: React.FC = () => {
                               }
                               className={`appearance-none px-3 py-1 pr-5 rounded-2xl text-sm font-medium border cursor-pointer ${getStatusColor(
                                 app.status
-                              )} focus:outline-none focus:border-2`}
+                              )} focus:outline-hidden focus:border-2`}
                             >
                               <option value='applied'>Applied</option>
                               <option value='interviewing'>Interviewing</option>
@@ -677,7 +482,7 @@ const Dashboard: React.FC = () => {
                             </select>
                             <ChevronDown className='absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none' />
                           </div>
-                          <div className='flex-shrink-0'>
+                          <div className='shrink-0'>
                             {expandedApp === app.id ? (
                               <ChevronUp className='w-5 h-5 text-gray-400' />
                             ) : (
@@ -689,8 +494,8 @@ const Dashboard: React.FC = () => {
 
                       {/* Expanded Content */}
                       {expandedApp === app.id && (
-                        <div className='border-t border-gray-100 bg-gray-50'>
-                          <div className='flex justify-between items-center border-b border-gray-200 bg-white px-6 py-3'>
+                        <div className='border-t border-border-col bg-background'>
+                          <div className='flex justify-between items-center border-b border-border-col bg-foreground px-6 py-3'>
                             <div className='flex'>
                               <button
                                 onClick={() =>
@@ -735,7 +540,7 @@ const Dashboard: React.FC = () => {
                                           [`${app.id}-jobType`]: e.target.value,
                                         })
                                       }
-                                      className='px-2 py-1 border border-gray-300 rounded text-xs'
+                                      className='px-2 py-1 border border-gray-300 rounded-sm text-xs'
                                     >
                                       <option value='fulltime'>
                                         Full-time
@@ -822,7 +627,7 @@ const Dashboard: React.FC = () => {
                                         onClick={() =>
                                           saveEdit(app.id, "notes")
                                         }
-                                        className='px-3 py-1 bg-indigo-600 text-white rounded text-sm hover:bg-indigo-700'
+                                        className='px-3 py-1 bg-indigo-600 text-white rounded-sm text-sm hover:bg-indigo-700'
                                       >
                                         Save
                                       </button>
@@ -830,7 +635,7 @@ const Dashboard: React.FC = () => {
                                         onClick={() =>
                                           cancelEdit(app.id, "notes")
                                         }
-                                        className='px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm hover:bg-gray-300'
+                                        className='px-3 py-1 bg-gray-200 text-gray-700 rounded-sm text-sm hover:bg-gray-300'
                                       >
                                         Cancel
                                       </button>
@@ -883,7 +688,7 @@ const Dashboard: React.FC = () => {
                                         onClick={() =>
                                           saveEdit(app.id, "jobBrief")
                                         }
-                                        className='px-3 py-1 bg-indigo-600 text-white rounded text-sm hover:bg-indigo-700'
+                                        className='px-3 py-1 bg-indigo-600 text-white rounded-sm text-sm hover:bg-indigo-700'
                                       >
                                         Save
                                       </button>
@@ -891,7 +696,7 @@ const Dashboard: React.FC = () => {
                                         onClick={() =>
                                           cancelEdit(app.id, "jobBrief")
                                         }
-                                        className='px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm hover:bg-gray-300'
+                                        className='px-3 py-1 bg-gray-200 text-gray-700 rounded-sm text-sm hover:bg-gray-300'
                                       >
                                         Cancel
                                       </button>
@@ -932,18 +737,18 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className='lg:col-span-2 space-y-6'>
+          <div className='lg:col-span-3 space-y-6'>
             {/* Chart */}
-            <div className='bg-white rounded-xl border border-gray-200 p-6'>
+            <div className='bg-foreground rounded-xl border border-border-col p-6'>
               <div className='flex justify-between items-center mb-6'>
-                <div className='flex bg-gray-100 rounded-lg p-1'>
+                <div className='flex bg-background rounded-lg p-1'>
                   <button
                     onClick={() => setChartView("timeline")}
                     className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all ${
                       chartView === "timeline"
-                        ? "bg-white text-gray-900 shadow-sm"
-                        : "text-gray-600 hover:text-gray-900"
-                    }`}
+                        ? "bg-foreground text-secondary-text shadow-xs"
+                        : "text-secondary-text hover:text-primary-text"
+                    } cursor-pointer`}
                   >
                     <Calendar className='w-4 h-4' />
                     Timeline
@@ -952,15 +757,15 @@ const Dashboard: React.FC = () => {
                     onClick={() => setChartView("sources")}
                     className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all ${
                       chartView === "sources"
-                        ? "bg-white text-gray-900 shadow-sm"
-                        : "text-gray-600 hover:text-gray-900"
-                    }`}
+                        ? "bg-white text-gray-900 shadow-xs"
+                        : "text-secondary-text hover:text-primary-text"
+                    } cursor-pointer`}
                   >
                     <PieChart className='w-4 h-4' />
                     Sources
                   </button>
                 </div>
-                <button className='text-gray-400 hover:text-gray-600'>
+                <button className='text-gray-400 hover:text-gray-600 '>
                   <Settings className='w-4 h-4' />
                 </button>
               </div>
@@ -968,7 +773,7 @@ const Dashboard: React.FC = () => {
               {chartView === "timeline" ? (
                 <>
                   <div className='flex justify-between items-center mb-4'>
-                    <h3 className='text-lg font-semibold text-gray-900'>
+                    <h3 className='text-lg font-semibold text-primary-text'>
                       Applications Overview
                     </h3>
                     <div className='flex gap-1'>
@@ -982,16 +787,16 @@ const Dashboard: React.FC = () => {
                           onClick={() => setTimeRange(option.key)}
                           className={`px-3 py-1 rounded text-sm font-medium transition-all ${
                             timeRange === option.key
-                              ? "bg-gray-900 text-white"
-                              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                          }`}
+                              ? "bg-gray-900 text-white border border-border-col"
+                              : "bg-button-col text-primary-text hover:bg-button-hov border border-border-col rounded"
+                          } cursor-pointer`}
                         >
                           {option.label}
                         </button>
                       ))}
                     </div>
                   </div>
-                  <div className='bg-gray-50 rounded-xl p-4'>
+                  <div className='bg-foreground rounded-xl p-4'>
                     <canvas
                       ref={canvasRef}
                       width={320}
@@ -1001,12 +806,12 @@ const Dashboard: React.FC = () => {
                   </div>
                   <div className='flex items-center gap-4 mt-4 text-xs'>
                     <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 bg-[#989AFF] rounded'></div>
-                      <span className='text-gray-600'>Applications</span>
+                      <div className='w-2 h-2 bg-[#989AFF] rounded-sm'></div>
+                      <span className='text-secondary-text'>Applications</span>
                     </div>
                     <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 bg-[#6366F1] rounded'></div>
-                      <span className='text-gray-600'>Interviews</span>
+                      <div className='w-2 h-2 bg-[#6366F1] rounded-sm'></div>
+                      <span className='text-secondary-text'>Interviews</span>
                     </div>
                   </div>
                 </>
@@ -1060,7 +865,7 @@ const Dashboard: React.FC = () => {
 
       {/* Add Application Modal */}
       {showAddModal && (
-        <div className='fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4'>
+        <div className='fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center z-50 p-4'>
           <div className='bg-white rounded-2xl w-full max-w-md'>
             <div className='flex justify-between items-center p-6 border-b border-gray-200'>
               <h3 className='text-xl font-semibold text-gray-900'>

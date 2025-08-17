@@ -85,11 +85,11 @@ const QuickActions: React.FC<QuickActionsProps> = ({
 
   return (
     <div className='quick-actions-control'>
-      <h3 className='text-base pl-2 font-medium mb-1.5 text-[#343435] dark:text-[#F3F4F6] font-poppins'>
+      <h3 className='text-base pl-2 font-medium mb-1.5 text-primary-text font-poppins'>
         Quick Actions
       </h3>
 
-      <div className='grid grid-cols-3 gap-4 mb-4 bg-white dark:bg-[#1F2937] border dark:border-[#374151] rounded-[10px] px-3 py-4'>
+      <div className='grid grid-cols-3 gap-4 mb-4 bg-foreground border border-border-col rounded-[10px] px-3 py-4'>
         {actions.map((action, index) => (
           <button
             key={index}

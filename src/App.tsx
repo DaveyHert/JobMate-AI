@@ -1,41 +1,52 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
 import Popup from "./components/Popup";
 import Dashboard from "./components/dashboard/Dashboard";
+import { useThemeContext } from "./hooks/useThemeContext";
+
+function DevNav() {
+  const location = useLocation();
+  const { theme, toggleTheme } = useThemeContext();
+  console.log(theme);
+  return (
+    <div className='bg-gray-600 text-white p-2 text-sm flex gap-4 items-center'>
+      <span className='font-medium'>Dev Mode:</span>
+      <Link
+        to='/'
+        className='px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded-sm transition-colors'
+      >
+        Popup View
+      </Link>
+      <Link
+        to='/dashboard'
+        className='px-3 py-1 bg-green-600 hover:bg-green-700 rounded-sm transition-colors'
+      >
+        Dashboard View
+      </Link>
+      <button
+        className='py-1 px-2 rounded bg-gray-950 cursor-pointer'
+        onClick={toggleTheme}
+      >
+        Toggle Light/Dark
+      </button>
+      <span className='text-gray-300 ml-auto'>
+        Current:{" "}
+        {location.pathname.includes("dashboard") ? "Dashboard" : "Popup"}
+      </span>
+    </div>
+  );
+}
 
 function App() {
-  // Check if we're in the popup context or dashboard context
-  const isPopup =
-    window.location.pathname.includes("popup") || window.innerWidth < 600;
-  console.log(isPopup);
-
   return (
     <Router>
       <div className='min-h-screen'>
-        {/* Development Navigation Bar - only show in dev mode */}
-        {process.env.NODE_ENV === "development" && (
-          <div className='bg-gray-600 text-white p-2 text-sm flex gap-4 items-center'>
-            <span className='font-medium'>Dev Mode:</span>
-            <Link
-              to='/'
-              className='px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded transition-colors'
-            >
-              Popup View
-            </Link>
-            <Link
-              to='/dashboard'
-              className='px-3 py-1 bg-green-600 hover:bg-green-700 rounded transition-colors'
-            >
-              Dashboard View
-            </Link>
-            <span className='text-gray-300 ml-auto'>
-              Current:{" "}
-              {window.location.pathname.includes("dashboard")
-                ? "Dashboard"
-                : "Popup"}
-            </span>
-          </div>
-        )}
-
+        {process.env.NODE_ENV === "development" && <DevNav />}
         <Routes>
           <Route path='/' element={<Popup />} />
           <Route path='/popup' element={<Popup />} />

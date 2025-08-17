@@ -404,7 +404,7 @@ const JobBoards: React.FC = () => {
                   onClick={() => setViewMode("grid")}
                   className={`p-2 rounded-md transition-colors ${
                     viewMode === "grid"
-                      ? "bg-white dark:bg-[#1F2937] text-gray-900 dark:text-[#F3F4F6] shadow-sm"
+                      ? "bg-white dark:bg-[#1F2937] text-gray-900 dark:text-[#F3F4F6] shadow-xs"
                       : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                   }`}
                   title='Grid view'
@@ -415,7 +415,7 @@ const JobBoards: React.FC = () => {
                   onClick={() => setViewMode("list")}
                   className={`p-2 rounded-md transition-colors ${
                     viewMode === "list"
-                      ? "bg-white dark:bg-[#1F2937] text-gray-900 dark:text-[#F3F4F6] shadow-sm"
+                      ? "bg-white dark:bg-[#1F2937] text-gray-900 dark:text-[#F3F4F6] shadow-xs"
                       : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                   }`}
                   title='List view'
