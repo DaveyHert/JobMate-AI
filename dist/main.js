@@ -1,1 +1,1 @@
-import{c as s,j as e,r,T as t}from"./assets/index-BwPqbhPy.js";import{A as o}from"./assets/App-BrFM5IB5.js";s(document.getElementById("root")).render(e.jsx(r.StrictMode,{children:e.jsx(t,{children:e.jsx(o,{})})}));
+import{c as s,j as e,r,T as t}from"./assets/index-CZgNv4b8.js";import{A as o}from"./assets/App-CAdjju0S.js";s(document.getElementById("root")).render(e.jsx(r.StrictMode,{children:e.jsx(t,{children:e.jsx(o,{})})}));
