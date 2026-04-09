@@ -44,7 +44,36 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     root.classList.add(theme);
   }, [theme]);
 
-  // Persist on every theme changes
+  // Hydrate from chrome.storage on mount and subscribe to cross-context
+  // changes. Without this, popup and dashboard each boot from their own
+  // synchronous source (localStorage / system pref) and never see what the
+  // other extension context saved. The functional updater in setTheme avoids
+  // a re-render loop with the persist effect below.
+  useEffect(() => {
+    if (typeof chrome === "undefined" || !chrome.storage?.local) return;
+
+    chrome.storage.local.get(["theme"]).then((result) => {
+      const stored = result.theme as Theme | undefined;
+      if (stored === "light" || stored === "dark") {
+        setTheme((current) => (current === stored ? current : stored));
+      }
+    });
+
+    const listener = (
+      changes: { [key: string]: chrome.storage.StorageChange },
+      area: string
+    ) => {
+      if (area !== "local") return;
+      const next = changes.theme?.newValue as Theme | undefined;
+      if (next === "light" || next === "dark") {
+        setTheme((current) => (current === next ? current : next));
+      }
+    };
+    chrome.storage.onChanged.addListener(listener);
+    return () => chrome.storage.onChanged.removeListener(listener);
+  }, []);
+
+  // Persist on every theme change
   useEffect(() => {
     if (typeof chrome !== "undefined" && chrome.storage?.local) {
       chrome.storage.local.set({ theme });
