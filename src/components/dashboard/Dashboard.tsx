@@ -17,14 +17,11 @@ import {
 import { mockApplications } from "../../data/mockApplications";
 import {
   Application,
-  ApplicationStatus,
-  JobType,
   DashboardStats,
 } from "../../models/models";
 import { AddIcon } from "../../assets/icons";
 
 import QuickActions from "./QuickActions";
-import Header from "./Header";
 import { formatDate } from "../../utils/dateHelpers";
 import { calculateStats } from "../../helpers/calculateStats";
 import { StatsGrid } from "./StatsGrid";
@@ -32,25 +29,9 @@ import drawChart from "../../utils/drawChart";
 import { getStatusColor } from "../../utils/getStatusColor";
 import ApplicationStatusFilter from "../application/ApplicationStatusFilter";
 import { getDynamicFilterCounts } from "../../utils/getDynamicFilterCounts";
-
-const initialStats: DashboardStats = {
-  totalApplied: 0,
-  totalInterviews: 0,
-  responseRate: 0,
-  totalCompanies: 0,
-  weeklyChange: {
-    applied: 0,
-    interviews: 0,
-    responseRate: 0,
-    companies: 0,
-    lastWeek: { applied: 0, interviews: 0, companies: 0 },
-    percentageChange: {
-      applied: 0,
-      interviews: 0,
-      companies: 0,
-    },
-  },
-};
+import { useJobMateData } from "../../hooks/useJobMateData";
+import { jobMateStore } from "../../store/jobMateStore";
+import { AddApplicationModal } from "../application/AddApplicationModal";
 
 const STATUSES = [
   "applied",
@@ -62,27 +43,18 @@ const STATUSES = [
 ];
 
 const Dashboard: React.FC = () => {
-  const [applications, setApplications] = useState<Application[]>([]);
-  const [stats, setStats] = useState<DashboardStats>(initialStats);
+  const data = useJobMateData();
+  const applications: Application[] = data?.applications ?? mockApplications;
+  const stats: DashboardStats = useMemo(
+    () => calculateStats(applications),
+    [applications]
+  );
   const [statusFilter, setStatusFilter] = useState("all");
   const [showAddModal, setShowAddModal] = useState(false);
   const [expandedApp, setExpandedApp] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<{ [key: number]: string }>({});
   const [chartView, setChartView] = useState("timeline");
   const [timeRange, setTimeRange] = useState("week");
-  const [newApp, setNewApp] = useState<Omit<Application, "id" | "dateApplied">>(
-    {
-      title: "",
-      company: "",
-      url: "",
-      source: "linkedin",
-      status: "applied",
-      history: [],
-      notes: "",
-      jobType: "fulltime",
-      jobBrief: "",
-    }
-  );
   const [editingFields, setEditingFields] = useState<{
     [key: string]: boolean;
   }>({});
@@ -90,34 +62,10 @@ const Dashboard: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    loadData();
-  }, []);
-
-  useEffect(() => {
     if (applications.length > 0 && chartView === "timeline") {
       drawChart(canvasRef, timeRange, applications);
     }
   }, [applications, chartView, timeRange]);
-
-  const loadData = async () => {
-    try {
-      if (typeof chrome !== "undefined" && chrome.storage) {
-        const result = await chrome.storage.local.get(["jobMateData"]);
-        if (result.jobMateData?.applications) {
-          const apps = result.jobMateData.applications;
-          setApplications(apps);
-          setStats(calculateStats(apps));
-          return;
-        }
-      }
-      setApplications(mockApplications);
-      setStats(calculateStats(mockApplications));
-    } catch (error) {
-      console.error("Error loading data:", error);
-      setApplications(mockApplications);
-      setStats(calculateStats(mockApplications));
-    }
-  };
 
   const getSourceData = () => {
     const sourceMap: { [key: string]: number } = {};
@@ -155,88 +103,16 @@ const Dashboard: React.FC = () => {
     return colors[index % colors.length];
   };
 
-  const addApplication = async () => {
-    const newApplication: Application = {
-      id: Date.now(),
-      ...newApp,
-      dateApplied: new Date().toISOString(),
-    };
-
-    const updatedApps = [newApplication, ...applications];
-    setApplications(updatedApps);
-    setStats(calculateStats(updatedApps));
-
-    try {
-      if (typeof chrome !== "undefined" && chrome.storage) {
-        const result = await chrome.storage.local.get(["jobMateData"]);
-        const existingData = result.jobMateData || {};
-        existingData.applications = updatedApps;
-        await chrome.storage.local.set({ jobMateData: existingData });
-      }
-    } catch (error) {
-      console.error("Error saving application:", error);
-    }
-
-    setShowAddModal(false);
-    setNewApp({
-      title: "",
-      company: "",
-      url: "",
-      source: "linkedin",
-      status: "applied",
-      history: [],
-      notes: "",
-      jobType: "fulltime",
-      jobBrief: "",
-    });
-  };
-
   const updateApplicationStatus = async (id: number, status: string) => {
-    const updatedApps = applications.map((app) =>
-      app.id === id ? { ...app, status: status as Application["status"] } : app
+    await jobMateStore.updateApplicationStatus(
+      id,
+      status as Application["status"]
     );
-    setApplications(updatedApps);
-    setStats(calculateStats(updatedApps));
-
-    try {
-      if (
-        typeof chrome !== "undefined" &&
-        chrome.storage &&
-        chrome.storage.local
-      ) {
-        const result = await chrome.storage.local.get(["jobMateData"]);
-        const existingData = result.jobMateData || {};
-        existingData.applications = updatedApps;
-        await chrome.storage.local.set({ jobMateData: existingData });
-      }
-    } catch (error) {
-      console.error("Error saving to storage:", error);
-    }
   };
 
   const deleteApplication = async (id: number) => {
     if (!confirm("Are you sure you want to delete this application?")) return;
-
-    const updatedApps = applications.filter((app) => app.id !== id);
-    setApplications(updatedApps);
-    setStats(calculateStats(updatedApps));
-
-    try {
-      if (
-        typeof chrome !== "undefined" &&
-        chrome.storage &&
-        chrome.storage.local
-      ) {
-        const result = await chrome.storage.local.get(["jobMateData"]);
-        const existingData = result.jobMateData || {};
-        existingData.applications = updatedApps;
-        await chrome.storage.local.set({ jobMateData: existingData });
-      }
-    } catch (error) {
-      console.error("Error saving to storage:", error);
-    }
-
-    // Close expanded view if this app was expanded
+    await jobMateStore.deleteApplication(id);
     if (expandedApp === id) {
       setExpandedApp(null);
     }
@@ -247,26 +123,14 @@ const Dashboard: React.FC = () => {
     field: string,
     value: string
   ) => {
-    const updatedApps = applications.map((app) =>
-      app.id === id ? { ...app, [field]: value } : app
-    );
-    setApplications(updatedApps);
-    setStats(calculateStats(updatedApps));
-
-    try {
-      if (
-        typeof chrome !== "undefined" &&
-        chrome.storage &&
-        chrome.storage.local
-      ) {
-        const result = await chrome.storage.local.get(["jobMateData"]);
-        const existingData = result.jobMateData || {};
-        existingData.applications = updatedApps;
-        await chrome.storage.local.set({ jobMateData: existingData });
-      }
-    } catch (error) {
-      console.error("Error saving to storage:", error);
-    }
+    const target = applications.find((a) => a.id === id);
+    if (!target) return;
+    const updated = { ...target, [field]: value } as Application;
+    // Write-through the whole applications array via the store's commit path.
+    // The store doesn't expose a per-field update helper, so we re-use the
+    // public data path to persist the edit.
+    const next = applications.map((app) => (app.id === id ? updated : app));
+    await jobMateStore.replaceApplications(next);
   };
 
   const startEditing = (appId: number, field: string, currentValue: string) => {
@@ -355,21 +219,9 @@ const Dashboard: React.FC = () => {
     return jobTypeColors[jobType] || jobTypeColors.fulltime;
   };
 
-  const statusCounts = {
-    all: applications.length,
-    applied: applications.filter((app) => app.status === "applied").length,
-    interviewing: applications.filter((app) => app.status === "interviewing")
-      .length,
-    rejected: applications.filter((app) => app.status === "rejected").length,
-    ghosted: applications.filter((app) => app.status === "ghosted").length,
-  };
-
   return (
-    <div className='min-h-screen bg-background'>
-      <div className='max-w-7xl mx-auto p-6'>
-        {/* Header */}
-        <Header />
-
+    <div className='bg-background'>
+      <div className='px-8 pb-8'>
         {/* Stats Cards */}
         <StatsGrid stats={stats} />
 
@@ -863,166 +715,10 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Add Application Modal */}
-      {showAddModal && (
-        <div className='fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center z-50 p-4'>
-          <div className='bg-white rounded-2xl w-full max-w-md'>
-            <div className='flex justify-between items-center p-6 border-b border-gray-200'>
-              <h3 className='text-xl font-semibold text-gray-900'>
-                Add Job Application
-              </h3>
-              <button
-                onClick={() => setShowAddModal(false)}
-                className='p-2 hover:bg-gray-100 rounded-lg transition-colors'
-              >
-                <X className='w-5 h-5 text-gray-500' />
-              </button>
-            </div>
-            <div className='p-6 space-y-4'>
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Job Title
-                </label>
-                <input
-                  type='text'
-                  value={newApp.title}
-                  onChange={(e) =>
-                    setNewApp({ ...newApp, title: e.target.value })
-                  }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
-                  placeholder='e.g. Senior Software Engineer'
-                />
-              </div>
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Company
-                </label>
-                <input
-                  type='text'
-                  value={newApp.company}
-                  onChange={(e) =>
-                    setNewApp({ ...newApp, company: e.target.value })
-                  }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
-                  placeholder='e.g. Google'
-                />
-              </div>
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Job URL
-                </label>
-                <input
-                  type='url'
-                  value={newApp.url}
-                  onChange={(e) =>
-                    setNewApp({ ...newApp, url: e.target.value })
-                  }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
-                  placeholder='https://...'
-                />
-              </div>
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Source
-                </label>
-                <select
-                  value={newApp.source}
-                  onChange={(e) =>
-                    setNewApp({ ...newApp, source: e.target.value })
-                  }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
-                >
-                  <option value='linkedin'>LinkedIn</option>
-                  <option value='indeed'>Indeed</option>
-                  <option value='greenhouse'>Greenhouse</option>
-                  <option value='lever'>Lever</option>
-                  <option value='workable'>Workable</option>
-                  <option value='other'>Other</option>
-                </select>
-              </div>
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Job Type
-                </label>
-                <select
-                  value={newApp.jobType}
-                  onChange={(e) =>
-                    setNewApp({ ...newApp, jobType: e.target.value as JobType })
-                  }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
-                >
-                  <option value='fulltime'>Full-time</option>
-                  <option value='contract'>Contract</option>
-                  <option value='gig'>Gig</option>
-                </select>
-              </div>
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Status
-                </label>
-                <select
-                  value={newApp.status}
-                  onChange={(e) =>
-                    setNewApp({
-                      ...newApp,
-                      status: e.target.value as ApplicationStatus,
-                    })
-                  }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
-                >
-                  <option value='applied'>Applied</option>
-                  <option value='interviewing'>Interviewing</option>
-                  <option value='rejected'>Rejected</option>
-                  <option value='offer'>Offer</option>
-                </select>
-              </div>
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Job Brief
-                </label>
-                <textarea
-                  value={newApp.jobBrief}
-                  onChange={(e) =>
-                    setNewApp({ ...newApp, jobBrief: e.target.value })
-                  }
-                  rows={2}
-                  className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
-                  placeholder='Brief description of the role...'
-                />
-              </div>
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Notes
-                </label>
-                <textarea
-                  value={newApp.notes}
-                  onChange={(e) =>
-                    setNewApp({ ...newApp, notes: e.target.value })
-                  }
-                  rows={3}
-                  className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
-                  placeholder='Any additional notes...'
-                />
-              </div>
-            </div>
-            <div className='flex gap-3 p-6 border-t border-gray-200'>
-              <button
-                onClick={() => setShowAddModal(false)}
-                className='flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors'
-              >
-                Cancel
-              </button>
-              <button
-                onClick={addApplication}
-                disabled={!newApp.title || !newApp.company}
-                className='flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 text-white rounded-lg transition-colors'
-              >
-                Add Application
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <AddApplicationModal
+        open={showAddModal}
+        onClose={() => setShowAddModal(false)}
+      />
     </div>
   );
 };

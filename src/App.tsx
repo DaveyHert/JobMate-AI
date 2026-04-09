@@ -6,7 +6,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import Popup from "./components/Popup";
-import Dashboard from "./components/dashboard/Dashboard";
+import DashboardApp from "./components/dashboard/DashboardApp";
 import { useThemeContext } from "./hooks/useThemeContext";
 
 function DevNav() {
@@ -51,8 +51,8 @@ function App() {
           <Route path='/' element={<Popup />} />
           <Route path='/popup' element={<Popup />} />
           <Route path='/popup.html' element={<Popup />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/dashboard.html' element={<Dashboard />} />
+          <Route path='/dashboard' element={<DashboardApp />} />
+          <Route path='/dashboard.html' element={<DashboardApp />} />
         </Routes>
       </div>
     </Router>

@@ -1,13 +1,24 @@
-import { useState, useEffect, useMemo } from "react";
+// ============================================================================
+// Popup — extension popup shell
+// ============================================================================
+// Subscribes to jobMateStore via useJobMateData so the popup always reflects
+// what the dashboard saved (active profile, applications, weekly goal, etc).
+// All writes go through jobMateStore so the dashboard sees them on next render.
+// ============================================================================
+
+import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import AIFeatures from "./AIFeatures";
 import BottomNavigation from "./BottomNavigation";
 import Header from "./Header";
 import LoadSpinner from "./LoadSpinner";
 import ApplicationsTab from "./application/ApplicationTab";
 import HomeTab from "./home/HomeTab";
+import PopupSettingsTab from "./settings/PopupSettingsTab";
 import { getDynamicFilterCounts } from "../utils/getDynamicFilterCounts";
-import { PopupData, Application } from "../models/models";
-import { useNavigate } from "react-router-dom";
+import type { Application, ApplicationStatus } from "../models/models";
+import { useJobMateData } from "../hooks/useJobMateData";
+import { jobMateStore } from "../store/jobMateStore";
 
 const STATUSES = [
   "applied",
@@ -19,11 +30,7 @@ const STATUSES = [
 ];
 
 function Popup() {
-  const [data, setData] = useState<PopupData>({
-    applications: [],
-    weeklyGoal: { current: 5, target: 20 },
-    currentProfile: "product-manager",
-  });
+  const data = useJobMateData();
   const [activeTab, setActiveTab] = useState("home");
   const [statusFilter, setStatusFilter] = useState("all");
   const [showAIFeature, setShowAIFeature] = useState<string | null>(null);
@@ -31,182 +38,37 @@ function Popup() {
   const isInDevMode = process.env.NODE_ENV === "development";
   const navigate = useNavigate();
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  const applications = data?.applications ?? [];
+  const profiles = useMemo(
+    () => (data ? Object.values(data.profiles) : []),
+    [data]
+  );
+  const activeProfile = data ? data.profiles[data.activeProfileId] : null;
 
-  // Calculate filter counts
   const filterCounts = useMemo(
-    () => getDynamicFilterCounts(data.applications, STATUSES),
-    [data.applications]
+    () => getDynamicFilterCounts(applications, STATUSES),
+    [applications]
   );
 
-  const filteredApplications = data.applications.filter(
+  const filteredApplications = applications.filter(
     (app) => statusFilter === "all" || app.status === statusFilter
   );
 
-  const getMockApplications = (): Application[] => {
-    return [
-      {
-        id: 1,
-        title: "Director of Engineering",
-        company: "Narvar",
-        source: "indeed",
-        status: "applied",
-        dateApplied: new Date().toISOString(),
-        url: "https://careers.narvar.com",
-      },
-      {
-        id: 2,
-        title: "Director of Engineering",
-        company: "Narvar",
-        source: "greenhouse",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 1 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.narvar.com",
-      },
-      {
-        id: 3,
-        title: "Frontend Engineer",
-        company: "Stripe",
-        source: "workable",
-        status: "offer",
-        dateApplied: new Date(
-          Date.now() - 2 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://stripe.com/jobs",
-      },
-      {
-        id: 4,
-        title: "Director of Engineering",
-        company: "Narvar",
-        source: "lever",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 3 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.narvar.com",
-      },
-      {
-        id: 5,
-        title: "Senior Product Engineering Manager",
-        company: "Slack",
-        source: "greenhouse",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 4 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://slack.com/careers",
-      },
-      {
-        id: 6,
-        title: "Principal Frontend Engineer",
-        company: "AirBnB",
-        source: "lever",
-        status: "interviewing",
-        dateApplied: new Date(
-          Date.now() - 5 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.airbnb.com",
-      },
-      {
-        id: 7,
-        title: "Director of Engineering",
-        company: "X",
-        source: "lever",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 6 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.x.com",
-      },
-      {
-        id: 8,
-        title: "Frontend Engineer",
-        company: "Google",
-        source: "lever",
-        status: "rejected",
-        dateApplied: new Date(
-          Date.now() - 7 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.google.com",
-      },
-      {
-        id: 9,
-        title: "Director of Engineering",
-        company: "Mimi",
-        source: "lever",
-        status: "rejected",
-        dateApplied: new Date(
-          Date.now() - 8 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.mimi.com",
-      },
-      {
-        id: 10,
-        title: "Design Engineer",
-        company: "Figma",
-        source: "lever",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 9 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.figma.com",
-      },
-      {
-        id: 11,
-        title: "Director of Engineering",
-        company: "Apple",
-        source: "indeed",
-        status: "applied",
-        dateApplied: new Date(
-          Date.now() - 10 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        url: "https://careers.apple.com",
-      },
-    ];
+  const handleProfileChange = (profileId: string) => {
+    void jobMateStore.setActiveProfile(profileId);
   };
 
-  const loadData = async () => {
-    try {
-      if (
-        typeof chrome !== "undefined" &&
-        chrome.storage &&
-        chrome.storage.local
-      ) {
-        const result = await chrome.storage.local.get(["jobMateData"]);
-        if (result.jobMateData) {
-          setData({
-            applications:
-              result.jobMateData.applications || getMockApplications(),
-            weeklyGoal: result.jobMateData.weeklyGoal || {
-              current: 5,
-              target: 10,
-            },
-            currentProfile:
-              result.jobMateData.currentProfile || "product-manager",
-          });
-          return;
-        }
-      }
+  const handleStatusChange = async (
+    id: number,
+    newStatus: ApplicationStatus
+  ) => {
+    await jobMateStore.updateApplicationStatus(id, newStatus);
+  };
 
-      const mockApps = getMockApplications();
-      setData({
-        applications: mockApps,
-        weeklyGoal: { current: 5, target: 10 },
-        currentProfile: "product-manager",
-      });
-    } catch (error) {
-      console.error("Error loading data:", error);
-      const mockApps = getMockApplications();
-      setData({
-        applications: mockApps,
-        weeklyGoal: { current: 5, target: 10 },
-        currentProfile: "product-manager",
-      });
-    }
+  const handleAddApplication = async (
+    app: Omit<Application, "id" | "status" | "dateApplied" | "history">
+  ) => {
+    await jobMateStore.addApplication(app);
   };
 
   const openDashboard = () => {
@@ -217,36 +79,15 @@ function Popup() {
     }
   };
 
-  const updateApplicationStatus = async (
-    id: number,
-    newStatus: Application["status"]
-  ) => {
-    const updatedApps = data.applications.map((app) =>
-      app.id === id ? { ...app, status: newStatus } : app
+  if (!data) {
+    return (
+      <div
+        className={`${isInDevMode ? "w-[580px] h-[700px]" : "w-dvw h-dvh"} bg-background flex items-center justify-center`}
+      >
+        <p className='text-sm text-secondary-text'>Loading…</p>
+      </div>
     );
-    const updatedData = { ...data, applications: updatedApps };
-    setData(updatedData);
-
-    // Save to storage if available
-    if (
-      typeof chrome !== "undefined" &&
-      chrome.storage &&
-      chrome.storage.local
-    ) {
-      try {
-        const result = await chrome.storage.local.get(["jobMateData"]);
-        const existingData = result.jobMateData || {};
-        await chrome.storage.local.set({
-          jobMateData: {
-            ...existingData,
-            applications: updatedApps,
-          },
-        });
-      } catch (error) {
-        console.error("Error saving to storage:", error);
-      }
-    }
-  };
+  }
 
   return (
     <div
@@ -254,22 +95,21 @@ function Popup() {
     >
       {/* Header */}
       <Header
-        currentProfile={data.currentProfile}
-        onProfileChange={(profile) =>
-          setData({ ...data, currentProfile: profile })
-        }
+        profiles={profiles}
+        activeProfileId={data.activeProfileId}
+        onProfileChange={handleProfileChange}
       />
-
-      {/* Content - Scrollable area between header and bottom nav */}
 
       {/* Home Tab */}
       {activeTab === "home" && (
         <HomeTab
-          data={data}
+          applications={applications}
+          weeklyGoal={data.weeklyGoal}
           setActiveTab={setActiveTab}
-          handleStatusChange={updateApplicationStatus}
+          handleStatusChange={handleStatusChange}
           setActiveAIFeature={setShowAIFeature}
-          setData={setData}
+          onAddApplication={handleAddApplication}
+          setIsBusy={setIsLoading}
         />
       )}
 
@@ -278,13 +118,16 @@ function Popup() {
         <ApplicationsTab
           filterCounts={filterCounts}
           filteredApplications={filteredApplications}
-          updateApplicationStatus={updateApplicationStatus}
+          updateApplicationStatus={handleStatusChange}
           setStatusFilter={setStatusFilter}
           statusFilter={statusFilter}
         />
       )}
 
-      {/* Bottom Navigation - ALWAYS RENDERED */}
+      {/* Settings Tab */}
+      {activeTab === "settings" && <PopupSettingsTab />}
+
+      {/* Bottom Navigation */}
       <BottomNavigation
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -295,7 +138,7 @@ function Popup() {
       {showAIFeature && (
         <AIFeatures
           feature={showAIFeature as any}
-          activeProfile={null} // You can pass the actual profile data here
+          activeProfile={activeProfile}
           onClose={() => setShowAIFeature(null)}
         />
       )}

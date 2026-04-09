@@ -1,12 +1,21 @@
 import React from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, User } from "lucide-react";
+import type { UserProfile } from "../models/models";
 
 interface HeaderProps {
-  currentProfile: string;
-  onProfileChange: (profile: string) => void;
+  profiles: UserProfile[];
+  activeProfileId: string;
+  onProfileChange: (profileId: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentProfile, onProfileChange }) => {
+const Header: React.FC<HeaderProps> = ({
+  profiles,
+  activeProfileId,
+  onProfileChange,
+}) => {
+  const activeProfile = profiles.find((p) => p.id === activeProfileId);
+  const avatarUrl = activeProfile?.identity.profilePictureUrl;
+
   return (
     <header className='flex justify-between items-center px-5 py-2 bg-foreground shrink-0 border-b border-border-col'>
       {/* Logo */}
@@ -28,25 +37,35 @@ const Header: React.FC<HeaderProps> = ({ currentProfile, onProfileChange }) => {
 
       {/* Selector + Profile */}
       <div className='flex items-center gap-2'>
-        <div className='profile-selector relative '>
+        <div className='profile-selector relative'>
           <select
-            value={currentProfile}
+            value={activeProfileId}
             onChange={(e) => onProfileChange(e.target.value)}
-            className='appearance-none bg-button-col border border-border-col rounded-sm px-4 py-1 pr-10 text-sm font-normal text-primary-text cursor-pointer hover:bg-button-hov'
+            className='appearance-none bg-button-col border border-border-col rounded-sm px-4 py-1 pr-10 text-sm font-normal text-primary-text cursor-pointer hover:bg-button-hov max-w-[180px] truncate'
           >
-            <option value='product-manager'>Product Manager</option>
-            <option value='software-engineer'>Software Engineer</option>
-            <option value='designer'>Designer</option>
+            {profiles.length === 0 ? (
+              <option value=''>No profiles</option>
+            ) : (
+              profiles.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.documents.resumes[0]?.label ?? p.label ?? "Untitled"}
+                </option>
+              ))
+            )}
           </select>
           <ChevronDown className='absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-primary-text pointer-events-none' />
         </div>
 
-        <div className='w-10 h-10 rounded-full border-2 border-[#D1D5DB] dark:border-[#1D1E21] overflow-hidden'>
-          <img
-            src='https://images.pexels.com/photos/3785424/pexels-photo-3785424.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop&crop=face'
-            alt='Profile'
-            className='w-full h-full object-center'
-          />
+        <div className='w-10 h-10 rounded-full border-2 border-[#D1D5DB] dark:border-[#1D1E21] overflow-hidden bg-button-col flex items-center justify-center'>
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt={activeProfile?.identity.fullName ?? "Profile"}
+              className='w-full h-full object-cover'
+            />
+          ) : (
+            <User className='w-5 h-5 text-secondary-text' />
+          )}
         </div>
       </div>
     </header>
