@@ -11,15 +11,11 @@ export default defineConfig({
         popup: resolve(__dirname, "popup.html"),
         dashboard: resolve(__dirname, "dashboard.html"),
         background: resolve(__dirname, "src/background/background.ts"),
-        contentScript: resolve(__dirname, "src/content/contentScript.ts"),
       },
       output: {
         entryFileNames: (chunkInfo) => {
           if (chunkInfo.name === "background") {
             return "background/[name].js";
-          }
-          if (chunkInfo.name === "contentScript") {
-            return "content/[name].js";
           }
           if (chunkInfo.name === "popup") {
             return "popup.js";

@@ -1,62 +1,11 @@
 // Background script for JobMate AI+
-
-interface Application {
-  id: number;
-  title: string;
-  company: string;
-  url?: string;
-  source: string;
-  status: 'applied' | 'interviewing' | 'rejected' | 'offer' | 'ghosted';
-  dateApplied: string;
-  notes?: string;
-}
-
-interface UserProfile {
-  name: string;
-  personalInfo: {
-    firstName: string;
-    lastName: string;
-    fullName: string;
-    email: string;
-    phone: string;
-    address: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-    linkedIn: string;
-    website: string;
-    github: string;
-  };
-  professional: {
-    currentTitle: string;
-    company: string;
-    experience: string;
-    salary: string;
-    salaryMin: string;
-    salaryMax: string;
-    availability: string;
-    workAuthorization: string;
-    preferredLocation: string;
-  };
-  documents: {
-    resumeUrl: string;
-    coverLetterUrl: string;
-  };
-}
-
-interface JobMateData {
-  currentProfile: string;
-  applications: Application[];
-  weeklyGoal: { current: number; target: number };
-  profiles: Record<string, UserProfile>;
-  settings: {
-    darkMode: boolean;
-    autoFillEnabled: boolean;
-    notifications: boolean;
-    weeklyGoalReminders: boolean;
-  };
-}
+import type { Application, ApplicationStatus, UserProfile } from "../models/models";
+import { jobMateStore } from "../store/jobMateStore";
+import {
+  llmClient,
+  LLMNotConfiguredError,
+  LLMRequestError,
+} from "../engine/LLMClient";
 
 class BackgroundManager {
   constructor() {
@@ -81,92 +30,10 @@ class BackgroundManager {
 
   private async initializeDefaultData() {
     try {
-      const result = await chrome.storage.local.get(['jobMateData']);
-      if (!result.jobMateData) {
-        const defaultData: JobMateData = {
-          currentProfile: 'product-manager',
-          applications: [],
-          weeklyGoal: { current: 0, target: 10 },
-          profiles: {
-            'product-manager': {
-              name: 'Product Manager',
-              personalInfo: {
-                firstName: 'John',
-                lastName: 'Doe',
-                fullName: 'John Doe',
-                email: 'john.doe@email.com',
-                phone: '(555) 123-4567',
-                address: '123 Main Street',
-                city: 'San Francisco',
-                state: 'CA',
-                zipCode: '94102',
-                country: 'United States',
-                linkedIn: 'https://linkedin.com/in/johndoe',
-                website: 'https://johndoe.dev',
-                github: 'https://github.com/johndoe'
-              },
-              professional: {
-                currentTitle: 'Senior Product Manager',
-                company: 'Tech Corp',
-                experience: '5+ years',
-                salary: '$140,000',
-                salaryMin: '$130,000',
-                salaryMax: '$150,000',
-                availability: 'Immediately',
-                workAuthorization: 'US Citizen',
-                preferredLocation: 'San Francisco, CA'
-              },
-              documents: {
-                resumeUrl: '/resume-pm.pdf',
-                coverLetterUrl: '/cover-letter-pm.pdf'
-              }
-            },
-            'software-engineer': {
-              name: 'Software Engineer',
-              personalInfo: {
-                firstName: 'John',
-                lastName: 'Doe',
-                fullName: 'John Doe',
-                email: 'john.doe@email.com',
-                phone: '(555) 123-4567',
-                address: '123 Main Street',
-                city: 'San Francisco',
-                state: 'CA',
-                zipCode: '94102',
-                country: 'United States',
-                linkedIn: 'https://linkedin.com/in/johndoe',
-                website: 'https://johndoe.dev',
-                github: 'https://github.com/johndoe'
-              },
-              professional: {
-                currentTitle: 'Senior Software Engineer',
-                company: 'Tech Corp',
-                experience: '5+ years',
-                salary: '$120,000',
-                salaryMin: '$110,000',
-                salaryMax: '$130,000',
-                availability: 'Immediately',
-                workAuthorization: 'US Citizen',
-                preferredLocation: 'San Francisco, CA'
-              },
-              documents: {
-                resumeUrl: '/resume-swe.pdf',
-                coverLetterUrl: '/cover-letter-swe.pdf'
-              }
-            }
-          },
-          settings: {
-            darkMode: false,
-            autoFillEnabled: true,
-            notifications: true,
-            weeklyGoalReminders: true
-          }
-        };
-        
-        await chrome.storage.local.set({ jobMateData: defaultData });
-      }
+      // The store creates default data on first read if none exists.
+      await jobMateStore.getData();
     } catch (error) {
-      console.error('Error initializing default data:', error);
+      console.error("Error initializing default data:", error);
     }
   }
 
@@ -202,138 +69,72 @@ class BackgroundManager {
     }
   }
 
-  private async handleTrackApplication(applicationData: any, sendResponse: (response: any) => void) {
+  private async handleTrackApplication(
+    applicationData: Omit<Application, "id" | "status" | "dateApplied" | "history">,
+    sendResponse: (response: any) => void
+  ) {
     try {
-      const result = await chrome.storage.local.get(['jobMateData']);
-      const data: JobMateData = result.jobMateData || {};
-      
-      if (!data.applications) {
-        data.applications = [];
-      }
-      
-      const application: Application = {
-        id: Date.now(),
-        ...applicationData,
-        status: 'applied' as const,
-        dateApplied: new Date().toISOString(),
-        notes: ''
-      };
-      
-      data.applications.unshift(application);
-      
-      // Update weekly goal
-      if (!data.weeklyGoal) {
-        data.weeklyGoal = { current: 0, target: 10 };
-      }
-      data.weeklyGoal.current++;
-      
-      await chrome.storage.local.set({ jobMateData: data });
+      const application = await jobMateStore.addApplication(applicationData);
       sendResponse({ success: true, application });
     } catch (error) {
-      sendResponse({ error: error instanceof Error ? error.message : 'Failed to track application' });
+      sendResponse({
+        error: error instanceof Error ? error.message : "Failed to track application",
+      });
     }
   }
 
   private async getApplications(sendResponse: (response: any) => void) {
     try {
-      const result = await chrome.storage.local.get(['jobMateData']);
-      const data: JobMateData = result.jobMateData || {};
-      sendResponse({ applications: data.applications || [] });
+      const applications = await jobMateStore.getApplications();
+      sendResponse({ applications });
     } catch (error) {
-      sendResponse({ error: error instanceof Error ? error.message : 'Failed to get applications' });
-    }
-  }
-
-  private async updateApplicationStatus(applicationId: number, status: string, sendResponse: (response: any) => void) {
-    try {
-      const result = await chrome.storage.local.get(['jobMateData']);
-      const data: JobMateData = result.jobMateData || {};
-      
-      if (data.applications) {
-        const application = data.applications.find(app => app.id === applicationId);
-        if (application) {
-          application.status = status as Application['status'];
-          
-          await chrome.storage.local.set({ jobMateData: data });
-          sendResponse({ success: true });
-        } else {
-          sendResponse({ error: 'Application not found' });
-        }
-      } else {
-        sendResponse({ error: 'No applications found' });
-      }
-    } catch (error) {
-      sendResponse({ error: error instanceof Error ? error.message : 'Failed to update application' });
-    }
-  }
-
-  private async generateCoverLetter(jobDescription: string, profile: any, sendResponse: (response: any) => void) {
-    try {
-      // TODO: Integrate with AI service (OpenAI, Claude, etc.)
-      // For now, return a placeholder response
-      
-      const coverLetter = `Dear Hiring Manager,
-
-I am writing to express my strong interest in the ${profile.professional.currentTitle} position. With ${profile.professional.experience} of experience in the field, I am confident that my skills and background make me an ideal candidate for this role.
-
-In my current position at ${profile.professional.company}, I have successfully [specific achievements related to the job description]. My expertise in [relevant skills] aligns perfectly with your requirements.
-
-I am particularly excited about this opportunity because [reason specific to the company/role]. I believe my experience in [relevant area] would allow me to make an immediate impact on your team.
-
-Thank you for considering my application. I look forward to discussing how my background and enthusiasm can contribute to your organization's success.
-
-Best regards,
-${profile.personalInfo.fullName}`;
-
       sendResponse({
-        success: true,
-        coverLetter,
-        metadata: {
-          generatedAt: new Date().toISOString(),
-          jobDescriptionLength: jobDescription.length,
-          profile: profile.professional.currentTitle
-        }
+        error: error instanceof Error ? error.message : "Failed to get applications",
       });
-    } catch (error) {
-      sendResponse({ error: error instanceof Error ? error.message : 'Failed to generate cover letter' });
     }
   }
 
-  private async analyzeJobFit(jobDescription: string, profile: any, sendResponse: (response: any) => void) {
+  private async updateApplicationStatus(
+    applicationId: number,
+    status: ApplicationStatus,
+    sendResponse: (response: any) => void
+  ) {
     try {
-      // TODO: Integrate with AI service for real analysis
-      // For now, return a mock analysis
-      
-      const mockAnalysis = {
-        score: Math.floor(Math.random() * 30) + 70, // 70-100%
-        matches: ['JavaScript', 'React', 'Node.js', 'Product Management', 'Agile'],
-        missing: ['Python', 'AWS', 'Machine Learning'],
-        recommendations: [
-          'Highlight your React experience in your resume',
-          'Mention any cloud computing experience you have',
-          'Emphasize your leadership and team collaboration skills',
-          'Include specific metrics from your previous roles'
-        ],
-        keyRequirements: [
-          { requirement: 'Bachelor\'s degree', match: true },
-          { requirement: '5+ years experience', match: true },
-          { requirement: 'JavaScript proficiency', match: true },
-          { requirement: 'Python experience', match: false },
-          { requirement: 'Cloud platforms', match: false }
-        ]
-      };
-      
-      sendResponse({
-        success: true,
-        analysis: mockAnalysis,
-        metadata: {
-          analyzedAt: new Date().toISOString(),
-          jobDescriptionLength: jobDescription.length,
-          profile: profile.professional.currentTitle
-        }
-      });
+      await jobMateStore.updateApplicationStatus(applicationId, status);
+      sendResponse({ success: true });
     } catch (error) {
-      sendResponse({ error: error instanceof Error ? error.message : 'Failed to analyze job fit' });
+      sendResponse({
+        error: error instanceof Error ? error.message : "Failed to update application",
+      });
+    }
+  }
+
+  // AI handlers — real Claude calls via LLMClient. BYOK: if the user hasn't
+  // added an API key in Settings, LLMClient throws LLMNotConfiguredError and
+  // we surface that as a typed error the UI can prompt against.
+  private async generateCoverLetter(
+    jobDescription: string,
+    profile: UserProfile,
+    sendResponse: (response: any) => void
+  ) {
+    try {
+      const coverLetter = await llmClient.generateCoverLetter(jobDescription, profile);
+      sendResponse({ success: true, coverLetter });
+    } catch (error) {
+      sendResponse(buildAIErrorResponse(error));
+    }
+  }
+
+  private async analyzeJobFit(
+    jobDescription: string,
+    profile: UserProfile,
+    sendResponse: (response: any) => void
+  ) {
+    try {
+      const analysis = await llmClient.analyzeJobFit(jobDescription, profile);
+      sendResponse({ success: true, analysis });
+    } catch (error) {
+      sendResponse(buildAIErrorResponse(error));
     }
   }
 
@@ -365,6 +166,29 @@ ${profile.personalInfo.fullName}`;
       }
     });
   }
+}
+
+/**
+ * Normalize LLMClient errors into a response the popup/dashboard can act on.
+ * The `needsConfig` flag lets the UI jump straight to the API key settings
+ * field instead of just showing a generic error toast.
+ */
+function buildAIErrorResponse(error: unknown): {
+  success: false;
+  error: string;
+  needsConfig?: boolean;
+  status?: number;
+} {
+  if (error instanceof LLMNotConfiguredError) {
+    return { success: false, error: error.message, needsConfig: true };
+  }
+  if (error instanceof LLMRequestError) {
+    return { success: false, error: error.message, status: error.status };
+  }
+  return {
+    success: false,
+    error: error instanceof Error ? error.message : "Unknown AI error",
+  };
 }
 
 // Initialize background manager

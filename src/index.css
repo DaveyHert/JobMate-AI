@@ -137,3 +137,11 @@
   background-color: var(--scroll-thumb);
   border-radius: 8px;
 }
+
+/* Hide scrollbar (used by horizontal pill tab rows in the popup). */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}

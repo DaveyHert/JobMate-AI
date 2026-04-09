@@ -1,10 +1,11 @@
 // Content script for JobMate AI+
-import { AutoFillEngine, createAutoFillEngine } from '../autofillEngine';
+import { orchestrator } from '../engine/Orchestrator';
+import { domProbe } from '../engine/DOMProbe';
+import { jobMateStore } from '../store/jobMateStore';
 import { extractJobInfo } from '../utils/jobExtraction';
 import { showNotification } from '../utils/notifications';
 
 class ContentScriptManager {
-  private autoFillEngine: AutoFillEngine | null = null;
   private isInitialized = false;
   private initializationPromise: Promise<void> | null = null;
 
@@ -15,9 +16,13 @@ class ContentScriptManager {
   private async init(): Promise<void> {
     try {
       console.log('🚀 JobMate AI+ content script starting initialization...');
-      
-      // Initialize autofill engine
-      this.autoFillEngine = createAutoFillEngine();
+
+      // Warm the store cache so the first autofill action doesn't have to
+      // wait on storage I/O. We don't keep an engine instance around —
+      // Orchestrator reads the profile fresh each run so profile switches
+      // in the popup/dashboard take effect on the very next fill.
+      await jobMateStore.getActiveProfile();
+
       this.isInitialized = true;
       
       console.log('✅ JobMate AI+ content script initialized successfully');
@@ -115,22 +120,34 @@ class ContentScriptManager {
 
   private async handleAutoFill(): Promise<{ success: boolean; result?: any; error?: string; message?: string }> {
     try {
-      if (!this.autoFillEngine) {
-        return { success: false, error: 'Autofill engine not initialized' };
+      console.log('🔄 Starting auto-fill process...');
+      const [profile, data] = await Promise.all([
+        jobMateStore.getActiveProfile(),
+        jobMateStore.getData(),
+      ]);
+
+      const summary = await orchestrator.run({
+        profile,
+        profileId: data.activeProfileId,
+        // Respect the user's Settings toggle; review is the default.
+        skipReview: !data.settings.requireReviewBeforeFill,
+      });
+
+      if (summary.error) {
+        showNotification(summary.error, 'warning');
+        return { success: false, error: summary.error };
+      }
+      if (summary.cancelled) {
+        return { success: false, message: 'Cancelled by user' };
       }
 
-      console.log('🔄 Starting auto-fill process...');
-      const result = await this.autoFillEngine.autoFillPage();
-      
-      if (result.filled > 0) {
-        console.log(`✅ Auto-fill successful: ${result.filled} fields filled`);
-        showNotification(`Successfully filled ${result.filled} fields!`, 'success');
-        return { success: true, result };
-      } else {
-        console.log('⚠️ No fillable fields found');
-        showNotification('No fillable fields found on this page', 'warning');
-        return { success: false, message: 'No fields found' };
+      const filled = summary.result?.succeeded ?? 0;
+      if (filled > 0) {
+        showNotification(`Filled ${filled} of ${summary.planned} fields`, 'success');
+        return { success: true, result: summary.result };
       }
+      showNotification('No fields were filled', 'warning');
+      return { success: false, message: 'Nothing filled' };
     } catch (error) {
       console.error('❌ AutoFill error:', error);
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
@@ -247,29 +264,18 @@ class ContentScriptManager {
   }
 
   private highlightDetectedFields() {
-    if (!this.autoFillEngine || !this.isInitialized) {
-      console.log('⚠️ Cannot highlight fields - autofill engine not ready');
-      return;
-    }
+    if (!this.isInitialized) return;
 
     try {
-      const detectedFields = this.autoFillEngine.getDetectedFields();
-      console.log(`🎯 Highlighting ${Object.keys(detectedFields).length} detected fields`);
-      
-      Object.keys(detectedFields).forEach(selector => {
-        try {
-          const element = document.querySelector(selector);
-          if (element) {
-            (element as HTMLElement).style.boxShadow = '0 0 0 2px rgba(59, 130, 246, 0.3)';
-            (element as HTMLElement).style.transition = 'box-shadow 0.3s ease';
-            
-            // Add tooltip
-            (element as HTMLElement).title = `JobMate AI+ detected: ${detectedFields[selector]}`;
-          }
-        } catch (error) {
-          console.warn('⚠️ Error highlighting field:', selector, error);
-        }
-      });
+      const snapshot = domProbe.probe();
+      console.log(`🎯 Highlighting ${snapshot.fields.length} detected fields`);
+
+      for (const field of snapshot.fields) {
+        const el = field.element;
+        el.style.boxShadow = '0 0 0 2px rgba(59, 130, 246, 0.3)';
+        el.style.transition = 'box-shadow 0.3s ease';
+        el.title = `JobMate AI+: ${field.labelText || field.name || field.id || field.fieldKind}`;
+      }
     } catch (error) {
       console.warn('⚠️ Error highlighting detected fields:', error);
     }
