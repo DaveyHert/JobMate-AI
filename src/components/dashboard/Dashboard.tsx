@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { toast } from "sonner";
 import {
   Briefcase,
   Building,
@@ -110,12 +111,18 @@ const Dashboard: React.FC = () => {
     );
   };
 
-  const deleteApplication = async (id: number) => {
-    if (!confirm("Are you sure you want to delete this application?")) return;
-    await jobMateStore.deleteApplication(id);
-    if (expandedApp === id) {
-      setExpandedApp(null);
-    }
+  const deleteApplication = (id: number) => {
+    toast("Delete this application?", {
+      description: "This cannot be undone.",
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          await jobMateStore.deleteApplication(id);
+          if (expandedApp === id) setExpandedApp(null);
+        },
+      },
+      cancel: { label: "Cancel", onClick: () => {} },
+    });
   };
 
   const updateApplicationField = async (
