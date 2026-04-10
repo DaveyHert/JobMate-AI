@@ -10,6 +10,7 @@ export default defineConfig({
         main: resolve(__dirname, "index.html"),
         popup: resolve(__dirname, "popup.html"),
         dashboard: resolve(__dirname, "dashboard.html"),
+        onboarding: resolve(__dirname, "onboarding.html"),
         background: resolve(__dirname, "src/background/background.ts"),
       },
       output: {
@@ -22,6 +23,9 @@ export default defineConfig({
           }
           if (chunkInfo.name === "dashboard") {
             return "dashboard.js";
+          }
+          if (chunkInfo.name === "onboarding") {
+            return "onboarding.js";
           }
           return "[name].js";
         },

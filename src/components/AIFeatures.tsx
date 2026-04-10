@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 import { 
   Brain, 
   FileText, 
@@ -47,7 +48,7 @@ const AIFeatures: React.FC<AIFeaturesProps> = ({ activeProfile, onClose, feature
 
   const handleAnalyzeJobFit = async () => {
     if (!jobDescription.trim()) {
-      alert('Please paste the job description first');
+      toast.error('Please paste the job description first');
       return;
     }
 
@@ -84,7 +85,7 @@ const AIFeatures: React.FC<AIFeaturesProps> = ({ activeProfile, onClose, feature
 
   const handleGenerateCoverLetter = async () => {
     if (!jobDescription.trim()) {
-      alert('Please paste the job description first');
+      toast.error('Please paste the job description first');
       return;
     }
 
@@ -116,7 +117,7 @@ ${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInf
 
   const handleTailorResume = async () => {
     if (!jobDescription.trim()) {
-      alert('Please paste the job description first');
+      toast.error('Please paste the job description first');
       return;
     }
 
@@ -146,7 +147,7 @@ ${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInf
 
   const handleGenerateAnswer = async () => {
     if (!question.trim()) {
-      alert('Please enter a question first');
+      toast.error('Please enter a question first');
       return;
     }
 

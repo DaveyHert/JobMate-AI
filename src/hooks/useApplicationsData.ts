@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { mockApplications, type Application } from "../data/mockApplications";
+import { mockApplications } from "../data/mockApplications";
+import type { Application } from "../models/models";
 
 interface WeeklyGoal {
   current: number;

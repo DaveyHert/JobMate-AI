@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import { DashboardLayout, DashboardRoute } from "./DashboardLayout";
 import SettingsPage from "../../pages/settings/SettingsPage";
+import { ApplicationsPage } from "../../pages/applications/ApplicationsPage";
 
 function parseRoute(): DashboardRoute {
   const hash = window.location.hash.toLowerCase();
@@ -30,7 +31,13 @@ export default function DashboardApp() {
 
   return (
     <DashboardLayout currentRoute={route}>
-      {route === "settings" ? <SettingsPage /> : <Dashboard />}
+      {route === "settings" ? (
+        <SettingsPage />
+      ) : route === "applications" ? (
+        <ApplicationsPage />
+      ) : (
+        <Dashboard />
+      )}
     </DashboardLayout>
   );
 }

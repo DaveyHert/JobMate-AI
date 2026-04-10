@@ -13,9 +13,15 @@ class BackgroundManager {
   }
 
   private init() {
-    chrome.runtime.onInstalled.addListener(() => {
+    chrome.runtime.onInstalled.addListener((details) => {
       console.log('JobMate AI+ extension installed');
       this.initializeDefaultData();
+      // Open onboarding only on a fresh install, not on update/reload
+      if (details.reason === "install") {
+        chrome.tabs.create({
+          url: chrome.runtime.getURL("onboarding.html"),
+        });
+      }
     });
 
     // Handle messages from content scripts and popup
