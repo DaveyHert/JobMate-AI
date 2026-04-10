@@ -20,7 +20,9 @@ import {
   Bell,
   Sun,
   Moon,
+  Monitor,
 } from "lucide-react";
+import type { ThemePreference } from "../../context/ThemeContext";
 import { useJobMateData } from "../../hooks/useJobMateData";
 import { useThemeContext } from "../../hooks/useThemeContext";
 import { AddApplicationModal } from "../application/AddApplicationModal";
@@ -72,7 +74,15 @@ export function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   const data = useJobMateData();
-  const { theme, toggleTheme } = useThemeContext();
+  const { preference, setPreference } = useThemeContext();
+
+  const THEME_CYCLE: ThemePreference[] = ["system", "light", "dark"];
+  const cycleTheme = () => {
+    const idx = THEME_CYCLE.indexOf(preference);
+    setPreference(THEME_CYCLE[(idx + 1) % THEME_CYCLE.length]);
+  };
+  const ThemeIcon = { system: Monitor, light: Sun, dark: Moon }[preference];
+  const themeLabel = { system: "System", light: "Light mode", dark: "Dark mode" }[preference];
   const [showAddModal, setShowAddModal] = useState(false);
   const profile = data ? data.profiles[data.activeProfileId] : null;
   const firstName = profile?.identity.firstName ?? "there";
@@ -135,16 +145,12 @@ export function DashboardLayout({
         {/* Theme toggle + sign out */}
         <div className='mt-auto px-4 py-4 border-t border-border-col space-y-1'>
           <button
-            onClick={toggleTheme}
+            onClick={cycleTheme}
             className='w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-secondary-text hover:text-primary-text hover:bg-button-col transition-colors'
-            aria-label='Toggle theme'
+            aria-label='Cycle theme'
           >
-            {theme === "dark" ? (
-              <Sun className='w-4 h-4' />
-            ) : (
-              <Moon className='w-4 h-4' />
-            )}
-            <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
+            <ThemeIcon className='w-4 h-4' />
+            <span>{themeLabel}</span>
           </button>
           <button className='w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-secondary-text hover:text-primary-text hover:bg-button-col transition-colors'>
             <LogOut className='w-4 h-4' />

@@ -52,7 +52,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
     profile: UserProfile;
     resume: ResumeDoc;
   } | null>(null);
-  const { theme, toggleTheme } = useThemeContext();
+  const { preference, setPreference } = useThemeContext();
 
   const settings = data.settings;
   const profiles = Object.values(data.profiles);
@@ -318,15 +318,29 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
         <section>
           <h2 className='text-xl font-semibold text-primary-text mb-2'>Appearance</h2>
           <p className='text-sm text-secondary-text mb-4'>
-            Switch between light and dark mode. The choice syncs to the dashboard.
+            Choose between system, light, or dark mode. Syncs to the dashboard.
           </p>
 
           <div className='border border-border-col rounded-lg bg-foreground'>
             <Row
-              label='Dark mode'
-              description='Use a darker color palette across the extension and dashboard.'
+              label='Color theme'
+              description='System follows your OS setting.'
             >
-              <Toggle checked={theme === "dark"} onChange={toggleTheme} />
+              <div className='inline-flex items-center border border-border-col rounded-lg overflow-hidden text-xs font-medium'>
+                {(["system", "light", "dark"] as const).map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => setPreference(p)}
+                    className={`px-3 py-1.5 capitalize transition-colors border-r border-border-col last:border-r-0 ${
+                      preference === p
+                        ? "bg-accent text-white"
+                        : "text-secondary-text hover:text-primary-text hover:bg-button-col"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
             </Row>
           </div>
         </section>
