@@ -19,6 +19,7 @@
 
 import { useState } from "react";
 import { Plus, FileText, Pencil, Trash2, Linkedin } from "lucide-react";
+import { toast } from "sonner";
 import type {
   CoverLetterTone,
   JobMateData,
@@ -113,21 +114,20 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
 
   // ── Delete: removes the row's parent profile entirely ──
 
-  const handleDeleteProfile = async (rowProfile: UserProfile) => {
+  const handleDeleteProfile = (rowProfile: UserProfile) => {
     if (profiles.length <= 1) {
-      alert(
-        "You need at least one resume profile. Upload a new resume first before deleting this one.",
-      );
+      toast.error("You need at least one resume profile. Upload a new resume first before deleting this one.");
       return;
     }
-    if (
-      !confirm(
-        `Delete the "${rowProfile.documents.resumes[0]?.label ?? rowProfile.label}" profile? This cannot be undone.`,
-      )
-    ) {
-      return;
-    }
-    await jobMateStore.deleteProfile(rowProfile.id);
+    const label = rowProfile.documents.resumes[0]?.label ?? rowProfile.label;
+    toast(`Delete "${label}"?`, {
+      description: "This profile and its resume will be permanently removed.",
+      action: {
+        label: "Delete",
+        onClick: () => void jobMateStore.deleteProfile(rowProfile.id),
+      },
+      cancel: { label: "Cancel", onClick: () => {} },
+    });
   };
 
   const handleMakeActive = (rowProfile: UserProfile) => {

@@ -8,6 +8,7 @@
 // ============================================================================
 
 import { useRef, ChangeEvent } from "react";
+import { toast } from "sonner";
 import type { UserProfile } from "../../../models/models";
 import { jobMateStore } from "../../../store/jobMateStore";
 import { InlineEditRow } from "../components/InlineEditRow";
@@ -48,7 +49,7 @@ export function PersonalInfoTab({ profile }: PersonalInfoTabProps) {
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.size > 15 * 1024 * 1024) {
-      alert("Profile picture must be under 15 MB.");
+      toast.error("Profile picture must be under 15 MB.");
       return;
     }
     const reader = new FileReader();

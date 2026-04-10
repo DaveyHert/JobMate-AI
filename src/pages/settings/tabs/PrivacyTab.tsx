@@ -7,6 +7,7 @@
 // ============================================================================
 
 import { Download, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import type { JobMateSettings } from "../../../models/models";
 import { jobMateStore } from "../../../store/jobMateStore";
 
@@ -32,20 +33,22 @@ export function PrivacyTab({ settings }: PrivacyTabProps) {
     URL.revokeObjectURL(url);
   };
 
-  const wipeData = async () => {
-    if (
-      !window.confirm(
-        "This will permanently delete your JobMate profile, applications, and settings on this device. Continue?"
-      )
-    ) {
-      return;
-    }
-    if (typeof chrome !== "undefined" && chrome.storage?.local) {
-      await chrome.storage.local.clear();
-    } else {
-      localStorage.clear();
-    }
-    window.location.reload();
+  const wipeData = () => {
+    toast("Wipe all data?", {
+      description: "This will permanently delete your profile, applications, and settings on this device.",
+      action: {
+        label: "Wipe",
+        onClick: async () => {
+          if (typeof chrome !== "undefined" && chrome.storage?.local) {
+            await chrome.storage.local.clear();
+          } else {
+            localStorage.clear();
+          }
+          window.location.reload();
+        },
+      },
+      cancel: { label: "Cancel", onClick: () => {} },
+    });
   };
 
   return (

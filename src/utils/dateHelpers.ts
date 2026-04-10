@@ -2,6 +2,23 @@
  * Date utility functions for the JobMate AI+ extension
  */
 
+import { format, isToday, isYesterday } from "date-fns";
+
+/**
+ * "Today" / "Yesterday" / "3 Jan 2025" — used on application cards.
+ */
+export const formatShortRelative = (date: Date): string => {
+  if (isToday(date)) return "Today";
+  if (isYesterday(date)) return "Yesterday";
+  return format(date, "d MMM yyyy");
+};
+
+/**
+ * "28th July, 2025 • 9:14 AM" — used in the list view and details modal.
+ */
+export const formatDetailDate = (date: Date): string =>
+  format(date, "do MMMM, yyyy") + " \u2022 " + format(date, "h:mm a");
+
 export const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
   const now = new Date();

@@ -422,6 +422,27 @@ class JobMateStore {
   }
 
   /**
+   * Update mutable fields on a single application.
+   * If `status` changes it is appended to history (append-only rule).
+   */
+  async updateApplication(
+    id: number,
+    patch: Partial<Omit<Application, "id" | "dateApplied" | "history">>
+  ): Promise<void> {
+    const data = await this.getData();
+    const now = new Date().toISOString();
+    const applications = data.applications.map((app) => {
+      if (app.id !== id) return app;
+      const updated = { ...app, ...patch };
+      if (patch.status && patch.status !== app.status) {
+        updated.history = [...(app.history ?? []), { status: patch.status, date: now }];
+      }
+      return updated;
+    });
+    await this.commit({ ...data, applications });
+  }
+
+  /**
    * Replace the entire applications array. Used when a row is edited in
    * place (notes, title, etc.) — we don't have a per-field mutator.
    */
