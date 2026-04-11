@@ -1,7 +1,5 @@
 import { Plus, GraduationCap } from "lucide-react";
-import {
-  Field, DateInput, StepHeader, Divider,
-} from "../components/OnboardingPrimitives";
+import { Field, Input, DateInput, Divider, StepHeader, StepTopNav, StepFooter } from "../components/OnboardingPrimitives";
 
 export interface EducationEntry {
   school: string;
@@ -48,22 +46,7 @@ export function CredentialsStep({ data, onChange, onBack, onFinish, onSkip, prof
 
   return (
     <div>
-      {/* Top nav */}
-      <div className="flex items-center justify-between mb-8">
-        <button onClick={onBack} className="p-1 text-gray-500 hover:text-gray-800 transition-colors" aria-label="Back">
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        {profileLabel && (
-          <div className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700">
-            {profileLabel}
-            <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        )}
-      </div>
+      <StepTopNav onBack={onBack} profileLabel={profileLabel} />
 
       <StepHeader
         icon={<GraduationCap className="w-5 h-5 text-accent" />}
@@ -168,22 +151,12 @@ export function CredentialsStep({ data, onChange, onBack, onFinish, onSkip, prof
         Add another credential <Plus className="w-4 h-4" />
       </button>
 
-      <div className="flex items-center gap-3 mt-10">
-        <button
-          onClick={onFinish}
-          disabled={saving}
-          className="px-8 py-3 bg-accent hover:bg-primary-600 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors"
-        >
-          {saving ? "Saving…" : "Finish"}
-        </button>
-        <button
-          onClick={onSkip}
-          disabled={saving}
-          className="px-8 py-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-800 rounded-lg text-sm font-medium transition-colors"
-        >
-          Skip this
-        </button>
-      </div>
+      <StepFooter
+        onContinue={onFinish}
+        onSkip={onSkip}
+        continueLabel={saving ? "Saving…" : "Finish"}
+        continueDisabled={saving}
+      />
     </div>
   );
 }

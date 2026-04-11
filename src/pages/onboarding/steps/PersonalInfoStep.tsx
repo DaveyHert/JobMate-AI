@@ -1,6 +1,5 @@
 import { User } from "lucide-react";
 import { Field, Input, Select, StepHeader, StepFooter } from "../components/OnboardingPrimitives";
-import { inputCls } from "../components/OnboardingPrimitives";
 
 export interface PersonalInfoData {
   email: string;

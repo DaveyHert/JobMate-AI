@@ -6,7 +6,8 @@
 // and sets onboardingComplete = true in chrome.storage so it never runs again.
 // ============================================================================
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 import { jobMateStore } from "../../store/jobMateStore";
 import { OnboardingSidebar } from "./components/OnboardingSidebar";
@@ -84,11 +85,27 @@ function redirectToDashboard() {
   }
 }
 
+// ── Animation variants ─────────────────────────────────────────────────────
+
+const stepVariants = {
+  enter: (dir: number) => ({ x: dir * 48, opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit: (dir: number) => ({ x: dir * -48, opacity: 0 }),
+};
+
+const stepTransition = { duration: 0.28, ease: "easeInOut" };
+
 // ── Component ──────────────────────────────────────────────────────────────
 
 export function OnboardingApp() {
   const [step, setStep] = useState(1);
   const [saving, setSaving] = useState(false);
+  const directionRef = useRef(1);
+
+  const goTo = (next: number) => {
+    directionRef.current = next > step ? 1 : -1;
+    setStep(next);
+  };
 
   const [personal, setPersonal] = useState<PersonalInfoData>(defaultPersonal);
   const [credentials, setCredentials] = useState<CredentialsData>(defaultCredentials);
@@ -214,44 +231,86 @@ export function OnboardingApp() {
       {/* Right panel — scrollable form content */}
       <main className='flex-1 overflow-y-auto'>
         <div className='max-w-[680px] mx-auto px-8 py-12'>
-          {step === 1 && (
-            <PersonalInfoStep
-              data={personal}
-              onChange={setPersonal}
-              onContinue={() => setStep(2)}
-            />
-          )}
-          {step === 2 && (
-            <ProfessionalInfoStep
-              data={professional}
-              onChange={setProfessional}
-              profileLabel={personal.profileLabel}
-              onBack={() => setStep(1)}
-              onContinue={() => setStep(3)}
-              onSkip={() => setStep(3)}
-            />
-          )}
-          {step === 3 && (
-            <WorkExperienceStep
-              data={work}
-              onChange={setWork}
-              profileLabel={personal.profileLabel}
-              onBack={() => setStep(2)}
-              onContinue={() => setStep(4)}
-              onSkip={() => setStep(4)}
-            />
-          )}
-          {step === 4 && (
-            <CredentialsStep
-              data={credentials}
-              onChange={setCredentials}
-              profileLabel={personal.profileLabel}
-              onBack={() => setStep(3)}
-              onFinish={finish}
-              onSkip={skip}
-              saving={saving}
-            />
-          )}
+          <AnimatePresence mode='wait' initial={false} custom={directionRef.current}>
+            {step === 1 && (
+              <motion.div
+                key='step-1'
+                custom={directionRef.current}
+                variants={stepVariants}
+                initial='enter'
+                animate='center'
+                exit='exit'
+                transition={stepTransition}
+              >
+                <PersonalInfoStep
+                  data={personal}
+                  onChange={setPersonal}
+                  onContinue={() => goTo(2)}
+                />
+              </motion.div>
+            )}
+            {step === 2 && (
+              <motion.div
+                key='step-2'
+                custom={directionRef.current}
+                variants={stepVariants}
+                initial='enter'
+                animate='center'
+                exit='exit'
+                transition={stepTransition}
+              >
+                <ProfessionalInfoStep
+                  data={professional}
+                  onChange={setProfessional}
+                  profileLabel={personal.profileLabel}
+                  onBack={() => goTo(1)}
+                  onContinue={() => goTo(3)}
+                  onSkip={() => goTo(3)}
+                />
+              </motion.div>
+            )}
+            {step === 3 && (
+              <motion.div
+                key='step-3'
+                custom={directionRef.current}
+                variants={stepVariants}
+                initial='enter'
+                animate='center'
+                exit='exit'
+                transition={stepTransition}
+              >
+                <WorkExperienceStep
+                  data={work}
+                  onChange={setWork}
+                  profileLabel={personal.profileLabel}
+                  onBack={() => goTo(2)}
+                  onContinue={() => goTo(4)}
+                  onSkip={() => goTo(4)}
+                />
+              </motion.div>
+            )}
+            {step === 4 && (
+              <motion.div
+                key='step-4'
+                custom={directionRef.current}
+                variants={stepVariants}
+                initial='enter'
+                animate='center'
+                exit='exit'
+                transition={stepTransition}
+              >
+                <CredentialsStep
+                  data={credentials}
+                  onChange={setCredentials}
+                  profileLabel={personal.profileLabel}
+                  onBack={() => goTo(3)}
+                  onFinish={finish}
+                  onSkip={skip}
+                  saving={saving}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </main>
     </div>

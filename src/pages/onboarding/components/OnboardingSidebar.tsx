@@ -1,5 +1,17 @@
+import { AnimatePresence, motion } from "framer-motion";
 import patternBg from "../../../assets/svgs/pattern-background.svg";
 import noisePng from "../../../assets/img/noise.png";
+import { PersonalInfoIllustration } from "../../../assets/illustrations/PersonalInfoIllustration";
+import { ProfessionalInfoIllustration } from "../../../assets/illustrations/ProfessionalInfoIllustration";
+import { WorkExperienceIllustration } from "../../../assets/illustrations/WorkExperienceIllustration";
+import { CertificateIllustration } from "../../../assets/illustrations/CertificateIllustration";
+
+const STEP_ILLUSTRATIONS = [
+  PersonalInfoIllustration,
+  ProfessionalInfoIllustration,
+  WorkExperienceIllustration,
+  CertificateIllustration,
+];
 
 const STEPS = [
   { n: 1, title: "Personal Info", desc: "Provide your personal information." },
@@ -17,6 +29,8 @@ interface Props {
 }
 
 export function OnboardingSidebar({ currentStep }: Props) {
+  const StepIllustration = STEP_ILLUSTRATIONS[currentStep - 1];
+
   return (
     <aside className='relative w-[500px] shrink-0 bg-[#4640DE] flex flex-col overflow-hidden rounded-[20px] m-5'>
       {/* Layer 1 — line pattern */}
@@ -52,7 +66,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
 
         {/* Headline */}
         <div className='mb-10'>
-          <h1 className='text-white text-xl leading-tight mb-3'>Welcome to JobMate AI</h1>
+          <h1 className='text-neutral-01 text-xl leading-tight mb-3'>Welcome to JobMate AI</h1>
           <p className='text-white/70 text-sm leading-relaxed'>
             Follow the steps to create an account and get started.
           </p>
@@ -69,65 +83,103 @@ export function OnboardingSidebar({ currentStep }: Props) {
               <div key={step.n} className='flex gap-4'>
                 {/* Indicator column */}
                 <div className='flex flex-col items-center'>
-                  <div
-                    className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-semibold shrink-0 transition-colors ${
-                      isCompleted
-                        ? "bg-white border-white text-[#4640DE]"
-                        : isActive
-                          ? "bg-white border-white text-[#4640DE]"
-                          : "bg-transparent border-white/40 text-white/50"
-                    }`}
+                  {/* Circle */}
+                  <motion.div
+                    animate={
+                      isCompleted || isActive
+                        ? { backgroundColor: "#ffffff", borderColor: "#ffffff", scale: 1 }
+                        : {
+                            backgroundColor: "transparent",
+                            borderColor: "rgba(255,255,255,0.4)",
+                            scale: 1,
+                          }
+                    }
+                    transition={{ duration: 0.3 }}
+                    className='w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-semibold shrink-0'
+                    style={{ color: isCompleted || isActive ? "#4640DE" : "rgba(255,255,255,0.5)" }}
                   >
-                    {step.n}
-                  </div>
+                    <AnimatePresence mode='wait' initial={false}>
+                      {isCompleted ? (
+                        <motion.svg
+                          key='check'
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className='w-4 h-4'
+                          fill='none'
+                          viewBox='0 0 24 24'
+                          stroke='currentColor'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth={2.5}
+                            d='M5 13l4 4L19 7'
+                          />
+                        </motion.svg>
+                      ) : (
+                        <motion.span
+                          key='number'
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {step.n}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+
+                  {/* Connector line */}
                   {!isLast && (
-                    <div
-                      className={`w-0.5 my-1.5 min-h-[44px] ${
-                        isCompleted ? "bg-white" : "bg-white/25"
-                      }`}
-                    />
+                    <div className='relative w-0.5  min-h-[70px] bg-white/25 overflow-hidden'>
+                      <motion.div
+                        className='absolute inset-x-0 top-0 bg-white'
+                        initial={{ height: 0 }}
+                        animate={{ height: isCompleted ? "100%" : 0 }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                      />
+                    </div>
                   )}
                 </div>
 
                 {/* Text */}
                 <div className='pb-8'>
-                  <p
-                    className={`text-sm font-semibold leading-tight ${
-                      isActive || isCompleted ? "text-white" : "text-white/50"
-                    }`}
+                  <motion.p
+                    animate={{ opacity: isActive || isCompleted ? 1 : 0.5 }}
+                    transition={{ duration: 0.3 }}
+                    className='text-sm font-semibold leading-tight text-white'
                   >
                     {step.title}
-                  </p>
-                  <p
-                    className={`text-xs mt-0.5 leading-relaxed ${
-                      isActive || isCompleted ? "text-white/70" : "text-white/35"
-                    }`}
+                  </motion.p>
+                  <motion.p
+                    animate={{ opacity: isActive || isCompleted ? 0.7 : 0.35 }}
+                    transition={{ duration: 0.3 }}
+                    className='text-xs mt-0.5 leading-relaxed text-white'
                   >
                     {step.desc}
-                  </p>
+                  </motion.p>
                 </div>
               </div>
             );
           })}
         </nav>
 
-        {/* Illustration card */}
-        <div className='mt-auto bg-white/10 border border-white/20 rounded-2xl p-6 flex items-center justify-center min-h-[180px]'>
-          <div className='relative w-full flex items-end justify-center gap-4'>
-            <div className='absolute left-4 top-2 flex flex-col gap-2 opacity-50'>
-              <div className='h-0.5 w-12 bg-white/60 rounded' />
-              <div className='h-0.5 w-8 bg-white/40 rounded' />
-              <div className='h-0.5 w-14 bg-white/30 rounded' />
-            </div>
-            <div className='flex flex-col items-center gap-1'>
-              <div className='w-10 h-10 rounded-full bg-white/30 border-2 border-white/50' />
-              <div className='w-16 h-20 rounded-t-xl bg-white/20 border-2 border-white/40' />
-            </div>
-            <div className='absolute right-4 bottom-4 flex gap-2 opacity-60'>
-              <div className='w-2 h-2 rounded-full bg-white/50' />
-              <div className='w-2 h-2 rounded-full bg-white/30' />
-            </div>
-          </div>
+        {/* Illustration */}
+        <div className='mt-auto rounded-2xl overflow-hidden'>
+          <AnimatePresence mode='wait' initial={false}>
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+            >
+              <StepIllustration className='w-full h-auto' />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </aside>
