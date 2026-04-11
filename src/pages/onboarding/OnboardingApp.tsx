@@ -14,20 +14,23 @@ import { PersonalInfoStep, type PersonalInfoData } from "./steps/PersonalInfoSte
 import { CredentialsStep, type CredentialsData } from "./steps/CredentialsStep";
 import { ProfessionalInfoStep, type ProfessionalInfoData } from "./steps/ProfessionalInfoStep";
 import { WorkExperienceStep, type WorkExperienceData } from "./steps/WorkExperienceStep";
-import type {
-  UserProfile,
-  Education,
-  Credential,
-  WorkExperience,
-} from "../../models/models";
+import type { UserProfile, Education, Credential, WorkExperience } from "../../models/models";
 
 // ── Default state ──────────────────────────────────────────────────────────
 
 const defaultPersonal: PersonalInfoData = {
-  email: "", phoneCode: "+1", phone: "",
-  firstName: "", lastName: "",
-  country: "", state: "", city: "", postalCode: "", address: "",
-  website: "", profileLabel: "",
+  email: "",
+  phoneCode: "+1",
+  phone: "",
+  firstName: "",
+  lastName: "",
+  country: "",
+  state: "",
+  city: "",
+  postalCode: "",
+  address: "",
+  website: "",
+  profileLabel: "",
 };
 
 const defaultCredentials: CredentialsData = {
@@ -36,16 +39,29 @@ const defaultCredentials: CredentialsData = {
 };
 
 const defaultProfessional: ProfessionalInfoData = {
-  yearsOfExperience: "", skills: "", authorizedUS: null,
+  yearsOfExperience: "",
+  skills: "",
+  authorizedUS: null,
   salaryExpectation: "",
-  twitter: "", github: "", behance: "", instagram: "",
+  twitter: "",
+  github: "",
+  behance: "",
+  instagram: "",
 };
 
 const defaultWork: WorkExperienceData = {
-  entries: [{
-    jobTitle: "", company: "", startDate: "", endDate: "",
-    isCurrent: false, skills: "", location: "", description: "",
-  }],
+  entries: [
+    {
+      jobTitle: "",
+      company: "",
+      startDate: "",
+      endDate: "",
+      isCurrent: false,
+      skills: "",
+      location: "",
+      description: "",
+    },
+  ],
 };
 
 // ── Helpers ────────────────────────────────────────────────────────────────
@@ -74,10 +90,10 @@ export function OnboardingApp() {
   const [step, setStep] = useState(1);
   const [saving, setSaving] = useState(false);
 
-  const [personal,     setPersonal]     = useState<PersonalInfoData>(defaultPersonal);
-  const [credentials,  setCredentials]  = useState<CredentialsData>(defaultCredentials);
+  const [personal, setPersonal] = useState<PersonalInfoData>(defaultPersonal);
+  const [credentials, setCredentials] = useState<CredentialsData>(defaultCredentials);
   const [professional, setProfessional] = useState<ProfessionalInfoData>(defaultProfessional);
-  const [work,         setWork]         = useState<WorkExperienceData>(defaultWork);
+  const [work, setWork] = useState<WorkExperienceData>(defaultWork);
 
   const finish = async () => {
     setSaving(true);
@@ -118,7 +134,12 @@ export function OnboardingApp() {
           endDate: w.isCurrent ? undefined : w.endDate || undefined,
           isCurrent: w.isCurrent,
           responsibilities: w.description ? [w.description] : [],
-          technologies: w.skills ? w.skills.split(",").map((s) => s.trim()).filter(Boolean) : [],
+          technologies: w.skills
+            ? w.skills
+                .split(",")
+                .map((s) => s.trim())
+                .filter(Boolean)
+            : [],
         }));
 
       const updatedProfile: UserProfile = {
@@ -153,7 +174,10 @@ export function OnboardingApp() {
           github: professional.github || undefined,
         },
         skills: professional.skills
-          ? professional.skills.split(",").map((s) => s.trim()).filter(Boolean)
+          ? professional.skills
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean)
           : existingProfile.skills,
         education,
         credentials: creds,
@@ -184,12 +208,12 @@ export function OnboardingApp() {
   };
 
   return (
-    <div className="min-h-screen flex bg-white">
+    <div className='h-screen flex bg-white  gap-4 font-inter'>
       <OnboardingSidebar currentStep={step} />
 
       {/* Right panel — scrollable form content */}
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-2xl mx-auto px-12 py-12">
+      <main className='flex-1 overflow-y-auto'>
+        <div className='max-w-[680px] mx-auto px-8 py-12'>
           {step === 1 && (
             <PersonalInfoStep
               data={personal}
@@ -198,9 +222,9 @@ export function OnboardingApp() {
             />
           )}
           {step === 2 && (
-            <CredentialsStep
-              data={credentials}
-              onChange={setCredentials}
+            <ProfessionalInfoStep
+              data={professional}
+              onChange={setProfessional}
               profileLabel={personal.profileLabel}
               onBack={() => setStep(1)}
               onContinue={() => setStep(3)}
@@ -208,9 +232,9 @@ export function OnboardingApp() {
             />
           )}
           {step === 3 && (
-            <ProfessionalInfoStep
-              data={professional}
-              onChange={setProfessional}
+            <WorkExperienceStep
+              data={work}
+              onChange={setWork}
               profileLabel={personal.profileLabel}
               onBack={() => setStep(2)}
               onContinue={() => setStep(4)}
@@ -218,9 +242,9 @@ export function OnboardingApp() {
             />
           )}
           {step === 4 && (
-            <WorkExperienceStep
-              data={work}
-              onChange={setWork}
+            <CredentialsStep
+              data={credentials}
+              onChange={setCredentials}
               profileLabel={personal.profileLabel}
               onBack={() => setStep(3)}
               onFinish={finish}

@@ -1,6 +1,6 @@
 import { Plus, GraduationCap } from "lucide-react";
 import {
-  Field, Input, StepHeader, StepFooter, Divider,
+  Field, DateInput, StepHeader, Divider,
 } from "../components/OnboardingPrimitives";
 
 export interface EducationEntry {
@@ -29,12 +29,13 @@ interface Props {
   data: CredentialsData;
   onChange: (data: CredentialsData) => void;
   onBack: () => void;
-  onContinue: () => void;
+  onFinish: () => void;
   onSkip: () => void;
   profileLabel: string;
+  saving: boolean;
 }
 
-export function CredentialsStep({ data, onChange, onBack, onContinue, onSkip, profileLabel }: Props) {
+export function CredentialsStep({ data, onChange, onBack, onFinish, onSkip, profileLabel, saving }: Props) {
   const setEdu = (i: number, k: keyof EducationEntry, v: string) => {
     const updated = data.education.map((e, idx) => idx === i ? { ...e, [k]: v } : e);
     onChange({ ...data, education: updated });
@@ -93,16 +94,14 @@ export function CredentialsStep({ data, onChange, onBack, onContinue, onSkip, pr
             </div>
             <div className="grid grid-cols-2 gap-4">
               <Field label="Start date">
-                <Input
-                  type="date"
+                <DateInput
                   value={edu.startDate}
                   onChange={(e) => setEdu(i, "startDate", e.target.value)}
                   placeholder="Select a start date"
                 />
               </Field>
               <Field label="End date">
-                <Input
-                  type="date"
+                <DateInput
                   value={edu.endDate}
                   onChange={(e) => setEdu(i, "endDate", e.target.value)}
                   placeholder="Select an end date"
@@ -145,16 +144,14 @@ export function CredentialsStep({ data, onChange, onBack, onContinue, onSkip, pr
             </div>
             <div className="grid grid-cols-2 gap-4">
               <Field label="Start date">
-                <Input
-                  type="date"
+                <DateInput
                   value={cred.startDate}
                   onChange={(e) => setCred(i, "startDate", e.target.value)}
                   placeholder="Select a start date"
                 />
               </Field>
               <Field label="End date">
-                <Input
-                  type="date"
+                <DateInput
                   value={cred.endDate}
                   onChange={(e) => setCred(i, "endDate", e.target.value)}
                   placeholder="Select an end date"
@@ -171,7 +168,22 @@ export function CredentialsStep({ data, onChange, onBack, onContinue, onSkip, pr
         Add another credential <Plus className="w-4 h-4" />
       </button>
 
-      <StepFooter onContinue={onContinue} onSkip={onSkip} />
+      <div className="flex items-center gap-3 mt-10">
+        <button
+          onClick={onFinish}
+          disabled={saving}
+          className="px-8 py-3 bg-accent hover:bg-primary-600 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors"
+        >
+          {saving ? "Saving…" : "Finish"}
+        </button>
+        <button
+          onClick={onSkip}
+          disabled={saving}
+          className="px-8 py-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-800 rounded-lg text-sm font-medium transition-colors"
+        >
+          Skip this
+        </button>
+      </div>
     </div>
   );
 }

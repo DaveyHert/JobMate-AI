@@ -88,21 +88,29 @@ export function PersonalInfoStep({ data, onChange, onContinue }: Props) {
           </Field>
 
           <Field label="Phone number">
-            <div className="flex gap-2">
+            <div className="flex items-stretch border border-gray-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-accent/30 focus-within:border-accent transition-colors bg-white">
               <select
                 value={data.phoneCode}
                 onChange={s("phoneCode")}
-                className={`${inputCls} w-32 shrink-0 pr-2`}
+                className="pl-3 py-3 text-sm text-gray-900 bg-transparent border-r border-gray-200 focus:outline-none cursor-pointer shrink-0 appearance-none"
+                style={{
+                  paddingRight: "28px",
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "right 6px center",
+                  backgroundSize: "14px",
+                }}
               >
                 {PHONE_CODES.map((p) => (
                   <option key={p.code} value={p.code}>{p.code}</option>
                 ))}
               </select>
-              <Input
+              <input
                 type="tel"
                 value={data.phone}
                 onChange={s("phone")}
                 placeholder="Enter your phone number"
+                className="flex-1 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none bg-transparent min-w-0"
               />
             </div>
           </Field>

@@ -1,6 +1,5 @@
 import { Plus, FileText } from "lucide-react";
-import { Field, Input, Select, Textarea, StepHeader } from "../components/OnboardingPrimitives";
-import { inputCls } from "../components/OnboardingPrimitives";
+import { Field, Input, DateInput, Select, Textarea, StepHeader } from "../components/OnboardingPrimitives";
 
 export interface WorkEntry {
   jobTitle: string;
@@ -39,13 +38,12 @@ interface Props {
   data: WorkExperienceData;
   onChange: (data: WorkExperienceData) => void;
   onBack: () => void;
-  onFinish: () => void;
+  onContinue: () => void;
   onSkip: () => void;
   profileLabel: string;
-  saving: boolean;
 }
 
-export function WorkExperienceStep({ data, onChange, onBack, onFinish, onSkip, profileLabel, saving }: Props) {
+export function WorkExperienceStep({ data, onChange, onBack, onContinue, onSkip, profileLabel }: Props) {
   const setEntry = (i: number, patch: Partial<WorkEntry>) => {
     const entries = data.entries.map((e, idx) => idx === i ? { ...e, ...patch } : e);
     onChange({ entries });
@@ -107,17 +105,17 @@ export function WorkExperienceStep({ data, onChange, onBack, onFinish, onSkip, p
 
             <div className="grid grid-cols-2 gap-4">
               <Field label="Start date">
-                <Input
-                  type="date"
+                <DateInput
                   value={entry.startDate}
                   onChange={(e) => setEntry(i, { startDate: e.target.value })}
+                  placeholder="Select a start date"
                 />
               </Field>
               <Field label="End date">
-                <Input
-                  type="date"
+                <DateInput
                   value={entry.endDate}
                   onChange={(e) => setEntry(i, { endDate: e.target.value })}
+                  placeholder="Select an end date"
                   disabled={entry.isCurrent}
                 />
               </Field>
@@ -174,15 +172,13 @@ export function WorkExperienceStep({ data, onChange, onBack, onFinish, onSkip, p
 
       <div className="flex items-center gap-3 mt-10">
         <button
-          onClick={onFinish}
-          disabled={saving}
-          className="px-8 py-3 bg-accent hover:bg-primary-600 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors"
+          onClick={onContinue}
+          className="px-8 py-3 bg-accent hover:bg-primary-600 text-white rounded-lg text-sm font-medium transition-colors"
         >
-          {saving ? "Saving…" : "Continue"}
+          Continue
         </button>
         <button
           onClick={onSkip}
-          disabled={saving}
           className="px-8 py-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-800 rounded-lg text-sm font-medium transition-colors"
         >
           Skip this

@@ -1,5 +1,5 @@
 // Lightweight shared atoms used across all onboarding step forms.
-import { ReactNode, InputHTMLAttributes, TextareaHTMLAttributes, SelectHTMLAttributes } from "react";
+import { ReactNode, InputHTMLAttributes, TextareaHTMLAttributes, SelectHTMLAttributes, useState } from "react";
 
 export const inputCls =
   "w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors bg-white";
@@ -27,6 +27,34 @@ export function Field({ label, optional, children }: FieldProps) {
 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
   return <input {...props} className={`${inputCls} ${props.className ?? ""}`} />;
+}
+
+interface DateInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
+  placeholder?: string;
+}
+
+export function DateInput({ value, placeholder = "Select a date", disabled, className, ...props }: DateInputProps) {
+  const [focused, setFocused] = useState(false);
+  const isEmpty = !value;
+
+  return (
+    <div className="relative">
+      <input
+        type="date"
+        value={value}
+        disabled={disabled}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        {...props}
+        className={`${inputCls} ${isEmpty && !focused ? "text-transparent" : ""} [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-50 ${className ?? ""}`}
+      />
+      {isEmpty && !focused && (
+        <span className="absolute inset-0 px-4 flex items-center text-sm text-gray-400 pointer-events-none">
+          {placeholder}
+        </span>
+      )}
+    </div>
+  );
 }
 
 export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
