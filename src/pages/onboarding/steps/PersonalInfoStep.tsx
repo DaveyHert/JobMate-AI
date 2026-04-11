@@ -1,5 +1,6 @@
 import { User } from "lucide-react";
 import { Field, Input, Select, StepHeader, StepFooter } from "../components/OnboardingPrimitives";
+import UserSvg from "@/assets/svgs/usersvg";
 
 export interface PersonalInfoData {
   email: string;
@@ -23,25 +24,52 @@ interface Props {
 }
 
 const PHONE_CODES = [
-  { code: "+1",   label: "+1  (US/CA)" },
-  { code: "+44",  label: "+44 (UK)" },
+  { code: "+1", label: "+1  (US/CA)" },
+  { code: "+44", label: "+44 (UK)" },
   { code: "+234", label: "+234 (NG)" },
-  { code: "+27",  label: "+27 (ZA)" },
-  { code: "+49",  label: "+49 (DE)" },
-  { code: "+33",  label: "+33 (FR)" },
-  { code: "+91",  label: "+91 (IN)" },
-  { code: "+61",  label: "+61 (AU)" },
-  { code: "+55",  label: "+55 (BR)" },
+  { code: "+27", label: "+27 (ZA)" },
+  { code: "+49", label: "+49 (DE)" },
+  { code: "+33", label: "+33 (FR)" },
+  { code: "+91", label: "+91 (IN)" },
+  { code: "+61", label: "+61 (AU)" },
+  { code: "+55", label: "+55 (BR)" },
   { code: "+971", label: "+971 (AE)" },
 ];
 
 const COUNTRIES = [
-  "Nigeria", "United States", "United Kingdom", "Canada", "Australia",
-  "Germany", "France", "India", "South Africa", "Brazil", "Kenya",
-  "Ghana", "Egypt", "UAE", "Netherlands", "Sweden", "Singapore",
-  "New Zealand", "Ireland", "Portugal", "Spain", "Italy", "Poland",
-  "Ukraine", "Pakistan", "Bangladesh", "Philippines", "Indonesia",
-  "Malaysia", "Mexico", "Argentina", "Chile", "Colombia",
+  "Nigeria",
+  "United States",
+  "United Kingdom",
+  "Canada",
+  "Australia",
+  "Germany",
+  "France",
+  "India",
+  "South Africa",
+  "Brazil",
+  "Kenya",
+  "Ghana",
+  "Egypt",
+  "UAE",
+  "Netherlands",
+  "Sweden",
+  "Singapore",
+  "New Zealand",
+  "Ireland",
+  "Portugal",
+  "Spain",
+  "Italy",
+  "Poland",
+  "Ukraine",
+  "Pakistan",
+  "Bangladesh",
+  "Philippines",
+  "Indonesia",
+  "Malaysia",
+  "Mexico",
+  "Argentina",
+  "Chile",
+  "Colombia",
 ];
 
 const set =
@@ -56,42 +84,42 @@ export function PersonalInfoStep({ data, onChange, onContinue }: Props) {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Create an Account</h1>
-        <p className="text-gray-500 text-sm">Fill in the fields below to create an account.</p>
+      <div className='mb-8'>
+        <h1 className='text-3xl font-bold text-gray-900 mb-2'>Create an Account</h1>
+        <p className='text-gray-500 text-sm'>Fill in the fields below to create an account.</p>
       </div>
 
       <StepHeader
-        icon={<User className="w-5 h-5 text-accent" />}
-        title="Personal Information"
+        icon={<UserSvg className='w-5 h-5 text-primary-04' />}
+        title='Personal Information'
       />
 
-      <div className="space-y-5">
+      <div className='space-y-5'>
         {/* Profile label — collected here so sidebar steps 2-4 can show it */}
-        <Field label="What role are you applying for?">
+        <Field label='What role are you applying for?'>
           <Input
             value={data.profileLabel}
             onChange={s("profileLabel")}
-            placeholder="e.g. Product Designer, Software Engineer"
+            placeholder='e.g. Product Designer, Software Engineer'
           />
         </Field>
 
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="Email address">
+        <div className='grid grid-cols-2 gap-4'>
+          <Field label='Email address'>
             <Input
-              type="email"
+              type='email'
               value={data.email}
               onChange={s("email")}
-              placeholder="Enter your email address"
+              placeholder='Enter your email address'
             />
           </Field>
 
-          <Field label="Phone number">
-            <div className="flex items-stretch border border-gray-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-accent/30 focus-within:border-accent transition-colors bg-white">
+          <Field label='Phone number'>
+            <div className='flex items-stretch border border-gray-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-accent/30 focus-within:border-accent transition-colors bg-white'>
               <select
                 value={data.phoneCode}
                 onChange={s("phoneCode")}
-                className="pl-3 py-3 text-sm text-gray-900 bg-transparent border-r border-gray-200 focus:outline-none cursor-pointer shrink-0 appearance-none"
+                className='pl-3 py-3 text-sm text-gray-900 bg-neutral-01 border-r border-gray-200 focus:outline-none cursor-pointer shrink-0 appearance-none'
                 style={{
                   paddingRight: "28px",
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
@@ -101,62 +129,90 @@ export function PersonalInfoStep({ data, onChange, onContinue }: Props) {
                 }}
               >
                 {PHONE_CODES.map((p) => (
-                  <option key={p.code} value={p.code}>{p.code}</option>
+                  <option key={p.code} value={p.code}>
+                    {p.code}
+                  </option>
                 ))}
               </select>
               <input
-                type="tel"
+                type='tel'
                 value={data.phone}
                 onChange={s("phone")}
-                placeholder="Enter your phone number"
-                className="flex-1 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none bg-transparent min-w-0"
+                placeholder='Enter your phone number'
+                className='flex-1 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none bg-transparent min-w-0'
               />
             </div>
           </Field>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="First name">
-            <Input value={data.firstName} onChange={s("firstName")} placeholder="Enter your first name" />
+        <div className='grid grid-cols-2 gap-4'>
+          <Field label='First name'>
+            <Input
+              value={data.firstName}
+              onChange={s("firstName")}
+              placeholder='Enter your first name'
+            />
           </Field>
-          <Field label="Last name">
-            <Input value={data.lastName} onChange={s("lastName")} placeholder="Enter your last name" />
+          <Field label='Last name'>
+            <Input
+              value={data.lastName}
+              onChange={s("lastName")}
+              placeholder='Enter your last name'
+            />
           </Field>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="Country">
+        <div className='grid grid-cols-2 gap-4'>
+          <Field label='Country'>
             <Select value={data.country} onChange={s("country")}>
-              <option value="">Select a country</option>
+              <option value=''>Select a country</option>
               {COUNTRIES.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>
+                  {c}
+                </option>
               ))}
             </Select>
           </Field>
-          <Field label="State">
-            <Input value={data.state} onChange={s("state")} placeholder="What state do you stay in?" />
+          <Field label='State'>
+            <Input
+              value={data.state}
+              onChange={s("state")}
+              placeholder='What state do you stay in?'
+            />
           </Field>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="City">
-            <Input value={data.city} onChange={s("city")} placeholder="What's the name of your city?" />
+        <div className='grid grid-cols-2 gap-4'>
+          <Field label='City'>
+            <Input
+              value={data.city}
+              onChange={s("city")}
+              placeholder="What's the name of your city?"
+            />
           </Field>
-          <Field label="Postal code">
-            <Input value={data.postalCode} onChange={s("postalCode")} placeholder="Enter your postal code" />
+          <Field label='Postal code'>
+            <Input
+              value={data.postalCode}
+              onChange={s("postalCode")}
+              placeholder='Enter your postal code'
+            />
           </Field>
         </div>
 
-        <Field label="House address">
-          <Input value={data.address} onChange={s("address")} placeholder="What's your street name & house number?" />
+        <Field label='House address'>
+          <Input
+            value={data.address}
+            onChange={s("address")}
+            placeholder="What's your street name & house number?"
+          />
         </Field>
 
-        <Field label="Website URL" optional>
+        <Field label='Website URL' optional>
           <Input
-            type="url"
+            type='url'
             value={data.website}
             onChange={s("website")}
-            placeholder="Please enter the URL of your general website"
+            placeholder='Please enter the URL of your general website'
           />
         </Field>
       </div>

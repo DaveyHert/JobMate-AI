@@ -67,7 +67,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
         {/* Headline */}
         <div className='mb-10'>
           <h1 className='text-neutral-01 text-xl leading-tight mb-3'>Welcome to JobMate AI</h1>
-          <p className='text-white/70 text-sm leading-relaxed'>
+          <p className='text-neutral-01 font-normal text-base leading-relaxed'>
             Follow the steps to create an account and get started.
           </p>
         </div>
@@ -85,27 +85,50 @@ export function OnboardingSidebar({ currentStep }: Props) {
                 <div className='flex flex-col items-center'>
                   {/* Circle */}
                   <motion.div
-                    animate={
+                    initial={
                       isCompleted || isActive
-                        ? { backgroundColor: "#ffffff", borderColor: "#ffffff", scale: 1 }
+                        ? {
+                            backgroundColor: "#ffffff",
+                            borderColor: "#ffffff",
+                            scale: 1,
+                            color: "#4640DE",
+                          }
                         : {
-                            backgroundColor: "transparent",
+                            backgroundColor: "rgba(255, 255, 255, 0)",
                             borderColor: "rgba(255,255,255,0.4)",
                             scale: 1,
+                            color: "rgba(255,255,255,0.5)",
                           }
                     }
-                    transition={{ duration: 0.3 }}
+                    animate={
+                      isCompleted || isActive
+                        ? {
+                            backgroundColor: "#ffffff",
+                            borderColor: "#ffffff",
+                            scale: 1,
+                            color: "#4640DE",
+                          }
+                        : {
+                            backgroundColor: "rgba(255, 255, 255, 0)",
+                            borderColor: "rgba(255,255,255,0.4)",
+                            scale: 1,
+                            color: "rgba(255,255,255,0.5)",
+                          }
+                    }
+                    transition={{ duration: 0.3, delay: isActive && !isCompleted ? 0.4 : 0 }}
                     className='w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-semibold shrink-0'
-                    style={{ color: isCompleted || isActive ? "#4640DE" : "rgba(255,255,255,0.5)" }}
                   >
                     <AnimatePresence mode='wait' initial={false}>
                       {isCompleted ? (
+                        // checkmark for completed steps
                         <motion.svg
                           key='check'
                           initial={{ scale: 0, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           exit={{ scale: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
+                          transition={{
+                            duration: 0.2,
+                          }}
                           className='w-4 h-4'
                           fill='none'
                           viewBox='0 0 24 24'
@@ -148,16 +171,18 @@ export function OnboardingSidebar({ currentStep }: Props) {
                 {/* Text */}
                 <div className='pb-8'>
                   <motion.p
+                    initial={{ opacity: isActive || isCompleted ? 1 : 0.5 }}
                     animate={{ opacity: isActive || isCompleted ? 1 : 0.5 }}
-                    transition={{ duration: 0.3 }}
-                    className='text-sm font-semibold leading-tight text-white'
+                    transition={{ duration: 0.1, delay: isActive && !isCompleted ? 0.5 : 0 }}
+                    className='text-base font-semibold leading-tight text-neutral-01'
                   >
                     {step.title}
                   </motion.p>
                   <motion.p
+                    initial={{ opacity: isActive || isCompleted ? 0.7 : 0.35 }}
                     animate={{ opacity: isActive || isCompleted ? 0.7 : 0.35 }}
-                    transition={{ duration: 0.3 }}
-                    className='text-xs mt-0.5 leading-relaxed text-white'
+                    transition={{ duration: 0.1, delay: isActive && !isCompleted ? 0.5 : 0 }}
+                    className='text-xs mt-0.5 leading-relaxed text-neutral-02'
                   >
                     {step.desc}
                   </motion.p>

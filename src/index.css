@@ -35,6 +35,14 @@
   --color-primary-700: #3836a0;
   --color-primary-800: #28267b;
   --color-primary-900: #1c1a55;
+
+  --color-primary-01: #f3f2fc;
+  --color-primary-02: #d4d2f8;
+  --color-primary-03: #8580f2;
+  --color-primary-04: #5750f1;
+  --color-primary-05: #3f38c7;
+  --color-primary-06: #474ac4;
+
   /* Semantic */
   --color-success-500: #22c55e;
   --color-warning-500: #f5a524;

@@ -101,10 +101,10 @@ export function StepHeader({ icon, title, action }: StepHeaderProps) {
   return (
     <div className='flex items-center justify-between mb-8'>
       <div className='flex items-center gap-3'>
-        <div className='w-10 h-10 rounded-lg bg-accent-soft flex items-center justify-center shrink-0'>
+        <div className='rounded-lg bg-primary-02 flex items-center justify-center shrink-0 w-10 h-10'>
           {icon}
         </div>
-        <h2 className='text-xl font-semibold text-gray-900'>{title}</h2>
+        <h2 className='text-xl font-medium text-neutral-06'>{title}</h2>
       </div>
       {action && <div>{action}</div>}
     </div>
@@ -125,17 +125,24 @@ export function StepTopNav({ onBack, profileLabel }: StepTopNavProps) {
     <div className='flex items-center justify-between mb-8'>
       <button
         onClick={onBack}
-        className='p-1 text-gray-500 hover:text-gray-800 transition-colors'
+        className='p-1 text-neutral-06 hover:text-gray-800 transition-colors cursor-pointer flex items-center gap-1'
         aria-label='Back'
       >
         <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
           <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 19l-7-7 7-7' />
         </svg>
+
+        <span className='text-sm'>back</span>
       </button>
       {profileLabel && (
         <div className='flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700'>
           {profileLabel}
-          <svg className='w-4 h-4 text-gray-400' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+          <svg
+            className='w-4 h-4 text-gray-400'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'
+          >
             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
           </svg>
         </div>
@@ -175,7 +182,7 @@ export function StepFooter({
               d='M15 19l-7-7 7-7'
             />
           </svg>
-          <span className='text-neutral-06'>back</span>
+          <span className='text-neutral-06 text-sm font-semibold'>Back</span>
         </button>
       )}
       <button
