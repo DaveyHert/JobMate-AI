@@ -14,6 +14,16 @@
   --color-muted: #c5c8ff;
   --color-accent: #5750f1;
   --color-accent-soft: #f3f3fe;
+
+  --color-neutral-01: #f5f7f9;
+  --color-neutral-02: #dae1e7;
+  --color-neutral-03: #b8c2cc;
+  --color-neutral-04: #8795a1;
+  --color-neutral-05: #606f7b;
+  --color-neutral-06: #3d4852;
+  --color-neutral-07: #1a1f23;
+  --color-neutral-08: #111517;
+  --color-neutral-09: #030108;
   /* Brand */
   --color-primary-50: #eef0ff;
   --color-primary-100: #dadcff;
