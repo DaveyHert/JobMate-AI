@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, delay, motion } from "framer-motion";
 import patternBg from "../../../assets/svgs/pattern-background.svg";
 import noisePng from "../../../assets/img/noise.png";
 import { PersonalInfoIllustration } from "../../../assets/illustrations/PersonalInfoIllustration";
@@ -194,13 +194,13 @@ export function OnboardingSidebar({ currentStep }: Props) {
 
         {/* Illustration */}
         <div className='mt-auto rounded-2xl overflow-hidden'>
-          <AnimatePresence mode='wait' initial={false}>
+          <AnimatePresence mode='wait'>
             <motion.div
               key={currentStep}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+              initial={{ opacity: 0, scale: 0, x: 100, y: 50 }}
+              animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, x: -60, y: 30 }}
+              transition={{ type: "spring", stiffness: 200, damping: 24 }}
             >
               <StepIllustration className='w-full h-auto' />
             </motion.div>

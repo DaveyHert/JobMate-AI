@@ -1,5 +1,4 @@
 import type { SVGProps } from "react";
-import { motion } from "framer-motion";
 
 export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
   return (
@@ -12,7 +11,6 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
       {...props}
     >
       <g id='work-experience-illustration'>
-        {/* Main Background Card */}
         <path
           id='card'
           d='M412.896 0.624023H23.2209C11.1811 0.624023 1.4209 10.9215 1.4209 23.624V204.749C1.4209 217.452 11.1811 227.749 23.2209 227.749H412.896C424.936 227.749 434.696 217.452 434.696 204.749V23.624C434.696 10.9215 424.936 0.624023 412.896 0.624023Z'
@@ -21,9 +19,7 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
           stroke='white'
           strokeOpacity={0.15}
         />
-
-        <g id='data-flow'>
-          {/* Left Hand Side Roles List */}
+        <g id='data-flow' filter='url(#filter0_d_1325_3005)'>
           <g id='roles'>
             <g id='card_2'>
               <path
@@ -47,14 +43,7 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
                 fillOpacity={0.15}
               />
             </g>
-
-            {/* The Active Role (Middle Card) - Pulses to indicate data extraction */}
-            <motion.g
-              id='card_3'
-              animate={{ scale: [1, 1.02, 1], opacity: [0.8, 1, 0.8] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              style={{ transformOrigin: "100px 108px" }}
-            >
+            <g id='card_3'>
               <path
                 id='Vector_4'
                 d='M132.088 92H68.0501C65.0401 92 62.6001 94.5744 62.6001 97.75V117.875C62.6001 121.051 65.0401 123.625 68.0501 123.625H132.088C135.098 123.625 137.538 121.051 137.538 117.875V97.75C137.538 94.5744 135.098 92 132.088 92Z'
@@ -75,8 +64,7 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
                 fill='white'
                 fillOpacity={0.6}
               />
-            </motion.g>
-
+            </g>
             <g id='card_4'>
               <path
                 id='Vector_7'
@@ -106,8 +94,6 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
               />
             </g>
           </g>
-
-          {/* Connecting Flow Line */}
           <g id='data-line'>
             <path
               id='line'
@@ -117,23 +103,12 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
               strokeWidth={1.5}
               strokeDasharray='3 3'
             />
-
-            {/* Traveling Data Packet (Shoots from List to ID Card) */}
-            <motion.path
+            <path
               id='data'
               d='M175.006 105.656H168.194C167.065 105.656 166.15 106.622 166.15 107.812C166.15 109.003 167.065 109.969 168.194 109.969H175.006C176.135 109.969 177.05 109.003 177.05 107.812C177.05 106.622 176.135 105.656 175.006 105.656Z'
               fill='#C4BFF2'
-              animate={{ x: [-28, 25], opacity: [0, 1, 1, 0] }}
-              transition={{
-                duration: 1.5,
-                times: [0, 0.2, 0.8, 1],
-                repeat: Infinity,
-                ease: "linear",
-              }}
             />
           </g>
-
-          {/* Timeline Axis */}
           <g id='timeline'>
             <path
               id='Vector_11'
@@ -146,19 +121,13 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
               d='M37.9927 63.375C39.6495 63.375 40.9927 62.0319 40.9927 60.375C40.9927 58.7181 39.6495 57.375 37.9927 57.375C36.3358 57.375 34.9927 58.7181 34.9927 60.375C34.9927 62.0319 36.3358 63.375 37.9927 63.375Z'
               fill='#8F87E7'
             />
-
-            {/* Active Timeline Node (Pulses with the middle card) */}
-            <motion.path
+            <path
               id='Vector_13'
               d='M37.9927 111.812C40.2018 111.812 41.9927 110.022 41.9927 107.812C41.9927 105.603 40.2018 103.812 37.9927 103.812C35.7835 103.812 33.9927 105.603 33.9927 107.812C33.9927 110.022 35.7835 111.812 37.9927 111.812Z'
               fill='white'
               stroke='#C4BFF2'
               strokeWidth={2}
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              style={{ transformOrigin: "38px 108px" }}
             />
-
             <path
               id='Vector_14'
               d='M37.9927 158.25C39.6495 158.25 40.9927 156.907 40.9927 155.25C40.9927 153.593 39.6495 152.25 37.9927 152.25C36.3358 152.25 34.9927 153.593 34.9927 155.25C34.9927 156.907 36.3358 158.25 37.9927 158.25Z'
@@ -166,57 +135,32 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
             />
           </g>
         </g>
-
         <g id='employment-data'>
           <g id='ripples'>
-            {/* Expanding processing ripples */}
-            <motion.g
-              id='Vector_15'
-              filter='url(#filter1_d_1325_3005)'
-              animate={{ scale: [0.95, 1.05, 0.95], opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              style={{ transformOrigin: "264px 108px" }}
-            >
+            <g id='Vector_15' filter='url(#filter1_d_1325_3005)'>
               <path
                 d='M264.25 186.875C305.637 186.875 339.188 151.478 339.188 107.812C339.188 64.1475 305.637 28.75 264.25 28.75C222.863 28.75 189.312 64.1475 189.312 107.812C189.312 151.478 222.863 186.875 264.25 186.875Z'
                 fill='white'
                 fillOpacity={0.06}
                 shapeRendering='crispEdges'
               />
-            </motion.g>
-
-            <motion.g
-              id='Vector_16'
-              filter='url(#filter2_d_1325_3005)'
-              animate={{ scale: [0.97, 1.05, 0.97], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              style={{ transformOrigin: "264px 108px" }}
-            >
+            </g>
+            <g id='Vector_16' filter='url(#filter2_d_1325_3005)'>
               <path
                 d='M264.25 165.312C294.35 165.312 318.75 139.569 318.75 107.812C318.75 76.0561 294.35 50.3125 264.25 50.3125C234.15 50.3125 209.75 76.0561 209.75 107.812C209.75 139.569 234.15 165.312 264.25 165.312Z'
                 fill='white'
                 fillOpacity={0.06}
                 shapeRendering='crispEdges'
               />
-            </motion.g>
+            </g>
           </g>
-
-          {/* Glowing background diamond */}
-          <motion.path
+          <path
             id='Vector_17'
             d='M264.25 43.125L325.562 107.812L264.25 172.5L202.938 107.812L264.25 43.125Z'
             stroke='white'
             strokeOpacity={0.1}
-            animate={{ strokeOpacity: [0.1, 0.3, 0.1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           />
-
-          {/* Central ID Card - Gently floats */}
-          <motion.g
-            id='employment-id-card'
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          >
+          <g id='employment-id-card'>
             <g id='hook'>
               <path
                 id='Vector_18'
@@ -241,7 +185,6 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
                 />
               </g>
             </g>
-
             <g id='card_5' filter='url(#filter3_d_1325_3005)'>
               <path
                 d='M294.164 56.7173H234.525C230.724 56.7173 227.643 59.9678 227.643 63.9775V158.361C227.643 162.371 230.724 165.621 234.525 165.621H294.164C297.964 165.621 301.045 162.371 301.045 158.361V63.9775C301.045 59.9678 297.964 56.7173 294.164 56.7173Z'
@@ -256,7 +199,6 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
                 shapeRendering='crispEdges'
               />
             </g>
-
             <g id='user'>
               <g id='Vector_20'>
                 <mask id='path-24-inside-2_1325_3005' fill='white'>
@@ -301,14 +243,8 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
                 />
               </g>
             </g>
-
-            {/* User Info Lines - Pulsing as data hits the card */}
             <g id='user-info'>
-              <motion.g
-                id='Vector_23'
-                animate={{ opacity: [0.3, 1, 0.3] }}
-                transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
-              >
+              <g id='Vector_23'>
                 <mask id='path-28-inside-5_1325_3005' fill='white'>
                   <path d='M282.695 129.319H245.994C244.727 129.319 243.7 130.403 243.7 131.739C243.7 133.076 244.727 134.16 245.994 134.16H282.695C283.962 134.16 284.988 133.076 284.988 131.739C284.988 130.403 283.962 129.319 282.695 129.319Z' />
                 </mask>
@@ -321,13 +257,8 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
                   strokeWidth={2}
                   mask='url(#path-28-inside-5_1325_3005)'
                 />
-              </motion.g>
-
-              <motion.g
-                id='Vector_24'
-                animate={{ opacity: [0.2, 0.8, 0.2] }}
-                transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
-              >
+              </g>
+              <g id='Vector_24'>
                 <mask id='path-29-inside-6_1325_3005' fill='white'>
                   <path d='M264.344 141.42H245.994C244.727 141.42 243.7 142.504 243.7 143.84C243.7 145.177 244.727 146.261 245.994 146.261H264.344C265.611 146.261 266.638 145.177 266.638 143.84C266.638 142.504 265.611 141.42 264.344 141.42Z' />
                 </mask>
@@ -340,13 +271,8 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
                   strokeWidth={2}
                   mask='url(#path-29-inside-6_1325_3005)'
                 />
-              </motion.g>
-
-              <motion.g
-                id='Vector_25'
-                animate={{ opacity: [0.1, 0.6, 0.1] }}
-                transition={{ duration: 1.5, repeat: Infinity, delay: 0.6 }}
-              >
+              </g>
+              <g id='Vector_25'>
                 <mask id='path-30-inside-7_1325_3005' fill='white'>
                   <path d='M274.093 62.7681H254.595C253.645 62.7681 252.875 63.5807 252.875 64.5831C252.875 65.5856 253.645 66.3982 254.595 66.3982H274.093C275.043 66.3982 275.813 65.5856 275.813 64.5831C275.813 63.5807 275.043 62.7681 274.093 62.7681Z' />
                 </mask>
@@ -359,11 +285,10 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
                   strokeWidth={2}
                   mask='url(#path-30-inside-7_1325_3005)'
                 />
-              </motion.g>
+              </g>
             </g>
-          </motion.g>
+          </g>
         </g>
-
         <g id='pagination'>
           <path
             id='Vector_26'
@@ -391,7 +316,6 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
           />
         </g>
       </g>
-
       <defs>
         <filter
           id='filter0_d_1325_3005'
@@ -421,14 +345,12 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
             result='shape'
           />
         </filter>
-
-        {/* Expanded filters to avoid clipping animated elements */}
         <filter
           id='filter1_d_1325_3005'
-          x={164}
-          y={3}
-          width={200}
-          height={208}
+          x={184.312}
+          y={23.75}
+          width={159.875}
+          height={168.125}
           filterUnits='userSpaceOnUse'
           colorInterpolationFilters='sRGB'
         >
@@ -451,13 +373,12 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
             result='shape'
           />
         </filter>
-
         <filter
           id='filter2_d_1325_3005'
-          x={185}
-          y={26}
-          width={157}
-          height={163}
+          x={205.75}
+          y={46.3125}
+          width={117}
+          height={123}
           filterUnits='userSpaceOnUse'
           colorInterpolationFilters='sRGB'
         >
@@ -480,13 +401,12 @@ export function WorkExperienceIllustration(props: SVGProps<SVGSVGElement>) {
             result='shape'
           />
         </filter>
-
         <filter
           id='filter3_d_1325_3005'
-          x={210}
-          y={35}
-          width={110}
-          height={150}
+          x={222.143}
+          y={51.2173}
+          width={84.4023}
+          height={119.904}
           filterUnits='userSpaceOnUse'
           colorInterpolationFilters='sRGB'
         >

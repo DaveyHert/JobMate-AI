@@ -1,4 +1,5 @@
 import type { SVGProps } from "react";
+import { motion } from "framer-motion";
 
 export function PersonalInfoIllustration(props: SVGProps<SVGSVGElement>) {
   return (
@@ -11,6 +12,7 @@ export function PersonalInfoIllustration(props: SVGProps<SVGSVGElement>) {
       {...props}
     >
       <g id='personal-info-illustration' clipPath='url(#clip0_1326_3361)'>
+        {/* Main Background Card */}
         <path
           id='card'
           d='M412.838 1.375H23.1625C11.1227 1.375 1.36255 11.2247 1.36255 23.375V196.625C1.36255 208.775 11.1227 218.625 23.1625 218.625H412.838C424.877 218.625 434.638 208.775 434.638 196.625V23.375C434.638 11.2247 424.877 1.375 412.838 1.375Z'
@@ -19,33 +21,45 @@ export function PersonalInfoIllustration(props: SVGProps<SVGSVGElement>) {
           stroke='white'
           strokeOpacity={0.15}
         />
+
+        {/* Left Skeleton Data - Staggered Pulsing Effect */}
         <g id='skeleton-data'>
-          <path
+          <motion.path
             id='Vector'
             d='M100.825 89.375H47.6876C45.4301 89.375 43.6001 91.2218 43.6001 93.5C43.6001 95.7782 45.4301 97.625 47.6876 97.625H100.825C103.083 97.625 104.913 95.7782 104.913 93.5C104.913 91.2218 103.083 89.375 100.825 89.375Z'
             fill='white'
-            fillOpacity={0.3}
+            animate={{ fillOpacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, delay: 0 }}
           />
-          <path
+          <motion.path
             id='Vector_2'
             d='M141.7 108.625H47.6876C45.4301 108.625 43.6001 110.472 43.6001 112.75C43.6001 115.028 45.4301 116.875 47.6876 116.875H141.7C143.958 116.875 145.788 115.028 145.788 112.75C145.788 110.472 143.958 108.625 141.7 108.625Z'
             fill='white'
-            fillOpacity={0.3}
+            animate={{ fillOpacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
           />
-          <path
+          <motion.path
             id='Vector_3'
             d='M80.3876 127.875H47.6876C45.4301 127.875 43.6001 129.722 43.6001 132C43.6001 134.278 45.4301 136.125 47.6876 136.125H80.3876C82.6451 136.125 84.4751 134.278 84.4751 132C84.4751 129.722 82.6451 127.875 80.3876 127.875Z'
             fill='white'
-            fillOpacity={0.3}
+            animate={{ fillOpacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
           />
-          <path
+          <motion.path
             id='Vector_4'
             d='M111.725 127.875H92.65C90.3925 127.875 88.5625 129.722 88.5625 132C88.5625 134.278 90.3925 136.125 92.65 136.125H111.725C113.982 136.125 115.812 134.278 115.812 132C115.812 129.722 113.982 127.875 111.725 127.875Z'
             fill='white'
-            fillOpacity={0.1}
+            animate={{ fillOpacity: [0.1, 0.4, 0.1] }}
+            transition={{ duration: 2, repeat: Infinity, delay: 0.9 }}
           />
         </g>
-        <g id='user-profile'>
+
+        {/* Center User Profile - Gentle Floating Effect */}
+        <motion.g
+          id='user-profile'
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
           <g id='profile'>
             <g id='Vector_5' filter='url(#filter0_d_1326_3361)'>
               <path
@@ -85,46 +99,75 @@ export function PersonalInfoIllustration(props: SVGProps<SVGSVGElement>) {
                 />
               </g>
             </g>
+
+            {/* AI Typing Lines inside the profile */}
             <g id='lines'>
-              <path
+              <motion.path
                 id='Vector_8'
                 d='M216.825 151.25H271.325'
                 stroke='white'
-                strokeOpacity={0.25}
-                strokeWidth={1.5}
+                strokeOpacity={0.8}
+                strokeWidth={2}
                 strokeLinecap='round'
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: [0, 1, 1, 0], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
               />
-              <path
+              <motion.path
                 id='Vector_9'
                 d='M216.825 162.25H250.887'
                 stroke='white'
-                strokeOpacity={0.25}
-                strokeWidth={1.5}
+                strokeOpacity={0.8}
+                strokeWidth={2}
                 strokeLinecap='round'
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: [0, 1, 1, 0], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
               />
             </g>
           </g>
+
           <g id='shine'>
-            <path
+            {/* Twinkling AI Sparkles */}
+            <motion.path
               id='star'
               d='M182.762 103.125L184.125 107.25L188.212 108.625L184.125 110L182.762 114.125L181.4 110L177.312 108.625L181.4 107.25L182.762 103.125Z'
               fill='white'
-              fillOpacity={0.6}
+              animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              style={{ transformOrigin: "182px 108px" }}
             />
-            <path
+            <motion.path
               id='star-main'
               d='M291.763 41.25L293.806 48.8125L301.3 50.875L293.806 52.9375L291.763 60.5L289.719 52.9375L282.225 50.875L289.719 48.8125L291.763 41.25Z'
               fill='white'
-              fillOpacity={0.8}
+              animate={{ opacity: [0.4, 1, 0.4], scale: [0.9, 1.1, 0.9] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              style={{ transformOrigin: "291px 50px" }}
             />
-            <g id='cursor' filter='url(#filter1_d_1326_3361)'>
+
+            {/* The Magic Autofill Cursor - Glides around the form */}
+            <motion.g
+              id='cursor'
+              filter='url(#filter1_d_1326_3361)'
+              animate={{
+                x: [0, -45, -45, -10, 0],
+                y: [0, -35, 15, 20, 0],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
               <path
                 d='M261.749 155.813V175.063L265.836 170.938L269.924 180.563L274.011 179.188L269.924 169.563H275.374L261.749 155.813Z'
                 fill='white'
               />
-            </g>
+            </motion.g>
           </g>
-        </g>
+        </motion.g>
+
         <g id='pagination'>
           <path
             id='Vector_10'
@@ -152,6 +195,8 @@ export function PersonalInfoIllustration(props: SVGProps<SVGSVGElement>) {
           />
         </g>
       </g>
+
+      {/* Existing Defs and Filters from your original SVG remain unchanged */}
       <defs>
         <filter
           id='filter0_d_1326_3361'

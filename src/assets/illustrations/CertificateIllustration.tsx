@@ -1,4 +1,6 @@
 import type { SVGProps } from "react";
+import { motion } from "framer-motion";
+
 export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -10,6 +12,7 @@ export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
       {...props}
     >
       <g id='certificate-illustration' clipPath='url(#clip0_1326_3135)'>
+        {/* Main Background Card */}
         <path
           id='card'
           d='M412.837 1.4375H23.1623C11.1225 1.4375 1.3623 11.7349 1.3623 24.4375V205.562C1.3623 218.265 11.1225 228.562 23.1623 228.562H412.837C424.877 228.562 434.637 218.265 434.637 205.562V24.4375C434.637 11.7349 424.877 1.4375 412.837 1.4375Z'
@@ -18,7 +21,13 @@ export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
           stroke='white'
           strokeOpacity={0.15}
         />
-        <g id='credential-data'>
+
+        {/* Left Uploaded Credential 1 - Gentle float */}
+        <motion.g
+          id='credential-data'
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
           <path
             id='Vector'
             d='M108.69 112.125H84.1651C81.9077 112.125 80.0776 114.056 80.0776 116.438V148.063C80.0776 150.444 81.9077 152.375 84.1651 152.375H108.69C110.948 152.375 112.778 150.444 112.778 148.063V116.438C112.778 114.056 110.948 112.125 108.69 112.125Z'
@@ -54,142 +63,14 @@ export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
             fill='white'
             fillOpacity={0.2}
           />
-        </g>
-        <g id='data-flow'>
-          <path
-            id='Vector_6'
-            d='M112.778 77.625C148.203 77.625 175.453 165.313 229.953 165.313'
-            stroke='white'
-            strokeOpacity={0.25}
-            strokeWidth={1.5}
-            strokeDasharray='3 3'
-          />
-          <path
-            id='data'
-            d='M177.123 133.572L172.694 128.396C171.96 127.538 170.632 127.47 169.727 128.245C168.822 129.019 168.683 130.342 169.417 131.199L173.846 136.376C174.58 137.233 175.908 137.301 176.813 136.527C177.718 135.753 177.857 134.43 177.123 133.572Z'
-            fill='white'
-            fillOpacity={0.7}
-          />
-          <path
-            id='Vector_7'
-            d='M112.778 132.25C148.203 132.25 175.453 165.312 229.953 165.312'
-            stroke='white'
-            strokeOpacity={0.15}
-            strokeWidth={1.5}
-            strokeDasharray='3 3'
-          />
-        </g>
-        <g id='certificate-on-projector'>
-          <g id='projector-light'>
-            <path
-              id='Vector_8'
-              d='M217.141 179.688L230.766 165.312H271.641L285.266 179.688H217.141Z'
-              fill='white'
-              fillOpacity={0.15}
-              stroke='white'
-              strokeOpacity={0.3}
-              strokeWidth={1.5}
-              strokeLinejoin='round'
-            />
-            <path
-              id='Vector_9'
-              d='M251.203 169.625C262.49 169.625 271.641 167.694 271.641 165.312C271.641 162.931 262.49 161 251.203 161C239.916 161 230.766 162.931 230.766 165.312C230.766 167.694 239.916 169.625 251.203 169.625Z'
-              fill='white'
-              fillOpacity={0.3}
-            />
-            <g id='light'>
-              <g id='Vector_10' filter='url(#filter0_d_1326_3135)'>
-                <path
-                  d='M230.765 165.312H271.64L312.515 35.9375H189.89L230.765 165.312Z'
-                  fill='white'
-                  fillOpacity={0.1}
-                  shapeRendering='crispEdges'
-                />
-              </g>
-              <g id='Vector_11' filter='url(#filter1_d_1326_3135)'>
-                <path
-                  d='M237.578 165.312H264.828L292.078 35.9375H210.328L237.578 165.312Z'
-                  fill='white'
-                  fillOpacity={0.1}
-                  shapeRendering='crispEdges'
-                />
-              </g>
-            </g>
-          </g>
-          <g id='certificate' filter='url(#filter2_d_1326_3135)'>
-            <path
-              id='Vector_12'
-              d='M271.621 43.9883H230.783C229.328 43.9883 228.148 45.2328 228.148 46.768V103.753C228.148 105.288 229.328 106.532 230.783 106.532H271.621C273.076 106.532 274.256 105.288 274.256 103.753V46.768C274.256 45.2328 273.076 43.9883 271.621 43.9883Z'
-              fill='white'
-              fillOpacity={0.15}
-              stroke='white'
-              strokeOpacity={0.5}
-            />
-            <path
-              id='Vector_13'
-              d='M251.202 57.1929C252.658 57.1929 253.837 55.9482 253.837 54.4128C253.837 52.8775 252.658 51.6328 251.202 51.6328C249.747 51.6328 248.567 52.8775 248.567 54.4128C248.567 55.9482 249.747 57.1929 251.202 57.1929Z'
-              fill='white'
-              fillOpacity={0.25}
-            />
-            <g id='lines'>
-              <path
-                id='Vector_14'
-                d='M238.028 61.3604H264.376'
-                stroke='white'
-                strokeOpacity={0.4}
-                strokeWidth={1.5}
-                strokeLinecap='round'
-              />
-              <path
-                id='Vector_15'
-                d='M241.322 66.2266H261.083'
-                stroke='white'
-                strokeOpacity={0.2}
-                strokeWidth={1.5}
-                strokeLinecap='round'
-              />
-              <path
-                id='Vector_16'
-                d='M236.711 73.1768H265.693'
-                stroke='white'
-                strokeOpacity={0.2}
-                strokeLinecap='round'
-              />
-              <path
-                id='Vector_17'
-                d='M236.711 77.3452H257.789'
-                stroke='white'
-                strokeOpacity={0.2}
-                strokeLinecap='round'
-              />
-            </g>
-            <path
-              id='Vector_18'
-              d='M255.154 85.6846L252.52 105.143L259.106 100.973L265.693 105.143L263.059 85.6846H255.154Z'
-              fill='white'
-              fillOpacity={0.15}
-              stroke='white'
-              strokeOpacity={0.4}
-              strokeLinejoin='round'
-            />
-            <path
-              id='Vector_19'
-              d='M259.106 96.8038C264.199 96.8038 268.328 92.4479 268.328 87.0745C268.328 81.7012 264.199 77.3452 259.106 77.3452C254.013 77.3452 249.885 81.7012 249.885 87.0745C249.885 92.4479 254.013 96.8038 259.106 96.8038Z'
-              fill='white'
-              fillOpacity={0.15}
-              stroke='white'
-              strokeOpacity={0.5}
-            />
-            <path
-              id='Vector_20'
-              d='M259.106 94.0235C262.744 94.0235 265.693 90.9121 265.693 87.074C265.693 83.2359 262.744 80.1245 259.106 80.1245C255.469 80.1245 252.52 83.2359 252.52 87.074C252.52 90.9121 255.469 94.0235 259.106 94.0235Z'
-              stroke='white'
-              strokeOpacity={0.4}
-              strokeDasharray='2 2'
-            />
-          </g>
-        </g>
-        <g id='credential-data_2'>
+        </motion.g>
+
+        {/* Left Uploaded Credential 2 - Gentle float (offset delay) */}
+        <motion.g
+          id='credential-data_2'
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
           <path
             id='Vector_21'
             d='M110.816 56.332H82.0396C80.9561 56.332 80.0776 57.1954 80.0776 58.2604V96.1852C80.0776 97.2502 80.9561 98.1136 82.0396 98.1136H110.816C111.899 98.1136 112.778 97.2502 112.778 96.1852V58.2604C112.778 57.1954 111.899 56.332 110.816 56.332Z'
@@ -254,8 +135,196 @@ export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
               mask='url(#path-27-inside-4_1326_3135)'
             />
           </g>
+        </motion.g>
+
+        <g id='data-flow'>
+          {/* Upper Data Stream */}
+          <path
+            id='Vector_6'
+            d='M112.778 77.625C148.203 77.625 175.453 165.313 229.953 165.313'
+            stroke='white'
+            strokeOpacity={0.25}
+            strokeWidth={1.5}
+            strokeDasharray='3 3'
+          />
+
+          {/* Lower Data Stream */}
+          <path
+            id='Vector_7'
+            d='M112.778 132.25C148.203 132.25 175.453 165.312 229.953 165.312'
+            stroke='white'
+            strokeOpacity={0.15}
+            strokeWidth={1.5}
+            strokeDasharray='3 3'
+          />
+
+          {/* The traveling Data Packet (circular node) tracing the upper curve at a uniform speed */}
+          <motion.circle
+            id='data'
+            cx={173}
+            cy={132}
+            r={3.5}
+            fill='white'
+            fillOpacity={0.4}
+            animate={{
+              x: [-60, -35, -9, 20, 41, 57],
+              y: [-54, -40, -10, 19, 31, 33],
+              opacity: [0, 1, 1, 1, 1, 0],
+            }}
+            transition={{
+              duration: 3,
+              times: [0, 0.25, 0.5, 0.75, 0.9, 1],
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
         </g>
-        <g id='Group'>
+
+        <g id='certificate-on-projector'>
+          <g id='projector-light'>
+            <path
+              id='Vector_8'
+              d='M217.141 179.688L230.766 165.312H271.641L285.266 179.688H217.141Z'
+              fill='white'
+              fillOpacity={0.15}
+              stroke='white'
+              strokeOpacity={0.3}
+              strokeWidth={1.5}
+              strokeLinejoin='round'
+            />
+            <path
+              id='Vector_9'
+              d='M251.203 169.625C262.49 169.625 271.641 167.694 271.641 165.312C271.641 162.931 262.49 161 251.203 161C239.916 161 230.766 162.931 230.766 165.312C230.766 167.694 239.916 169.625 251.203 169.625Z'
+              fill='white'
+              fillOpacity={0.3}
+            />
+
+            {/* Flickering Holographic Light */}
+            <motion.g
+              id='light'
+              animate={{ opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <g id='Vector_10' filter='url(#filter0_d_1326_3135)'>
+                <path
+                  d='M230.765 165.312H271.64L312.515 35.9375H189.89L230.765 165.312Z'
+                  fill='white'
+                  fillOpacity={0.1}
+                  shapeRendering='crispEdges'
+                />
+              </g>
+              <g id='Vector_11' filter='url(#filter1_d_1326_3135)'>
+                <path
+                  d='M237.578 165.312H264.828L292.078 35.9375H210.328L237.578 165.312Z'
+                  fill='white'
+                  fillOpacity={0.1}
+                  shapeRendering='crispEdges'
+                />
+              </g>
+            </motion.g>
+          </g>
+
+          {/* Hovering Certificate Hologram - Floats lower and dynamically scales down slightly as it dips */}
+          <motion.g
+            id='certificate'
+            filter='url(#filter2_d_1326_3135)'
+            animate={{ y: [6, -4, 6], scale: [0.94, 1, 0.94] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transformOrigin: "251px 75px" }}
+          >
+            <path
+              id='Vector_12'
+              d='M271.621 43.9883H230.783C229.328 43.9883 228.148 45.2328 228.148 46.768V103.753C228.148 105.288 229.328 106.532 230.783 106.532H271.621C273.076 106.532 274.256 105.288 274.256 103.753V46.768C274.256 45.2328 273.076 43.9883 271.621 43.9883Z'
+              fill='white'
+              fillOpacity={0.15}
+              stroke='white'
+              strokeOpacity={0.5}
+            />
+            <path
+              id='Vector_13'
+              d='M251.202 57.1929C252.658 57.1929 253.837 55.9482 253.837 54.4128C253.837 52.8775 252.658 51.6328 251.202 51.6328C249.747 51.6328 248.567 52.8775 248.567 54.4128C248.567 55.9482 249.747 57.1929 251.202 57.1929Z'
+              fill='white'
+              fillOpacity={0.25}
+            />
+
+            <g id='lines'>
+              {/* Lines drawing themselves in sequentially (Methodical parsing effect) */}
+              <motion.path
+                id='Vector_14'
+                d='M238.028 61.3604H264.376'
+                stroke='white'
+                strokeOpacity={0.8}
+                strokeWidth={1.5}
+                strokeLinecap='round'
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: [0, 1, 1, 0], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+              />
+              <motion.path
+                id='Vector_15'
+                d='M241.322 66.2266H261.083'
+                stroke='white'
+                strokeOpacity={0.6}
+                strokeWidth={1.5}
+                strokeLinecap='round'
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: [0, 1, 1, 0], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+              />
+              <motion.path
+                id='Vector_16'
+                d='M236.711 73.1768H265.693'
+                stroke='white'
+                strokeOpacity={0.6}
+                strokeLinecap='round'
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: [0, 1, 1, 0], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+              />
+              <motion.path
+                id='Vector_17'
+                d='M236.711 77.3452H257.789'
+                stroke='white'
+                strokeOpacity={0.6}
+                strokeLinecap='round'
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: [0, 1, 1, 0], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+              />
+            </g>
+            <path
+              id='Vector_18'
+              d='M255.154 85.6846L252.52 105.143L259.106 100.973L265.693 105.143L263.059 85.6846H255.154Z'
+              fill='white'
+              fillOpacity={0.15}
+              stroke='white'
+              strokeOpacity={0.4}
+              strokeLinejoin='round'
+            />
+            <path
+              id='Vector_19'
+              d='M259.106 96.8038C264.199 96.8038 268.328 92.4479 268.328 87.0745C268.328 81.7012 264.199 77.3452 259.106 77.3452C254.013 77.3452 249.885 81.7012 249.885 87.0745C249.885 92.4479 254.013 96.8038 259.106 96.8038Z'
+              fill='white'
+              fillOpacity={0.15}
+              stroke='white'
+              strokeOpacity={0.5}
+            />
+            {/* Rotating Dashed Seal Ring */}
+            <motion.path
+              id='Vector_20'
+              d='M259.106 94.0235C262.744 94.0235 265.693 90.9121 265.693 87.074C265.693 83.2359 262.744 80.1245 259.106 80.1245C255.469 80.1245 252.52 83.2359 252.52 87.074C252.52 90.9121 255.469 94.0235 259.106 94.0235Z'
+              stroke='white'
+              strokeOpacity={0.6}
+              strokeWidth={1.5}
+              strokeDasharray='2 2'
+              animate={{ rotate: 360 }}
+              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+              style={{ transformOrigin: "259px 87px" }}
+            />
+          </motion.g>
+        </g>
+
+        <g id='pagination'>
           <path
             id='Vector_26'
             d='M365.15 199.812C366.655 199.812 367.875 198.525 367.875 196.937C367.875 195.35 366.655 194.062 365.15 194.062C363.645 194.062 362.425 195.35 362.425 196.937C362.425 198.525 363.645 199.812 365.15 199.812Z'
@@ -274,6 +343,7 @@ export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
             fill='white'
             fillOpacity={0.2}
           />
+          {/* The final step dot is active! */}
           <path
             id='Vector_29'
             d='M416.925 194.062H406.025C404.52 194.062 403.3 195.35 403.3 196.937C403.3 198.525 404.52 199.812 406.025 199.812H416.925C418.43 199.812 419.65 198.525 419.65 196.937C419.65 195.35 418.43 194.062 416.925 194.062Z'
@@ -282,6 +352,7 @@ export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
           />
         </g>
       </g>
+
       <defs>
         <filter
           id='filter0_d_1326_3135'
@@ -339,12 +410,14 @@ export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
             result='shape'
           />
         </filter>
+
+        {/* Expanded bounding box coordinates to allow the hologram to hover safely without clipping */}
         <filter
           id='filter2_d_1326_3135'
-          x={224.648}
-          y={40.4883}
-          width={53.1074}
-          height={69.5439}
+          x={210}
+          y={20}
+          width={85}
+          height={110}
           filterUnits='userSpaceOnUse'
           colorInterpolationFilters='sRGB'
         >
