@@ -5,7 +5,10 @@
     "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    // support for chrome extension APIs
+    "types": ["chrome"]
   },
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }

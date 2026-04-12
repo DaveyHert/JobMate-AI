@@ -1,11 +1,7 @@
 // Background script for JobMate AI+
 import type { Application, ApplicationStatus, UserProfile } from "../models/models";
 import { jobMateStore } from "../store/jobMateStore";
-import {
-  llmClient,
-  LLMNotConfiguredError,
-  LLMRequestError,
-} from "../engine/LLMClient";
+import { llmClient, LLMNotConfiguredError, LLMRequestError } from "../engine/LLMClient";
 
 class BackgroundManager {
   constructor() {
@@ -14,8 +10,9 @@ class BackgroundManager {
 
   private init() {
     chrome.runtime.onInstalled.addListener((details) => {
-      console.log('JobMate AI+ extension installed');
+      console.log("JobMate AI+ extension installed");
       this.initializeDefaultData();
+
       // Open onboarding only on a fresh install, not on update/reload
       if (details.reason === "install") {
         chrome.tabs.create({
@@ -46,38 +43,38 @@ class BackgroundManager {
   private async handleMessage(request: any, sender: any, sendResponse: (response: any) => void) {
     try {
       switch (request.action) {
-        case 'trackApplication':
+        case "trackApplication":
           await this.handleTrackApplication(request.data, sendResponse);
           break;
-          
-        case 'getApplications':
+
+        case "getApplications":
           await this.getApplications(sendResponse);
           break;
-          
-        case 'updateApplicationStatus':
+
+        case "updateApplicationStatus":
           await this.updateApplicationStatus(request.applicationId, request.status, sendResponse);
           break;
-          
-        case 'generateCoverLetter':
+
+        case "generateCoverLetter":
           await this.generateCoverLetter(request.jobDescription, request.profile, sendResponse);
           break;
-          
-        case 'analyzeJobFit':
+
+        case "analyzeJobFit":
           await this.analyzeJobFit(request.jobDescription, request.profile, sendResponse);
           break;
-          
+
         default:
-          sendResponse({ error: 'Unknown action' });
+          sendResponse({ error: "Unknown action" });
       }
     } catch (error) {
-      console.error('Background script error:', error);
-      sendResponse({ error: error instanceof Error ? error.message : 'Unknown error' });
+      console.error("Background script error:", error);
+      sendResponse({ error: error instanceof Error ? error.message : "Unknown error" });
     }
   }
 
   private async handleTrackApplication(
     applicationData: Omit<Application, "id" | "status" | "dateApplied" | "history">,
-    sendResponse: (response: any) => void
+    sendResponse: (response: any) => void,
   ) {
     try {
       const application = await jobMateStore.addApplication(applicationData);
@@ -103,7 +100,7 @@ class BackgroundManager {
   private async updateApplicationStatus(
     applicationId: number,
     status: ApplicationStatus,
-    sendResponse: (response: any) => void
+    sendResponse: (response: any) => void,
   ) {
     try {
       await jobMateStore.updateApplicationStatus(applicationId, status);
@@ -121,7 +118,7 @@ class BackgroundManager {
   private async generateCoverLetter(
     jobDescription: string,
     profile: UserProfile,
-    sendResponse: (response: any) => void
+    sendResponse: (response: any) => void,
   ) {
     try {
       const coverLetter = await llmClient.generateCoverLetter(jobDescription, profile);
@@ -134,7 +131,7 @@ class BackgroundManager {
   private async analyzeJobFit(
     jobDescription: string,
     profile: UserProfile,
-    sendResponse: (response: any) => void
+    sendResponse: (response: any) => void,
   ) {
     try {
       const analysis = await llmClient.analyzeJobFit(jobDescription, profile);
@@ -147,27 +144,27 @@ class BackgroundManager {
   private setupContextMenus() {
     chrome.runtime.onInstalled.addListener(() => {
       chrome.contextMenus.create({
-        id: 'autoFill',
-        title: 'Auto-fill form with JobMate AI+',
-        contexts: ['page']
+        id: "autoFill",
+        title: "Auto-fill form with JobMate AI+",
+        contexts: ["page"],
       });
-      
+
       chrome.contextMenus.create({
-        id: 'trackApplication',
-        title: 'Track this job application',
-        contexts: ['page']
+        id: "trackApplication",
+        title: "Track this job application",
+        contexts: ["page"],
       });
     });
 
     chrome.contextMenus.onClicked.addListener((info, tab) => {
       if (!tab?.id) return;
-      
+
       switch (info.menuItemId) {
-        case 'autoFill':
-          chrome.tabs.sendMessage(tab.id, { action: 'autoFill' });
+        case "autoFill":
+          chrome.tabs.sendMessage(tab.id, { action: "autoFill" });
           break;
-        case 'trackApplication':
-          chrome.tabs.sendMessage(tab.id, { action: 'trackApplication' });
+        case "trackApplication":
+          chrome.tabs.sendMessage(tab.id, { action: "trackApplication" });
           break;
       }
     });
@@ -200,4 +197,4 @@ function buildAIErrorResponse(error: unknown): {
 // Initialize background manager
 new BackgroundManager();
 
-console.log('JobMate AI+ background script loaded');
+console.log("JobMate AI+ background script loaded");

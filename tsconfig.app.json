@@ -28,7 +28,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    // support for chrome extension APIs
+    "types": ["chrome"]
   },
   "include": ["src", "autofillEngine.js"]
 }
