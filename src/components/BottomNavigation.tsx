@@ -1,10 +1,4 @@
-import {
-  BarchartIcon,
-  BriefIcon,
-  GearIcon,
-  HomeIcon,
-  ProfileIcon,
-} from "../assets/icons";
+import { BarchartIcon, BriefIcon, GearIcon, HomeIcon, ProfileIcon } from "../assets/svg/icons";
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -35,15 +29,9 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       {navigationItems.map((item) => (
         <button
           key={item.key}
-          onClick={
-            item.key === "dashboard"
-              ? item.action
-              : () => setActiveTab(item.key)
-          }
+          onClick={item.key === "dashboard" ? item.action : () => setActiveTab(item.key)}
           className={`flex flex-col items-center gap-1 cursor-pointer ${
-            activeTab === item.key
-              ? "text-accent"
-              : "text-gray-400 hover:text-gray-600"
+            activeTab === item.key ? "text-accent" : "text-gray-400 hover:text-gray-600"
           }`}
         >
           <item.icon className='w-5 h-5' />

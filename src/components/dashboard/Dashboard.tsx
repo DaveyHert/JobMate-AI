@@ -16,11 +16,8 @@ import {
   Edit3,
 } from "lucide-react";
 import { mockApplications } from "../../data/mockApplications";
-import {
-  Application,
-  DashboardStats,
-} from "../../models/models";
-import { AddIcon } from "../../assets/icons";
+import { Application, DashboardStats } from "../../models/models";
+import { AddIcon } from "../../assets/svg/icons";
 
 import QuickActions from "./QuickActions";
 import { formatDate } from "../../utils/dateHelpers";
@@ -34,22 +31,12 @@ import { useJobMateData } from "../../hooks/useJobMateData";
 import { jobMateStore } from "../../store/jobMateStore";
 import { AddApplicationModal } from "../application/AddApplicationModal";
 
-const STATUSES = [
-  "applied",
-  "interviewing",
-  "rejected",
-  "offer",
-  "ghosted",
-  "withdrawn",
-];
+const STATUSES = ["applied", "interviewing", "rejected", "offer", "ghosted", "withdrawn"];
 
 const Dashboard: React.FC = () => {
   const data = useJobMateData();
   const applications: Application[] = data?.applications ?? mockApplications;
-  const stats: DashboardStats = useMemo(
-    () => calculateStats(applications),
-    [applications]
-  );
+  const stats: DashboardStats = useMemo(() => calculateStats(applications), [applications]);
   const [statusFilter, setStatusFilter] = useState("all");
   const [showAddModal, setShowAddModal] = useState(false);
   const [expandedApp, setExpandedApp] = useState<number | null>(null);
@@ -93,22 +80,12 @@ const Dashboard: React.FC = () => {
   };
 
   const getSourceColor = (index: number): string => {
-    const colors = [
-      "#6366f1",
-      "#8b5cf6",
-      "#06b6d4",
-      "#10b981",
-      "#f59e0b",
-      "#ef4444",
-    ];
+    const colors = ["#6366f1", "#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"];
     return colors[index % colors.length];
   };
 
   const updateApplicationStatus = async (id: number, status: string) => {
-    await jobMateStore.updateApplicationStatus(
-      id,
-      status as Application["status"]
-    );
+    await jobMateStore.updateApplicationStatus(id, status as Application["status"]);
   };
 
   const deleteApplication = (id: number) => {
@@ -125,11 +102,7 @@ const Dashboard: React.FC = () => {
     });
   };
 
-  const updateApplicationField = async (
-    id: number,
-    field: string,
-    value: string
-  ) => {
+  const updateApplicationField = async (id: number, field: string, value: string) => {
     const target = applications.find((a) => a.id === id);
     if (!target) return;
     const updated = { ...target, [field]: value } as Application;
@@ -175,13 +148,13 @@ const Dashboard: React.FC = () => {
   };
 
   const filteredApplications = applications.filter(
-    (app) => statusFilter === "all" || app.status === statusFilter
+    (app) => statusFilter === "all" || app.status === statusFilter,
   );
 
   // Calculate filter counts
   const filterCounts = useMemo(
     () => getDynamicFilterCounts(applications, STATUSES),
-    [applications]
+    [applications],
   );
 
   const getSourceDisplayName = (source: string): string => {
@@ -211,9 +184,7 @@ const Dashboard: React.FC = () => {
       "bg-pink-500",
       "bg-gray-500",
     ];
-    const hash = company
-      .split("")
-      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const hash = company.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return colors[hash % colors.length];
   };
 
@@ -238,9 +209,7 @@ const Dashboard: React.FC = () => {
           <div className='lg:col-span-6'>
             <div className='bg-foreground rounded-xl border border-border-col p-6'>
               <div className='flex justify-between items-center mb-6'>
-                <h2 className='text-xl font-semibold text-primary-text'>
-                  Recent Applications
-                </h2>
+                <h2 className='text-xl font-semibold text-primary-text'>Recent Applications</h2>
                 <button
                   onClick={() => setShowAddModal(true)}
                   className='px-3 py-2 bg-accent hover:bg-indigo-700 rounded-4xl text-white font-medium text-sm transition-all flex items-center gap-1'
@@ -268,9 +237,7 @@ const Dashboard: React.FC = () => {
                   <div className='text-center py-12 text-gray-500'>
                     <Briefcase className='w-12 h-12 mx-auto mb-4 text-gray-400' />
                     <p className='text-lg mb-2'>No applications found</p>
-                    <p className='text-sm'>
-                      Start tracking your job applications to see them here
-                    </p>
+                    <p className='text-sm'>Start tracking your job applications to see them here</p>
                   </div>
                 ) : (
                   filteredApplications.map((app) => (
@@ -278,14 +245,11 @@ const Dashboard: React.FC = () => {
                       key={app.id}
                       className='bg-foreground border border-border-col rounded-xl overflow-hidden hover:shadow-md transition-all.  '
                     >
-                      <div
-                        className='p-4 cursor-pointer'
-                        onClick={() => toggleExpanded(app.id)}
-                      >
+                      <div className='p-4 cursor-pointer' onClick={() => toggleExpanded(app.id)}>
                         <div className='flex items-center gap-4'>
                           <div
                             className={`w-12 h-12 rounded-full ${getCompanyColor(
-                              app.company
+                              app.company,
                             )} flex items-center justify-center text-white font-semibold text-lg shrink-0 bg-background`}
                           >
                             {getCompanyInitial(app.company)}
@@ -294,9 +258,7 @@ const Dashboard: React.FC = () => {
                             <div className='text-base font-semibold text-primary-text mb-1'>
                               {app.title}
                             </div>
-                            <div className='text-sm text-secondary-text mb-2'>
-                              {app.company}
-                            </div>
+                            <div className='text-sm text-secondary-text mb-2'>{app.company}</div>
                             <div className='flex items-center gap-4 text-xs text-gray-500'>
                               <span className='flex items-center gap-1'>
                                 <Building className='w-3 h-3' />
@@ -320,17 +282,12 @@ const Dashboard: React.FC = () => {
                               )}
                             </div>
                           </div>
-                          <div
-                            className='relative shrink-0'
-                            onClick={(e) => e.stopPropagation()}
-                          >
+                          <div className='relative shrink-0' onClick={(e) => e.stopPropagation()}>
                             <select
                               value={app.status}
-                              onChange={(e) =>
-                                updateApplicationStatus(app.id, e.target.value)
-                              }
+                              onChange={(e) => updateApplicationStatus(app.id, e.target.value)}
                               className={`appearance-none px-3 py-1 pr-5 rounded-2xl text-sm font-medium border cursor-pointer ${getStatusColor(
-                                app.status
+                                app.status,
                               )} focus:outline-hidden focus:border-2`}
                             >
                               <option value='applied'>Applied</option>
@@ -357,12 +314,9 @@ const Dashboard: React.FC = () => {
                           <div className='flex justify-between items-center border-b border-border-col bg-foreground px-6 py-3'>
                             <div className='flex'>
                               <button
-                                onClick={() =>
-                                  setActiveTabForApp(app.id, "notes")
-                                }
+                                onClick={() => setActiveTabForApp(app.id, "notes")}
                                 className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
-                                  activeTab[app.id] === "notes" ||
-                                  !activeTab[app.id]
+                                  activeTab[app.id] === "notes" || !activeTab[app.id]
                                     ? "border-indigo-500 text-indigo-600"
                                     : "border-transparent text-gray-500 hover:text-gray-700"
                                 }`}
@@ -370,9 +324,7 @@ const Dashboard: React.FC = () => {
                                 My Notes
                               </button>
                               <button
-                                onClick={() =>
-                                  setActiveTabForApp(app.id, "brief")
-                                }
+                                onClick={() => setActiveTabForApp(app.id, "brief")}
                                 className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                                   activeTab[app.id] === "brief"
                                     ? "border-indigo-500 text-indigo-600"
@@ -389,9 +341,7 @@ const Dashboard: React.FC = () => {
                                   <div className='flex items-center gap-2'>
                                     <select
                                       value={
-                                        editValues[`${app.id}-jobType`] ||
-                                        app.jobType ||
-                                        "fulltime"
+                                        editValues[`${app.id}-jobType`] || app.jobType || "fulltime"
                                       }
                                       onChange={(e) =>
                                         setEditValues({
@@ -401,24 +351,18 @@ const Dashboard: React.FC = () => {
                                       }
                                       className='px-2 py-1 border border-gray-300 rounded-sm text-xs'
                                     >
-                                      <option value='fulltime'>
-                                        Full-time
-                                      </option>
+                                      <option value='fulltime'>Full-time</option>
                                       <option value='contract'>Contract</option>
                                       <option value='gig'>Gig</option>
                                     </select>
                                     <button
-                                      onClick={() =>
-                                        saveEdit(app.id, "jobType")
-                                      }
+                                      onClick={() => saveEdit(app.id, "jobType")}
                                       className='text-green-600 hover:text-green-700'
                                     >
                                       <Save className='w-3 h-3' />
                                     </button>
                                     <button
-                                      onClick={() =>
-                                        cancelEdit(app.id, "jobType")
-                                      }
+                                      onClick={() => cancelEdit(app.id, "jobType")}
                                       className='text-gray-400 hover:text-gray-600'
                                     >
                                       <X className='w-3 h-3' />
@@ -428,22 +372,18 @@ const Dashboard: React.FC = () => {
                                   <div className='flex items-center gap-1'>
                                     <span
                                       className={`px-2 py-1 rounded text-xs font-medium ${getJobTypeColor(
-                                        app.jobType || "fulltime"
+                                        app.jobType || "fulltime",
                                       )}`}
                                     >
                                       {app.jobType === "fulltime"
                                         ? "Full-time"
                                         : app.jobType === "contract"
-                                        ? "Contract"
-                                        : "Gig"}
+                                          ? "Contract"
+                                          : "Gig"}
                                     </span>
                                     <button
                                       onClick={() =>
-                                        startEditing(
-                                          app.id,
-                                          "jobType",
-                                          app.jobType || "fulltime"
-                                        )
+                                        startEditing(app.id, "jobType", app.jobType || "fulltime")
                                       }
                                       className='text-gray-400 hover:text-gray-600'
                                     >
@@ -462,15 +402,12 @@ const Dashboard: React.FC = () => {
                             </div>
                           </div>
                           <div className='p-6'>
-                            {(activeTab[app.id] === "notes" ||
-                              !activeTab[app.id]) && (
+                            {(activeTab[app.id] === "notes" || !activeTab[app.id]) && (
                               <div>
                                 {editingFields[`${app.id}-notes`] ? (
                                   <div className='space-y-3'>
                                     <textarea
-                                      value={
-                                        editValues[`${app.id}-notes`] || ""
-                                      }
+                                      value={editValues[`${app.id}-notes`] || ""}
                                       onChange={(e) =>
                                         setEditValues({
                                           ...editValues,
@@ -483,17 +420,13 @@ const Dashboard: React.FC = () => {
                                     />
                                     <div className='flex gap-2'>
                                       <button
-                                        onClick={() =>
-                                          saveEdit(app.id, "notes")
-                                        }
+                                        onClick={() => saveEdit(app.id, "notes")}
                                         className='px-3 py-1 bg-indigo-600 text-white rounded-sm text-sm hover:bg-indigo-700'
                                       >
                                         Save
                                       </button>
                                       <button
-                                        onClick={() =>
-                                          cancelEdit(app.id, "notes")
-                                        }
+                                        onClick={() => cancelEdit(app.id, "notes")}
                                         className='px-3 py-1 bg-gray-200 text-gray-700 rounded-sm text-sm hover:bg-gray-300'
                                       >
                                         Cancel
@@ -508,11 +441,7 @@ const Dashboard: React.FC = () => {
                                       </p>
                                       <button
                                         onClick={() =>
-                                          startEditing(
-                                            app.id,
-                                            "notes",
-                                            app.notes || ""
-                                          )
+                                          startEditing(app.id, "notes", app.notes || "")
                                         }
                                         className='opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 ml-2'
                                       >
@@ -528,14 +457,11 @@ const Dashboard: React.FC = () => {
                                 {editingFields[`${app.id}-jobBrief`] ? (
                                   <div className='space-y-3'>
                                     <textarea
-                                      value={
-                                        editValues[`${app.id}-jobBrief`] || ""
-                                      }
+                                      value={editValues[`${app.id}-jobBrief`] || ""}
                                       onChange={(e) =>
                                         setEditValues({
                                           ...editValues,
-                                          [`${app.id}-jobBrief`]:
-                                            e.target.value,
+                                          [`${app.id}-jobBrief`]: e.target.value,
                                         })
                                       }
                                       rows={4}
@@ -544,17 +470,13 @@ const Dashboard: React.FC = () => {
                                     />
                                     <div className='flex gap-2'>
                                       <button
-                                        onClick={() =>
-                                          saveEdit(app.id, "jobBrief")
-                                        }
+                                        onClick={() => saveEdit(app.id, "jobBrief")}
                                         className='px-3 py-1 bg-indigo-600 text-white rounded-sm text-sm hover:bg-indigo-700'
                                       >
                                         Save
                                       </button>
                                       <button
-                                        onClick={() =>
-                                          cancelEdit(app.id, "jobBrief")
-                                        }
+                                        onClick={() => cancelEdit(app.id, "jobBrief")}
                                         className='px-3 py-1 bg-gray-200 text-gray-700 rounded-sm text-sm hover:bg-gray-300'
                                       >
                                         Cancel
@@ -565,16 +487,11 @@ const Dashboard: React.FC = () => {
                                   <div className='group'>
                                     <div className='flex items-start justify-between'>
                                       <p className='text-sm text-gray-700 leading-relaxed flex-1'>
-                                        {app.jobBrief ||
-                                          "No job brief available."}
+                                        {app.jobBrief || "No job brief available."}
                                       </p>
                                       <button
                                         onClick={() =>
-                                          startEditing(
-                                            app.id,
-                                            "jobBrief",
-                                            app.jobBrief || ""
-                                          )
+                                          startEditing(app.id, "jobBrief", app.jobBrief || "")
                                         }
                                         className='opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 ml-2'
                                       >
@@ -656,12 +573,7 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className='bg-foreground rounded-xl p-4'>
-                    <canvas
-                      ref={canvasRef}
-                      width={320}
-                      height={200}
-                      className='w-full h-auto'
-                    />
+                    <canvas ref={canvasRef} width={320} height={200} className='w-full h-auto' />
                   </div>
                   <div className='flex items-center gap-4 mt-4 text-xs'>
                     <div className='flex items-center gap-2'>
@@ -683,20 +595,14 @@ const Dashboard: React.FC = () => {
                     {getSourceData().map((item, index) => (
                       <div key={item.source} className='space-y-2'>
                         <div className='flex justify-between items-center'>
-                          <span className='text-sm font-medium text-gray-700'>
-                            {item.source}
-                          </span>
-                          <span className='text-sm font-semibold text-gray-900'>
-                            {item.count}
-                          </span>
+                          <span className='text-sm font-medium text-gray-700'>{item.source}</span>
+                          <span className='text-sm font-semibold text-gray-900'>{item.count}</span>
                         </div>
                         <div className='w-full bg-gray-200 rounded-full h-2'>
                           <div
                             className='h-2 rounded-full transition-all duration-300'
                             style={{
-                              width: `${
-                                (item.count / applications.length) * 100
-                              }%`,
+                              width: `${(item.count / applications.length) * 100}%`,
                               backgroundColor: getSourceColor(index),
                             }}
                           />
@@ -705,12 +611,8 @@ const Dashboard: React.FC = () => {
                     ))}
                   </div>
                   <div className='mt-6 pt-4 border-t border-gray-200 text-center'>
-                    <div className='text-sm text-indigo-600 font-medium'>
-                      Total Applications
-                    </div>
-                    <div className='text-2xl font-bold text-gray-900'>
-                      {applications.length}
-                    </div>
+                    <div className='text-sm text-indigo-600 font-medium'>Total Applications</div>
+                    <div className='text-2xl font-bold text-gray-900'>{applications.length}</div>
                   </div>
                 </>
               )}
@@ -722,10 +624,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <AddApplicationModal
-        open={showAddModal}
-        onClose={() => setShowAddModal(false)}
-      />
+      <AddApplicationModal open={showAddModal} onClose={() => setShowAddModal(false)} />
     </div>
   );
 };

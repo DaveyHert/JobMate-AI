@@ -1,10 +1,10 @@
 import { AnimatePresence, delay, motion } from "framer-motion";
 import patternBg from "../../../assets/svgs/pattern-background.svg";
 import noisePng from "../../../assets/img/noise.png";
-import { PersonalInfoIllustration } from "../../../assets/illustrations/PersonalInfoIllustration";
-import { ProfessionalInfoIllustration } from "../../../assets/illustrations/ProfessionalInfoIllustration";
-import { WorkExperienceIllustration } from "../../../assets/illustrations/WorkExperienceIllustration";
-import { CertificateIllustration } from "../../../assets/illustrations/CertificateIllustration";
+import { PersonalInfoIllustration } from "../../../assets/svg/illustrations/PersonalInfoIllustration";
+import { ProfessionalInfoIllustration } from "../../../assets/svg/illustrations/ProfessionalInfoIllustration";
+import { WorkExperienceIllustration } from "../../../assets/svg/illustrations/WorkExperienceIllustration";
+import { CertificateIllustration } from "../../../assets/svg/illustrations/CertificateIllustration";
 
 const STEP_ILLUSTRATIONS = [
   PersonalInfoIllustration,
@@ -193,7 +193,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
         </nav>
 
         {/* Illustration */}
-        <div className='mt-auto rounded-2xl overflow-hidden'>
+        <div className='mt-auto rounded-2xl'>
           <AnimatePresence mode='wait'>
             <motion.div
               key={currentStep}

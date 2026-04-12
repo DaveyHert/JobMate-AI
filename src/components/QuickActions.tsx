@@ -6,7 +6,7 @@ import {
   TargetIcon,
   FileIcon,
   BrainIcon,
-} from "../assets/icons";
+} from "../assets/svg/icons";
 
 interface QuickAction {
   icon: React.ElementType;
@@ -103,9 +103,7 @@ const QuickActions: React.FC<QuickActionsProps> = ({
             >
               <action.icon className={`w-6 h-6  ${action.iconColor}`} />
             </div>
-            <span className='text-xs block my-1 font-medium'>
-              {action.label}
-            </span>
+            <span className='text-xs block my-1 font-medium'>{action.label}</span>
           </button>
         ))}
       </div>

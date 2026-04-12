@@ -158,7 +158,7 @@ export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
             strokeDasharray='3 3'
           />
 
-          {/* The traveling Data Packet (circular node) tracing the upper curve at a uniform speed */}
+          {/* The traveling Data Packet mapped accurately across 11 calculated points on the upper cubic bezier */}
           <motion.circle
             id='data'
             cx={173}
@@ -167,13 +167,13 @@ export function CertificateIllustration(props: SVGProps<SVGSVGElement>) {
             fill='white'
             fillOpacity={0.4}
             animate={{
-              x: [-60, -35, -9, 20, 41, 57],
-              y: [-54, -40, -10, 19, 31, 33],
-              opacity: [0, 1, 1, 1, 1, 0],
+              x: [-60.2, -49.8, -39.7, -29.6, -19.4, -8.8, 2.4, 14.3, 27.2, 41.4, 57.0],
+              y: [-54.4, -51.9, -45.3, -35.4, -23.5, -10.5, 2.4, 14.4, 24.2, 30.9, 33.3],
+              opacity: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
             }}
             transition={{
               duration: 3,
-              times: [0, 0.25, 0.5, 0.75, 0.9, 1],
+              times: [0, 0.07, 0.15, 0.24, 0.35, 0.46, 0.57, 0.68, 0.79, 0.9, 1],
               repeat: Infinity,
               ease: "linear",
             }}
