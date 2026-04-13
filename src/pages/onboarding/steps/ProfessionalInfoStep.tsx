@@ -1,3 +1,4 @@
+import React from "react";
 import { Briefcase } from "lucide-react";
 import {
   Field,
@@ -20,6 +21,31 @@ export interface ProfessionalInfoData {
   behance: string;
   instagram: string;
 }
+
+type platform = "twitter" | "github" | "behance" | "instagram";
+
+const SOCIAL_LINKS: { platform: platform; icon: React.ReactNode; placeholder: string }[] = [
+  {
+    platform: "twitter",
+    icon: <XIcon className='text-neutral-06 size-5' />,
+    placeholder: "X link",
+  },
+  {
+    platform: "github",
+    icon: <GithubIcon className='text-neutral-06 size-5' />,
+    placeholder: "GitHub link",
+  },
+  {
+    platform: "behance",
+    icon: <BehanceIcon className='size-5 text-blue-600' />,
+    placeholder: "Behance link",
+  },
+  {
+    platform: "instagram",
+    icon: <InstagramIcon className='size-5 text-pink-500' />,
+    placeholder: "Instagram link",
+  },
+];
 
 interface Props {
   data: ProfessionalInfoData;
@@ -110,30 +136,15 @@ export function ProfessionalInfoStep({
 
       <h3 className='text-neutral-06 mb-5 text-xl'>Social Media Links</h3>
       <div className='grid grid-cols-2 gap-4'>
-        <SocialInput
-          icon={<XIcon className='text-neutral-06 size-5' />}
-          placeholder='X link'
-          value={data.twitter}
-          onChange={set("twitter")}
-        />
-        <SocialInput
-          icon={<GithubIcon className='text-neutral-06 size-5' />}
-          placeholder='GitHub link'
-          value={data.github}
-          onChange={set("github")}
-        />
-        <SocialInput
-          icon={<BehanceIcon className='size-5 text-blue-600' />}
-          placeholder='Behance link'
-          value={data.behance}
-          onChange={set("behance")}
-        />
-        <SocialInput
-          icon={<InstagramIcon className='size-5 text-pink-500' />}
-          placeholder='Instagram link'
-          value={data.instagram}
-          onChange={set("instagram")}
-        />
+        {SOCIAL_LINKS.map(({ platform, icon, placeholder }) => (
+          <SocialInput
+            key={platform}
+            icon={icon}
+            placeholder={placeholder}
+            value={data[platform]}
+            onChange={set(platform)}
+          />
+        ))}
       </div>
 
       <StepFooter onContinue={onContinue} onSkip={onSkip} />

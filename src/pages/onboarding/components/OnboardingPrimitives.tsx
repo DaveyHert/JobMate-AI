@@ -24,7 +24,7 @@ export function Field({ label, optional, children }: FieldProps) {
     <div className='flex flex-col gap-1.5'>
       <label className='text-sm font-medium text-gray-700'>
         {label}
-        {optional && <span className='text-gray-400 font-normal ml-1'>(optional)</span>}
+        {optional && <span className='ml-1 font-normal text-gray-400'>(optional)</span>}
       </label>
       {children}
     </div>
@@ -61,7 +61,7 @@ export function DateInput({
         className={`${inputCls} ${isEmpty && !focused ? "text-transparent" : ""} [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-50 ${className ?? ""}`}
       />
       {isEmpty && !focused && (
-        <span className='absolute inset-0 px-4 flex items-center text-sm text-gray-400 pointer-events-none'>
+        <span className='pointer-events-none absolute inset-0 flex items-center px-4 text-sm text-gray-400'>
           {placeholder}
         </span>
       )}
@@ -80,7 +80,7 @@ export function Select(props: SelectHTMLAttributes<HTMLSelectElement>) {
     <div className='relative'>
       <select {...props} className={`${selectCls} pr-10 ${props.className ?? ""}`} />
       <svg
-        className='absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none'
+        className='pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-400'
         fill='none'
         viewBox='0 0 24 24'
         stroke='currentColor'
@@ -99,12 +99,12 @@ interface StepHeaderProps {
 
 export function StepHeader({ icon, title, action }: StepHeaderProps) {
   return (
-    <div className='flex items-center justify-between mb-8'>
+    <div className='mb-8 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
-        <div className='rounded-lg bg-primary-02 flex items-center justify-center shrink-0 w-10 h-10'>
+        <div className='bg-primary-02 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg'>
           {icon}
         </div>
-        <h2 className='text-xl font-medium text-neutral-06'>{title}</h2>
+        <h2 className='text-neutral-06 text-xl font-medium'>{title}</h2>
       </div>
       {action && <div>{action}</div>}
     </div>
@@ -112,7 +112,7 @@ export function StepHeader({ icon, title, action }: StepHeaderProps) {
 }
 
 export function Divider() {
-  return <div className='border-t border-dashed border-gray-200 my-8' />;
+  return <div className='my-8 border-t border-dashed border-gray-200' />;
 }
 
 interface StepTopNavProps {
@@ -122,23 +122,23 @@ interface StepTopNavProps {
 
 export function StepTopNav({ onBack, profileLabel }: StepTopNavProps) {
   return (
-    <div className='flex items-center justify-between mb-8'>
+    <div className='mb-8 flex items-center justify-between'>
       <button
         onClick={onBack}
-        className='p-1 text-neutral-06 hover:text-gray-800 transition-colors cursor-pointer flex items-center gap-1'
+        className='text-neutral-06 flex cursor-pointer items-center gap-1 p-1 transition-colors hover:text-gray-800'
         aria-label='Back'
       >
-        <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <svg className='h-5 w-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
           <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 19l-7-7 7-7' />
         </svg>
 
         <span className='text-sm'>back</span>
       </button>
       {profileLabel && (
-        <div className='flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700'>
+        <div className='flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700'>
           {profileLabel}
           <svg
-            className='w-4 h-4 text-gray-400'
+            className='h-4 w-4 text-gray-400'
             fill='none'
             viewBox='0 0 24 24'
             stroke='currentColor'
@@ -167,14 +167,14 @@ export function StepFooter({
   continueLabel = "Continue",
 }: FooterProps) {
   return (
-    <div className='flex items-center gap-3 mt-10'>
+    <div className='mt-10 flex items-center gap-3'>
       {onBack && (
         <button
           onClick={onBack}
-          className='p-2 text-gray-500 hover:text-gray-800 transition-colors flex items-center gap-1'
+          className='flex items-center gap-1 p-2 text-gray-500 transition-colors hover:text-gray-800'
           aria-label='Go back'
         >
-          <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+          <svg className='h-5 w-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
             <path
               strokeLinecap='round'
               strokeLinejoin='round'
@@ -188,14 +188,14 @@ export function StepFooter({
       <button
         onClick={onContinue}
         disabled={continueDisabled}
-        className='px-8 py-3 bg-accent hover:bg-primary-600 disabled:bg-accent/40 text-white rounded-lg text-sm font-medium transition-colors'
+        className='bg-accent hover:bg-primary-600 disabled:bg-accent/40 rounded-lg px-8 py-3 text-sm font-medium text-white transition-colors'
       >
         {continueLabel}
       </button>
       {onSkip && (
         <button
           onClick={onSkip}
-          className='px-8 py-3 bg-neutral-01 border border-neutral-02 hover:bg-gray-50 text-neutral-06 rounded-lg text-sm font-medium transition-colors'
+          className='bg-neutral-01 border-neutral-02 text-neutral-06 rounded-lg border px-8 py-3 text-sm font-medium transition-colors hover:bg-gray-50'
         >
           Skip this
         </button>
