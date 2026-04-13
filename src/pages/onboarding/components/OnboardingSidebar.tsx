@@ -1,10 +1,10 @@
-import { AnimatePresence, delay, motion } from "framer-motion";
-import patternBg from "../../../assets/svgs/pattern-background.svg";
-import noisePng from "../../../assets/img/noise.png";
-import { PersonalInfoIllustration } from "../../../assets/svg/illustrations/PersonalInfoIllustration";
-import { ProfessionalInfoIllustration } from "../../../assets/svg/illustrations/ProfessionalInfoIllustration";
-import { WorkExperienceIllustration } from "../../../assets/svg/illustrations/WorkExperienceIllustration";
-import { CertificateIllustration } from "../../../assets/svg/illustrations/CertificateIllustration";
+import { AnimatePresence, motion } from "framer-motion";
+import patternBg from "@/assets/svg/pattern-background.svg";
+import noisePng from "@/assets/img/noise.png";
+import { PersonalInfoIllustration } from "@/assets/svg/illustrations/PersonalInfoIllustration";
+import { ProfessionalInfoIllustration } from "@/assets/svg/illustrations/ProfessionalInfoIllustration";
+import { WorkExperienceIllustration } from "@/assets/svg/illustrations/WorkExperienceIllustration";
+import { CertificateIllustration } from "@/assets/svg/illustrations/CertificateIllustration";
 
 const STEP_ILLUSTRATIONS = [
   PersonalInfoIllustration,
@@ -32,7 +32,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
   const StepIllustration = STEP_ILLUSTRATIONS[currentStep - 1];
 
   return (
-    <aside className='relative w-[500px] shrink-0 bg-[#4640DE] flex flex-col overflow-hidden rounded-[20px] m-5'>
+    <aside className='relative w-[500px] shrink-0 bg-[#4640DE] flex flex-col overflow-hidden rounded-[20px] my-5 ml-8'>
       {/* Layer 1 — line pattern */}
       <div
         className='absolute inset-0 pointer-events-none select-none'

@@ -93,7 +93,7 @@ const stepVariants = {
   exit: (dir: number) => ({ x: dir * -48, opacity: 0 }),
 };
 
-const stepTransition = { duration: 0.28, ease: "easeInOut" };
+const stepTransition = { duration: 0.28, ease: "easeInOut" } as const;
 
 // ── Component ──────────────────────────────────────────────────────────────
 
@@ -225,12 +225,12 @@ export function OnboardingApp() {
   };
 
   return (
-    <div className='h-screen flex bg-white  gap-4 font-inter'>
+    <div className='h-screen flex bg-white  gap-4 font-inter  '>
       <OnboardingSidebar currentStep={step} />
 
       {/* Right panel — scrollable form content */}
       <main className='flex-1 overflow-y-auto'>
-        <div className='max-w-[680px] mx-auto px-8 py-12'>
+        <div className='max-w-[900px] mx-auto px-8 py-12'>
           <AnimatePresence mode='wait' initial={false} custom={directionRef.current}>
             {step === 1 && (
               <motion.div

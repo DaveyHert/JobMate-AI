@@ -1,6 +1,6 @@
 import { User } from "lucide-react";
 import { Field, Input, Select, StepHeader, StepFooter } from "../components/OnboardingPrimitives";
-import UserSvg from "@/assets/svg/usersvg";
+import UserSvg from "@/assets/svg/UserIcon";
 
 export interface PersonalInfoData {
   email: string;
