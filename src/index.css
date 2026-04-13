@@ -24,6 +24,7 @@
   --color-neutral-07: #1a1f23;
   --color-neutral-08: #111517;
   --color-neutral-09: #030108;
+
   /* Brand */
   --color-primary-50: #eef0ff;
   --color-primary-100: #dadcff;
@@ -126,11 +127,11 @@
 /*utility tailwind style  */
 
 .btn-primary {
-  @apply flex flex-col items-center gap-3 px-4 py-2 rounded-[10px] text-[#5E636E] dark:text-[#B1B1B1] bg-button-col border-2 border-border-col hover:border-muted transition-all duration-200 shadow-xs disabled:opacity-50 hover:bg-button-hov cursor-pointer;
+  @apply bg-button-col border-border-col hover:border-muted hover:bg-button-hov flex cursor-pointer flex-col items-center gap-3 rounded-[10px] border-2 px-4 py-2 text-[#5E636E] shadow-xs transition-all duration-200 disabled:opacity-50 dark:text-[#B1B1B1];
 }
 
 .btn-secondary {
-  @apply w-full flex items-center gap-2 p-2 bg-button-col hover:bg-button-hov border border-border-col rounded-lg text-sm text-gray-700 dark:text-[#F3F4F6] transition-all cursor-pointer;
+  @apply bg-button-col hover:bg-button-hov border-border-col flex w-full cursor-pointer items-center gap-2 rounded-lg border p-2 text-sm text-gray-700 transition-all dark:text-[#F3F4F6];
 }
 
 /* Light mode */

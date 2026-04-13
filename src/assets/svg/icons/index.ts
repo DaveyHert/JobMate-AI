@@ -11,3 +11,8 @@ export { default as HomeIcon } from "./HomeIcon";
 export { default as MagicStars } from "./MagicStars";
 export { default as ProfileIcon } from "./ProfileIcon";
 export { default as TargetIcon } from "./TargetIcon";
+export { default as XIcon } from "./XIcon";
+export { default as InstagramIcon } from "./InstagramIcon";
+export { default as LinkedInIcon } from "./LinkedInIcon";
+export { default as GithubIcon } from "./GithubIcon";
+export { default as BehanceIcon } from "./BehanceIcon";
