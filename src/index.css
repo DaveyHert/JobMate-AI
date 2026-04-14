@@ -7,7 +7,6 @@
   /* Brand palette */
   --color-background: #f3f4f6;
   --color-foreground: #ffff;
-  --color-card: #ffffff;
   --color-brand-border: #e5e7eb;
   --color-button-col: #f8faff;
   --color-button-hov: #eef0ff;
@@ -63,7 +62,6 @@
 .dark {
   --color-background: #06101e;
   --color-foreground: #122031;
-  --color-card: #18243a;
   --color-button-col: #1f2a37;
   --color-button-hov: #2a3746;
   --color-brand-border: #222f3f;

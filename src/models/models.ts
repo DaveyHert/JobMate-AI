@@ -236,6 +236,9 @@ export interface JobMateSettings {
   // Integrations
   linkedInConnected: boolean;
 
+  // Developer / debugging
+  highlightFormFields: boolean; // draw outlines on detected fields on page load
+
   // --- Deferred (SaaS pivot) ----------------------------------------------
   // Left in the schema so LLMClient keeps compiling until we swap it for an
   // AIClient that calls a backend proxy. Not surfaced in the Settings UI.

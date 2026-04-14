@@ -345,6 +345,26 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
         </section>
       )}
 
+      {/* ── Developer ── */}
+      <section>
+        <h2 className='text-primary-text mb-2 text-xl font-semibold'>Developer</h2>
+        <p className='text-secondary-text mb-4 text-sm'>
+          Debugging tools — not intended for everyday use.
+        </p>
+
+        <div className='border-brand-border bg-foreground rounded-lg border'>
+          <Row
+            label='Highlight detected form fields'
+            description='Draw a blue outline on every input JobMate recognises when a page loads.'
+          >
+            <Toggle
+              checked={settings.highlightFormFields}
+              onChange={(highlightFormFields) => updateSettings({ highlightFormFields })}
+            />
+          </Row>
+        </div>
+      </section>
+
       {showUpload && (
         <UploadResumeModal onSubmit={handleNewResume} onClose={() => setShowUpload(false)} />
       )}

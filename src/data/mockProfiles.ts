@@ -106,6 +106,9 @@ export const defaultSettings: JobMateSettings = {
   emailNotifications: true,
 
   linkedInConnected: false,
+
+  // TODO: remove developer / debug settings before launch
+  highlightFormFields: false,
 };
 
 export function createDefaultJobMateData(): JobMateData {
