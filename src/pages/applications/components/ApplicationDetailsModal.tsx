@@ -113,45 +113,44 @@ export function ApplicationDetailsModal({ app, onClose, onDeleted }: Props) {
     });
   };
 
-  const set = (k: keyof EditState, v: string) =>
-    setForm((f) => f && { ...f, [k]: v });
+  const set = (k: keyof EditState, v: string) => setForm((f) => f && { ...f, [k]: v });
 
   return (
     // Overlay
     <div
-      className='fixed inset-0 bg-black/40 backdrop-blur-xs z-50 flex items-stretch justify-end'
+      className='fixed inset-0 z-50 flex items-stretch justify-end bg-black/40 backdrop-blur-xs'
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       {/* Panel */}
-      <div className='w-[420px] bg-foreground flex flex-col shadow-2xl rounded-l-2xl overflow-hidden'>
+      <div className='bg-foreground flex w-[420px] flex-col overflow-hidden rounded-l-2xl shadow-2xl'>
         {/* ── Header ── */}
-        <div className='flex items-center justify-between px-6 py-5 border-b border-border-col'>
+        <div className='border-brand-border flex items-center justify-between border-b px-6 py-5'>
           <div className='flex items-center gap-2'>
-            <FileText className='w-5 h-5 text-secondary-text' />
-            <h2 className='text-base font-semibold text-primary-text'>Job Details</h2>
+            <FileText className='text-secondary-text h-5 w-5' />
+            <h2 className='text-primary-text text-base font-semibold'>Job Details</h2>
           </div>
           <div className='flex items-center gap-1'>
             {!editing && (
               <button
                 onClick={startEdit}
-                className='p-1.5 rounded-md text-secondary-text hover:text-primary-text hover:bg-button-col transition-colors'
+                className='text-secondary-text hover:text-primary-text hover:bg-button-col rounded-md p-1.5 transition-colors'
                 aria-label='Edit application'
               >
-                <Pencil className='w-4 h-4' />
+                <Pencil className='h-4 w-4' />
               </button>
             )}
             <button
               onClick={onClose}
-              className='p-1.5 rounded-md text-secondary-text hover:text-primary-text hover:bg-button-col transition-colors'
+              className='text-secondary-text hover:text-primary-text hover:bg-button-col rounded-md p-1.5 transition-colors'
               aria-label='Close'
             >
-              <X className='w-5 h-5' />
+              <X className='h-5 w-5' />
             </button>
           </div>
         </div>
 
         {/* ── Body ── */}
-        <div className='flex-1 overflow-y-auto px-6 py-5 space-y-0'>
+        <div className='flex-1 space-y-0 overflow-y-auto px-6 py-5'>
           {editing ? (
             <EditForm form={form} set={set} />
           ) : (
@@ -160,20 +159,20 @@ export function ApplicationDetailsModal({ app, onClose, onDeleted }: Props) {
         </div>
 
         {/* ── Footer ── */}
-        <div className='px-6 py-4 border-t border-border-col space-y-2'>
+        <div className='border-brand-border space-y-2 border-t px-6 py-4'>
           {editing ? (
             <div className='flex gap-3'>
               <button
                 onClick={cancelEdit}
                 disabled={saving}
-                className='flex-1 px-4 py-2.5 border border-border-col rounded-lg text-sm text-primary-text hover:bg-button-col transition-colors disabled:opacity-50'
+                className='border-brand-border text-primary-text hover:bg-button-col flex-1 rounded-lg border px-4 py-2.5 text-sm transition-colors disabled:opacity-50'
               >
                 Cancel
               </button>
               <button
                 onClick={save}
                 disabled={!form.title || !form.company || saving}
-                className='flex-1 px-4 py-2.5 bg-accent hover:bg-primary-600 disabled:bg-button-col disabled:text-secondary-text text-white rounded-lg text-sm font-medium transition-colors'
+                className='bg-brand-accent hover:bg-primary-600 disabled:bg-button-col disabled:text-secondary-text flex-1 rounded-lg px-4 py-2.5 text-sm font-medium text-white transition-colors'
               >
                 {saving ? "Saving…" : "Save changes"}
               </button>
@@ -181,7 +180,7 @@ export function ApplicationDetailsModal({ app, onClose, onDeleted }: Props) {
           ) : (
             <button
               onClick={handleDelete}
-              className='w-full px-4 py-2.5 bg-background border border-border-col rounded-lg text-sm text-primary-text hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600 dark:hover:bg-rose-950 dark:hover:border-rose-800 dark:hover:text-rose-400 transition-colors'
+              className='bg-background border-brand-border text-primary-text w-full rounded-lg border px-4 py-2.5 text-sm transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 dark:hover:border-rose-800 dark:hover:bg-rose-950 dark:hover:text-rose-400'
             >
               Delete application
             </button>
@@ -206,24 +205,24 @@ function ViewDetails({
   avatarBg: string;
 }) {
   return (
-    <div className='divide-y divide-border-col'>
+    <div className='divide-brand-border divide-y'>
       <DetailRow label='Company Name'>
         <div className='flex items-center gap-2'>
           <div
-            className={`w-6 h-6 rounded-full ${avatarBg} flex items-center justify-center text-white text-[10px] font-bold shrink-0`}
+            className={`h-6 w-6 rounded-full ${avatarBg} flex shrink-0 items-center justify-center text-[10px] font-bold text-white`}
           >
             {initial}
           </div>
-          <span className='text-sm font-medium text-primary-text'>{app.company}</span>
+          <span className='text-primary-text text-sm font-medium'>{app.company}</span>
         </div>
       </DetailRow>
 
       <DetailRow label='Job Title'>
-        <span className='text-sm font-medium text-primary-text'>{app.title}</span>
+        <span className='text-primary-text text-sm font-medium'>{app.title}</span>
       </DetailRow>
 
       <DetailRow label='Location'>
-        <span className='text-sm text-primary-text'>{app.source || "Remote"}</span>
+        <span className='text-primary-text text-sm'>{app.source || "Remote"}</span>
       </DetailRow>
 
       <DetailRow label='Job Status'>
@@ -234,14 +233,14 @@ function ViewDetails({
       </DetailRow>
 
       <DetailRow label='Last Updated'>
-        <span className='text-sm text-primary-text text-right'>
+        <span className='text-primary-text text-right text-sm'>
           {formatDetailDate(lastUpdated).replace(" \u2022 ", "\n")}
         </span>
       </DetailRow>
 
       {app.jobType && (
         <DetailRow label='Job Type'>
-          <span className='text-sm text-primary-text'>{JOB_TYPE_LABELS[app.jobType]}</span>
+          <span className='text-primary-text text-sm'>{JOB_TYPE_LABELS[app.jobType]}</span>
         </DetailRow>
       )}
 
@@ -251,9 +250,9 @@ function ViewDetails({
             href={app.url}
             target='_blank'
             rel='noopener noreferrer'
-            className='text-sm text-accent hover:underline break-all text-right flex items-start gap-1 max-w-[220px]'
+            className='text-brand-accent flex max-w-[220px] items-start gap-1 text-right text-sm break-all hover:underline'
           >
-            <ExternalLink className='w-3.5 h-3.5 mt-0.5 shrink-0' />
+            <ExternalLink className='mt-0.5 h-3.5 w-3.5 shrink-0' />
             <span className='break-all'>{app.url}</span>
           </a>
         </DetailRow>
@@ -261,13 +260,15 @@ function ViewDetails({
 
       {app.jobBrief && (
         <DetailRow label='Job Brief' stacked>
-          <p className='text-sm text-primary-text leading-relaxed'>{app.jobBrief}</p>
+          <p className='text-primary-text text-sm leading-relaxed'>{app.jobBrief}</p>
         </DetailRow>
       )}
 
       {app.notes && (
         <DetailRow label='Notes' stacked>
-          <p className='text-sm text-primary-text leading-relaxed whitespace-pre-wrap'>{app.notes}</p>
+          <p className='text-primary-text text-sm leading-relaxed whitespace-pre-wrap'>
+            {app.notes}
+          </p>
         </DetailRow>
       )}
     </div>
@@ -286,14 +287,14 @@ function DetailRow({
   if (stacked) {
     return (
       <div className='py-4'>
-        <p className='text-sm text-secondary-text mb-2'>{label}:</p>
+        <p className='text-secondary-text mb-2 text-sm'>{label}:</p>
         {children}
       </div>
     );
   }
   return (
     <div className='flex items-start justify-between gap-4 py-4'>
-      <span className='text-sm text-secondary-text shrink-0'>{label}:</span>
+      <span className='text-secondary-text shrink-0 text-sm'>{label}:</span>
       <div className='text-right'>{children}</div>
     </div>
   );
@@ -411,7 +412,7 @@ function EditForm({
 function FormField({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className='block text-xs font-medium text-secondary-text mb-1.5'>{label}</label>
+      <label className='text-secondary-text mb-1.5 block text-xs font-medium'>{label}</label>
       {children}
     </div>
   );
@@ -433,4 +434,4 @@ function appToForm(app: Application): EditState {
 }
 
 const inputCls =
-  "w-full px-3 py-2 bg-background border border-border-col text-primary-text rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent placeholder:text-secondary-text";
+  "w-full px-3 py-2 bg-background border border-brand-border text-primary-text rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text";

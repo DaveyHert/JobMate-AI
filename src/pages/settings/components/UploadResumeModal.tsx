@@ -33,7 +33,10 @@ export function UploadResumeModal({ onSubmit, onClose }: UploadResumeModalProps)
 
   const pickFile = (next: File | null) => {
     setError(null);
-    if (!next) { setFile(null); return; }
+    if (!next) {
+      setFile(null);
+      return;
+    }
     if (!ACCEPTED_MIME.has(next.type)) {
       setError("Only PDF, JPEG, and PNG files are allowed.");
       return;
@@ -45,8 +48,7 @@ export function UploadResumeModal({ onSubmit, onClose }: UploadResumeModalProps)
     setFile(next);
   };
 
-  const onInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-    pickFile(e.target.files?.[0] ?? null);
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => pickFile(e.target.files?.[0] ?? null);
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -93,48 +95,40 @@ export function UploadResumeModal({ onSubmit, onClose }: UploadResumeModalProps)
 
   return (
     <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4'
+      className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs'
       onClick={onClose}
     >
       <div
-        className='bg-foreground border border-border-col rounded-2xl w-full max-w-md shadow-xl'
+        className='bg-foreground border-brand-border w-full max-w-md rounded-2xl border shadow-xl'
         onClick={(e) => e.stopPropagation()}
       >
-        <header className='flex items-center justify-between px-6 py-5 border-b border-border-col'>
-          <h2 className='text-lg font-semibold text-primary-text'>
-            Upload Resume
-          </h2>
+        <header className='border-brand-border flex items-center justify-between border-b px-6 py-5'>
+          <h2 className='text-primary-text text-lg font-semibold'>Upload Resume</h2>
           <button
             onClick={onClose}
-            className='p-1 text-secondary-text hover:text-primary-text transition-colors'
+            className='text-secondary-text hover:text-primary-text p-1 transition-colors'
             aria-label='Close'
           >
-            <X className='w-5 h-5' />
+            <X className='h-5 w-5' />
           </button>
         </header>
 
-        <div className='px-6 py-6 space-y-5'>
+        <div className='space-y-5 px-6 py-6'>
           <div>
-            <label className='block text-sm font-medium text-primary-text mb-1.5'>
-              Label
-            </label>
+            <label className='text-primary-text mb-1.5 block text-sm font-medium'>Label</label>
             <input
               type='text'
               value={label}
-              onChange={(e) =>
-                setLabel(e.target.value.slice(0, MAX_LABEL_LENGTH))
-              }
+              onChange={(e) => setLabel(e.target.value.slice(0, MAX_LABEL_LENGTH))}
               placeholder='e.g. Frontend Engineer'
               maxLength={MAX_LABEL_LENGTH}
-              className='w-full text-sm bg-background border border-border-col text-primary-text rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent placeholder:text-secondary-text'
+              className='bg-background border-brand-border text-primary-text focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text w-full rounded-lg border px-3 py-2.5 text-sm focus:ring-2 focus:outline-none'
             />
-            <p className='text-xs text-secondary-text mt-1.5'>
-              Max {MAX_LABEL_LENGTH} characters
-            </p>
+            <p className='text-secondary-text mt-1.5 text-xs'>Max {MAX_LABEL_LENGTH} characters</p>
           </div>
 
           <div>
-            <label className='block text-sm font-medium text-primary-text mb-1.5'>
+            <label className='text-primary-text mb-1.5 block text-sm font-medium'>
               Resume file
             </label>
             <div
@@ -145,38 +139,34 @@ export function UploadResumeModal({ onSubmit, onClose }: UploadResumeModalProps)
               onDragLeave={() => setDragging(false)}
               onDrop={onDrop}
               onClick={() => inputRef.current?.click()}
-              className={`flex flex-col items-center justify-center gap-2 px-6 py-10 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${
+              className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed px-6 py-10 transition-colors ${
                 dragging
-                  ? "border-accent bg-accent-soft"
-                  : "border-border-col hover:border-accent hover:bg-button-col/50"
+                  ? "border-brand-accent bg-brand-accent-soft"
+                  : "border-brand-border hover:border-brand-accent hover:bg-button-col/50"
               }`}
             >
               {file ? (
                 <>
-                  <div className='w-12 h-12 rounded-lg bg-accent-soft flex items-center justify-center'>
-                    <FileText className='w-6 h-6 text-accent' />
+                  <div className='bg-brand-accent-soft flex h-12 w-12 items-center justify-center rounded-lg'>
+                    <FileText className='text-brand-accent h-6 w-6' />
                   </div>
-                  <div className='text-sm font-medium text-primary-text text-center'>
+                  <div className='text-primary-text text-center text-sm font-medium'>
                     {file.name}
                   </div>
-                  <div className='text-xs text-secondary-text'>
+                  <div className='text-secondary-text text-xs'>
                     {Math.round(file.size / 1024)} KB · click to replace
                   </div>
                 </>
               ) : (
                 <>
-                  <div className='w-12 h-12 rounded-lg bg-button-col flex items-center justify-center'>
-                    <UploadCloud className='w-6 h-6 text-secondary-text' />
+                  <div className='bg-button-col flex h-12 w-12 items-center justify-center rounded-lg'>
+                    <UploadCloud className='text-secondary-text h-6 w-6' />
                   </div>
-                  <div className='text-sm text-primary-text'>
-                    <span className='font-medium text-accent'>
-                      Click to upload
-                    </span>{" "}
-                    or drag and drop
+                  <div className='text-primary-text text-sm'>
+                    <span className='text-brand-accent font-medium'>Click to upload</span> or drag
+                    and drop
                   </div>
-                  <div className='text-xs text-secondary-text'>
-                    PDF, JPEG, PNG · max 5 MB
-                  </div>
+                  <div className='text-secondary-text text-xs'>PDF, JPEG, PNG · max 5 MB</div>
                 </>
               )}
               <input
@@ -189,14 +179,14 @@ export function UploadResumeModal({ onSubmit, onClose }: UploadResumeModalProps)
             </div>
           </div>
 
-          {error && <p className='text-xs text-danger-500'>{error}</p>}
+          {error && <p className='text-danger-500 text-xs'>{error}</p>}
         </div>
 
         <footer className='px-6 pb-6'>
           <button
             onClick={submit}
             disabled={!canSubmit}
-            className='w-full px-4 py-3 text-sm font-medium text-white bg-accent rounded-lg hover:bg-primary-600 disabled:bg-button-col disabled:text-secondary-text disabled:cursor-not-allowed transition-colors'
+            className='bg-brand-accent hover:bg-primary-600 disabled:bg-button-col disabled:text-secondary-text w-full rounded-lg px-4 py-3 text-sm font-medium text-white transition-colors disabled:cursor-not-allowed'
           >
             {saving ? "Submitting…" : "Submit resume"}
           </button>

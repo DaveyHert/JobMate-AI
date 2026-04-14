@@ -19,22 +19,16 @@ interface CardProps {
 
 export function Card({ title, description, children, footer }: CardProps) {
   return (
-    <section className='bg-foreground border border-border-col rounded-xl overflow-hidden mb-4'>
+    <section className='bg-foreground border-brand-border mb-4 overflow-hidden rounded-xl border'>
       {(title || description) && (
-        <header className='px-5 pt-5 pb-3 border-b border-border-col'>
-          {title && (
-            <h2 className='text-base font-semibold text-primary-text'>
-              {title}
-            </h2>
-          )}
-          {description && (
-            <p className='text-xs text-secondary-text mt-1'>{description}</p>
-          )}
+        <header className='border-brand-border border-b px-5 pt-5 pb-3'>
+          {title && <h2 className='text-primary-text text-base font-semibold'>{title}</h2>}
+          {description && <p className='text-secondary-text mt-1 text-xs'>{description}</p>}
         </header>
       )}
       <div className='p-5'>{children}</div>
       {footer && (
-        <footer className='px-5 py-3 border-t border-border-col bg-background/40'>
+        <footer className='border-brand-border bg-background/40 border-t px-5 py-3'>
           {footer}
         </footer>
       )}
@@ -53,14 +47,10 @@ interface RowProps {
 /** A horizontal label/value row — used for toggles and inline controls. */
 export function Row({ label, description, children }: RowProps) {
   return (
-    <div className='flex items-center justify-between gap-4 py-3 border-b border-border-col last:border-b-0'>
+    <div className='border-brand-border flex items-center justify-between gap-4 border-b py-3 last:border-b-0'>
       <div className='min-w-0'>
-        <div className='text-sm font-medium text-primary-text'>{label}</div>
-        {description && (
-          <div className='text-xs text-secondary-text mt-0.5'>
-            {description}
-          </div>
-        )}
+        <div className='text-primary-text text-sm font-medium'>{label}</div>
+        {description && <div className='text-secondary-text mt-0.5 text-xs'>{description}</div>}
       </div>
       <div className='shrink-0'>{children}</div>
     </div>
@@ -86,11 +76,11 @@ export function Toggle({ checked, onChange, disabled, label }: ToggleProps) {
       disabled={disabled}
       onClick={() => onChange(!checked)}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        checked ? "bg-accent" : "bg-button-col border border-border-col"
-      } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+        checked ? "bg-brand-accent" : "bg-button-col border-brand-border border"
+      } ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
     >
       <span
-        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform shadow ${
+        className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
           checked ? "translate-x-6" : "translate-x-1"
         }`}
       />
@@ -108,26 +98,16 @@ interface FieldProps {
   required?: boolean;
 }
 
-export function Field({
-  label,
-  hint,
-  error,
-  children,
-  required,
-}: FieldProps) {
+export function Field({ label, hint, error, children, required }: FieldProps) {
   return (
-    <label className='block mb-4 last:mb-0'>
-      <div className='text-xs font-medium text-primary-text mb-1.5'>
+    <label className='mb-4 block last:mb-0'>
+      <div className='text-primary-text mb-1.5 text-xs font-medium'>
         {label}
         {required && <span className='text-danger-500 ml-0.5'>*</span>}
       </div>
       {children}
-      {hint && !error && (
-        <div className='text-[11px] text-secondary-text mt-1'>{hint}</div>
-      )}
-      {error && (
-        <div className='text-[11px] text-danger-500 mt-1'>{error}</div>
-      )}
+      {hint && !error && <div className='text-secondary-text mt-1 text-[11px]'>{hint}</div>}
+      {error && <div className='text-danger-500 mt-1 text-[11px]'>{error}</div>}
     </label>
   );
 }
@@ -140,7 +120,7 @@ export function TextInput(props: TextInputProps) {
   return (
     <input
       {...props}
-      className={`w-full px-3 py-2 text-sm bg-background border border-border-col rounded-lg text-primary-text placeholder:text-secondary-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors ${
+      className={`bg-background border-brand-border text-primary-text placeholder:text-secondary-text focus:ring-brand-accent/30 focus:border-brand-accent w-full rounded-lg border px-3 py-2 text-sm transition-colors focus:ring-2 focus:outline-none ${
         props.className ?? ""
       }`}
     />
@@ -155,7 +135,7 @@ export function TextArea(props: TextAreaProps) {
   return (
     <textarea
       {...props}
-      className={`w-full px-3 py-2 text-sm bg-background border border-border-col rounded-lg text-primary-text placeholder:text-secondary-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors resize-y min-h-[96px] ${
+      className={`bg-background border-brand-border text-primary-text placeholder:text-secondary-text focus:ring-brand-accent/30 focus:border-brand-accent min-h-[96px] w-full resize-y rounded-lg border px-3 py-2 text-sm transition-colors focus:ring-2 focus:outline-none ${
         props.className ?? ""
       }`}
     />
@@ -171,18 +151,13 @@ interface SelectProps<T extends string> {
   disabled?: boolean;
 }
 
-export function Select<T extends string>({
-  value,
-  onChange,
-  options,
-  disabled,
-}: SelectProps<T>) {
+export function Select<T extends string>({ value, onChange, options, disabled }: SelectProps<T>) {
   return (
     <select
       value={value}
       disabled={disabled}
       onChange={(e) => onChange(e.target.value as T)}
-      className='w-full px-3 py-2 text-sm bg-background border border-border-col rounded-lg text-primary-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors'
+      className='bg-background border-brand-border text-primary-text focus:ring-brand-accent/30 focus:border-brand-accent w-full rounded-lg border px-3 py-2 text-sm transition-colors focus:ring-2 focus:outline-none'
     >
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>
@@ -221,9 +196,8 @@ export function Button({
     md: "px-4 py-2 text-sm",
   };
   const variants = {
-    primary: "bg-accent text-white hover:bg-primary-600",
-    secondary:
-      "bg-button-col text-primary-text border border-border-col hover:bg-button-hov",
+    primary: "bg-brand-accent text-white hover:bg-primary-600",
+    secondary: "bg-button-col text-primary-text border border-brand-border hover:bg-button-hov",
     danger: "bg-danger-500 text-white hover:opacity-90",
   };
   return (

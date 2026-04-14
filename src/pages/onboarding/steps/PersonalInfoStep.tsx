@@ -85,12 +85,12 @@ export function PersonalInfoStep({ data, onChange, onContinue }: Props) {
   return (
     <div>
       <div className='mb-8'>
-        <h1 className='text-3xl font-bold text-gray-900 mb-2'>Create an Account</h1>
-        <p className='text-gray-500 text-sm'>Fill in the fields below to create an account.</p>
+        <h1 className='mb-2 text-3xl font-bold text-gray-900'>Create an Account</h1>
+        <p className='text-sm text-gray-500'>Fill in the fields below to create an account.</p>
       </div>
 
       <StepHeader
-        icon={<UserSvg className='w-5 h-5 text-primary-04' />}
+        icon={<UserSvg className='text-primary-04 h-5 w-5' />}
         title='Personal Information'
       />
 
@@ -115,11 +115,11 @@ export function PersonalInfoStep({ data, onChange, onContinue }: Props) {
           </Field>
 
           <Field label='Phone number'>
-            <div className='flex items-stretch border border-gray-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-accent/30 focus-within:border-accent transition-colors bg-white'>
+            <div className='focus-within:ring-brand-accent/30 focus-within:border-brand-accent flex items-stretch overflow-hidden rounded-lg border border-gray-200 bg-white transition-colors focus-within:ring-2'>
               <select
                 value={data.phoneCode}
                 onChange={s("phoneCode")}
-                className='pl-3 py-3 text-sm text-gray-900 bg-neutral-01 border-r border-gray-200 focus:outline-none cursor-pointer shrink-0 appearance-none'
+                className='bg-neutral-01 shrink-0 cursor-pointer appearance-none border-r border-gray-200 py-3 pl-3 text-sm text-gray-900 focus:outline-none'
                 style={{
                   paddingRight: "28px",
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
@@ -139,7 +139,7 @@ export function PersonalInfoStep({ data, onChange, onContinue }: Props) {
                 value={data.phone}
                 onChange={s("phone")}
                 placeholder='Enter your phone number'
-                className='flex-1 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none bg-transparent min-w-0'
+                className='min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none'
               />
             </div>
           </Field>

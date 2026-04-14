@@ -35,7 +35,8 @@ export function PrivacyTab({ settings }: PrivacyTabProps) {
 
   const wipeData = () => {
     toast("Wipe all data?", {
-      description: "This will permanently delete your profile, applications, and settings on this device.",
+      description:
+        "This will permanently delete your profile, applications, and settings on this device.",
       action: {
         label: "Wipe",
         onClick: async () => {
@@ -74,9 +75,7 @@ export function PrivacyTab({ settings }: PrivacyTabProps) {
         >
           <Toggle
             checked={settings.personalizedExperience}
-            onChange={(personalizedExperience) =>
-              update({ personalizedExperience })
-            }
+            onChange={(personalizedExperience) => update({ personalizedExperience })}
           />
         </Row>
       </Section>
@@ -102,22 +101,14 @@ export function PrivacyTab({ settings }: PrivacyTabProps) {
         >
           <Toggle
             checked={settings.requireReviewBeforeFill}
-            onChange={(requireReviewBeforeFill) =>
-              update({ requireReviewBeforeFill })
-            }
+            onChange={(requireReviewBeforeFill) => update({ requireReviewBeforeFill })}
           />
         </Row>
       </Section>
 
       {/* Security & access */}
-      <Section
-        title='Security & access'
-        description='Keep your account safe.'
-      >
-        <Row
-          label='Login alerts'
-          description='Email me when there is a sign-in from a new device.'
-        >
+      <Section title='Security & access' description='Keep your account safe.'>
+        <Row label='Login alerts' description='Email me when there is a sign-in from a new device.'>
           <Toggle
             checked={settings.loginAlerts}
             onChange={(loginAlerts) => update({ loginAlerts })}
@@ -133,16 +124,16 @@ export function PrivacyTab({ settings }: PrivacyTabProps) {
         <div className='flex flex-wrap gap-3 px-5 py-5'>
           <button
             onClick={exportData}
-            className='flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-text bg-foreground border border-border-col rounded-lg hover:bg-button-col transition-colors'
+            className='text-primary-text bg-foreground border-brand-border hover:bg-button-col flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
           >
-            <Download className='w-4 h-4' />
+            <Download className='h-4 w-4' />
             Export my data
           </button>
           <button
             onClick={wipeData}
-            className='flex items-center gap-2 px-4 py-2 text-sm font-medium text-danger-500 bg-foreground border border-danger-500/30 rounded-lg hover:bg-danger-500/10 transition-colors'
+            className='text-danger-500 bg-foreground border-danger-500/30 hover:bg-danger-500/10 flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
           >
-            <Trash2 className='w-4 h-4' />
+            <Trash2 className='h-4 w-4' />
             Delete everything
           </button>
         </div>
@@ -163,14 +154,10 @@ function Section({
   return (
     <section>
       <div className='mb-4'>
-        <h2 className='text-xl font-semibold text-primary-text'>{title}</h2>
-        {description && (
-          <p className='text-sm text-secondary-text mt-1'>{description}</p>
-        )}
+        <h2 className='text-primary-text text-xl font-semibold'>{title}</h2>
+        {description && <p className='text-secondary-text mt-1 text-sm'>{description}</p>}
       </div>
-      <div className='border border-border-col rounded-lg bg-foreground'>
-        {children}
-      </div>
+      <div className='border-brand-border bg-foreground rounded-lg border'>{children}</div>
     </section>
   );
 }
@@ -186,11 +173,9 @@ function Row({
 }) {
   return (
     <div className='flex items-center gap-4 px-5 py-5'>
-      <div className='flex-1 min-w-0'>
-        <div className='text-sm font-medium text-primary-text'>{label}</div>
-        {description && (
-          <div className='text-xs text-secondary-text mt-1'>{description}</div>
-        )}
+      <div className='min-w-0 flex-1'>
+        <div className='text-primary-text text-sm font-medium'>{label}</div>
+        {description && <div className='text-secondary-text mt-1 text-xs'>{description}</div>}
       </div>
       <div className='shrink-0'>{children}</div>
     </div>
@@ -198,16 +183,10 @@ function Row({
 }
 
 function Divider() {
-  return <div className='border-t border-dashed border-border-col mx-5' />;
+  return <div className='border-brand-border mx-5 border-t border-dashed' />;
 }
 
-function Toggle({
-  checked,
-  onChange,
-}: {
-  checked: boolean;
-  onChange: (next: boolean) => void;
-}) {
+function Toggle({ checked, onChange }: { checked: boolean; onChange: (next: boolean) => void }) {
   return (
     <button
       type='button'
@@ -215,7 +194,7 @@ function Toggle({
       aria-checked={checked}
       onClick={() => onChange(!checked)}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        checked ? "bg-accent" : "bg-button-col border border-border-col"
+        checked ? "bg-brand-accent" : "bg-button-col border-brand-border border"
       }`}
     >
       <span

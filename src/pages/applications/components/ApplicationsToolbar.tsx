@@ -52,32 +52,32 @@ export function ApplicationsToolbar({
       <div className='relative shrink-0' ref={datePickerRef}>
         <button
           onClick={() => setDatePickerOpen((o) => !o)}
-          className='flex items-center bg-background border border-border-col rounded-lg text-sm text-primary-text overflow-hidden hover:bg-button-hov transition-colors whitespace-nowrap'
+          className='bg-background border-brand-border text-primary-text hover:bg-button-hov flex items-center overflow-hidden rounded-lg border text-sm whitespace-nowrap transition-colors'
         >
           <span className='px-4 py-2'>{dateRangeLabel}</span>
-          <span className='flex items-center justify-center px-3 py-2 border-l border-border-col'>
-            <Calendar className='w-4 h-4 text-secondary-text' />
+          <span className='border-brand-border flex items-center justify-center border-l px-3 py-2'>
+            <Calendar className='text-secondary-text h-4 w-4' />
           </span>
         </button>
 
         {datePickerOpen && (
-          <div className='absolute top-11 left-0 z-30 bg-foreground border border-border-col rounded-xl shadow-xl p-4 flex gap-3 min-w-[300px]'>
+          <div className='bg-foreground border-brand-border absolute top-11 left-0 z-30 flex min-w-[300px] gap-3 rounded-xl border p-4 shadow-xl'>
             <div className='flex-1'>
-              <label className='text-xs font-medium text-secondary-text block mb-1.5'>From</label>
+              <label className='text-secondary-text mb-1.5 block text-xs font-medium'>From</label>
               <input
                 type='date'
                 value={startDate}
                 onChange={(e) => onStartDateChange(e.target.value)}
-                className='w-full border border-border-col rounded-md px-3 py-1.5 text-sm bg-background text-primary-text focus:outline-none focus:ring-2 focus:ring-accent/30'
+                className='border-brand-border bg-background text-primary-text focus:ring-brand-accent/30 w-full rounded-md border px-3 py-1.5 text-sm focus:ring-2 focus:outline-none'
               />
             </div>
             <div className='flex-1'>
-              <label className='text-xs font-medium text-secondary-text block mb-1.5'>To</label>
+              <label className='text-secondary-text mb-1.5 block text-xs font-medium'>To</label>
               <input
                 type='date'
                 value={endDate}
                 onChange={(e) => onEndDateChange(e.target.value)}
-                className='w-full border border-border-col rounded-md px-3 py-1.5 text-sm bg-background text-primary-text focus:outline-none focus:ring-2 focus:ring-accent/30'
+                className='border-brand-border bg-background text-primary-text focus:ring-brand-accent/30 w-full rounded-md border px-3 py-1.5 text-sm focus:ring-2 focus:outline-none'
               />
             </div>
             {(startDate || endDate) && (
@@ -86,7 +86,7 @@ export function ApplicationsToolbar({
                   onStartDateChange("");
                   onEndDateChange("");
                 }}
-                className='self-end text-xs text-accent hover:underline whitespace-nowrap pb-1.5'
+                className='text-brand-accent self-end pb-1.5 text-xs whitespace-nowrap hover:underline'
               >
                 Clear
               </button>
@@ -97,13 +97,13 @@ export function ApplicationsToolbar({
 
       {/* Search — fixed width, left-aligned, not full-width */}
       <div className='relative w-72 shrink-0'>
-        <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary-text' />
+        <Search className='text-secondary-text absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2' />
         <input
           type='text'
           placeholder='Search for job name, status…'
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
-          className='w-full pl-9 pr-4 py-2 bg-background border border-border-col rounded-lg text-sm text-primary-text placeholder:text-secondary-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors'
+          className='bg-background border-brand-border text-primary-text placeholder:text-secondary-text focus:ring-brand-accent/30 focus:border-brand-accent w-full rounded-lg border py-2 pr-4 pl-9 text-sm transition-colors focus:ring-2 focus:outline-none'
         />
       </div>
 
@@ -111,40 +111,40 @@ export function ApplicationsToolbar({
       <div className='flex-1' />
 
       {/* View toggle */}
-      <div className='flex items-center border border-border-col rounded-lg overflow-hidden shrink-0'>
+      <div className='border-brand-border flex shrink-0 items-center overflow-hidden rounded-lg border'>
         <button
           onClick={() => onViewChange("list")}
           className={`p-2.5 transition-colors ${
             view === "list"
-              ? "bg-accent/10 text-accent"
+              ? "bg-brand-accent/10 text-brand-accent"
               : "bg-background text-secondary-text hover:text-primary-text hover:bg-button-col"
           }`}
           aria-label='List view'
           aria-pressed={view === "list"}
         >
-          <List className='w-4 h-4' />
+          <List className='h-4 w-4' />
         </button>
         <button
           onClick={() => onViewChange("grid")}
-          className={`p-2.5 transition-colors border-l border-border-col ${
+          className={`border-brand-border border-l p-2.5 transition-colors ${
             view === "grid"
-              ? "bg-accent/10 text-accent"
+              ? "bg-brand-accent/10 text-brand-accent"
               : "bg-background text-secondary-text hover:text-primary-text hover:bg-button-col"
           }`}
           aria-label='Grid view'
           aria-pressed={view === "grid"}
         >
-          <LayoutGrid className='w-4 h-4' />
+          <LayoutGrid className='h-4 w-4' />
         </button>
       </div>
 
       {/* Export — gray bg to match design */}
       <button
         onClick={onExport}
-        className='flex items-center gap-2 px-4 py-2 bg-background border border-border-col rounded-lg text-sm font-medium text-primary-text hover:bg-button-hov transition-colors whitespace-nowrap shrink-0'
+        className='bg-background border-brand-border text-primary-text hover:bg-button-hov flex shrink-0 items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors'
       >
         Export data
-        <Share2 className='w-4 h-4 text-secondary-text' />
+        <Share2 className='text-secondary-text h-4 w-4' />
       </button>
     </div>
   );

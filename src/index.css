@@ -4,17 +4,18 @@
   --font-inter: Inter, sans-serif;
   --font-poppins: Poppins, sans-serif;
 
-  /* Neutral palette */
+  /* Brand palette */
   --color-background: #f3f4f6;
   --color-foreground: #ffff;
   --color-card: #ffffff;
-  --color-border-col: #e5e7eb;
+  --color-brand-border: #e5e7eb;
   --color-button-col: #f8faff;
   --color-button-hov: #eef0ff;
-  --color-muted: #c5c8ff;
-  --color-accent: #5750f1;
-  --color-accent-soft: #f3f3fe;
+  --color-brand-muted: #c5c8ff;
+  --color-brand-accent: #5750f1;
+  --color-brand-accent-soft: #f3f3fe;
 
+  /* Neutral Palette */
   --color-neutral-01: #f5f7f9;
   --color-neutral-02: #dae1e7;
   --color-neutral-03: #b8c2cc;
@@ -57,8 +58,6 @@
   --color-link-text: #5a5fe1; /* same as --color-primary-500 */
 }
 
-/* @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *)); */
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 .dark {
@@ -67,11 +66,11 @@
   --color-card: #18243a;
   --color-button-col: #1f2a37;
   --color-button-hov: #2a3746;
-  --color-border-col: #222f3f;
-  --color-muted: #94a3b8;
+  --color-brand-border: #222f3f;
+  --color-brand-muted: #94a3b8;
 
-  --color-accent: #5750f1;
-  --color-accent-soft: #f3f3fe;
+  --color-brand-accent: #5750f1;
+  --color-brand-accent-soft: #f3f3fe;
 
   --color-primary-text: #f3f4f6;
   --color-secondary-text: #9ca3af;
@@ -107,12 +106,8 @@
 } */
 
 /*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
+  The default border color has changed to `currentcolor` in Tailwind CSS v4, so we've added these compatibility styles to make sure everything still looks the same as it did with Tailwind CSS v3.
+  If we ever want to remove these styles, we need to add an explicit border color utility to any element that depends on these defaults.
 */
 @layer base {
   *,
@@ -127,11 +122,11 @@
 /*utility tailwind style  */
 
 .btn-primary {
-  @apply bg-button-col border-border-col hover:border-muted hover:bg-button-hov flex cursor-pointer flex-col items-center gap-3 rounded-[10px] border-2 px-4 py-2 text-[#5E636E] shadow-xs transition-all duration-200 disabled:opacity-50 dark:text-[#B1B1B1];
+  @apply bg-button-col border-brand-border hover:border-brand-muted hover:bg-button-hov flex cursor-pointer flex-col items-center gap-3 rounded-[10px] border-2 px-4 py-2 text-[#5E636E] shadow-xs transition-all duration-200 disabled:opacity-50 dark:text-[#B1B1B1];
 }
 
 .btn-secondary {
-  @apply bg-button-col hover:bg-button-hov border-border-col flex w-full cursor-pointer items-center gap-2 rounded-lg border p-2 text-sm text-gray-700 transition-all dark:text-[#F3F4F6];
+  @apply bg-button-col hover:bg-button-hov border-brand-border flex w-full cursor-pointer items-center gap-2 rounded-lg border p-2 text-sm text-gray-700 transition-all dark:text-[#F3F4F6];
 }
 
 /* Light mode */
@@ -141,7 +136,7 @@
 }
 /* Dark mode */
 .dark {
-  --scroll-thumb: var(--color-accent-soft);
+  --scroll-thumb: var(--color-brand-accent-soft);
   --scroll-track: #434345;
 }
 

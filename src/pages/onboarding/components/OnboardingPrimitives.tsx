@@ -8,10 +8,10 @@ import {
 } from "react";
 
 export const inputCls =
-  "w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors bg-white";
+  "w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent transition-colors bg-white";
 
 export const selectCls =
-  "w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors bg-white appearance-none cursor-pointer";
+  "w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent transition-colors bg-white appearance-none cursor-pointer";
 
 interface FieldProps {
   label: string;
@@ -188,7 +188,7 @@ export function StepFooter({
       <button
         onClick={onContinue}
         disabled={continueDisabled}
-        className='bg-accent hover:bg-primary-600 disabled:bg-accent/40 rounded-lg px-8 py-3 text-sm font-medium text-white transition-colors'
+        className='bg-brand-accent hover:bg-primary-600 disabled:bg-brand-accent/40 rounded-lg px-8 py-3 text-sm font-medium text-white transition-colors'
       >
         {continueLabel}
       </button>

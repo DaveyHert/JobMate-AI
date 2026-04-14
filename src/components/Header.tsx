@@ -8,16 +8,12 @@ interface HeaderProps {
   onProfileChange: (profileId: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
-  profiles,
-  activeProfileId,
-  onProfileChange,
-}) => {
+const Header: React.FC<HeaderProps> = ({ profiles, activeProfileId, onProfileChange }) => {
   const activeProfile = profiles.find((p) => p.id === activeProfileId);
   const avatarUrl = activeProfile?.identity.profilePictureUrl;
 
   return (
-    <header className='flex justify-between items-center px-5 py-2 bg-foreground shrink-0 border-b border-border-col'>
+    <header className='bg-foreground border-brand-border flex shrink-0 items-center justify-between border-b px-5 py-2'>
       {/* Logo */}
       <div className='flex items-center gap-1'>
         <svg width='12' height='16' viewBox='0 0 12 14' fill='none'>
@@ -30,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({
           />
         </svg>
 
-        <span className='font-semibold text-lg font-inter text-gray-900 dark:text-[#E3E3E3]'>
+        <span className='font-inter text-lg font-semibold text-gray-900 dark:text-[#E3E3E3]'>
           JobMate AI
         </span>
       </div>
@@ -41,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({
           <select
             value={activeProfileId}
             onChange={(e) => onProfileChange(e.target.value)}
-            className='appearance-none bg-button-col border border-border-col rounded-sm px-4 py-1 pr-10 text-sm font-normal text-primary-text cursor-pointer hover:bg-button-hov max-w-[180px] truncate'
+            className='bg-button-col border-brand-border text-primary-text hover:bg-button-hov max-w-[180px] cursor-pointer appearance-none truncate rounded-sm border px-4 py-1 pr-10 text-sm font-normal'
           >
             {profiles.length === 0 ? (
               <option value=''>No profiles</option>
@@ -53,18 +49,18 @@ const Header: React.FC<HeaderProps> = ({
               ))
             )}
           </select>
-          <ChevronDown className='absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-primary-text pointer-events-none' />
+          <ChevronDown className='text-primary-text pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform' />
         </div>
 
-        <div className='w-10 h-10 rounded-full border-2 border-[#D1D5DB] dark:border-[#1D1E21] overflow-hidden bg-button-col flex items-center justify-center'>
+        <div className='bg-button-col flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 border-[#D1D5DB] dark:border-[#1D1E21]'>
           {avatarUrl ? (
             <img
               src={avatarUrl}
               alt={activeProfile?.identity.fullName ?? "Profile"}
-              className='w-full h-full object-cover'
+              className='h-full w-full object-cover'
             />
           ) : (
-            <User className='w-5 h-5 text-secondary-text' />
+            <User className='text-secondary-text h-5 w-5' />
           )}
         </div>
       </div>

@@ -11,13 +11,7 @@
 // ============================================================================
 
 import { useState } from "react";
-import {
-  Plus,
-  X as XIcon,
-  SquarePen,
-  Trash2,
-  Check,
-} from "lucide-react";
+import { Plus, X as XIcon, SquarePen, Trash2, Check } from "lucide-react";
 import type { UserProfile, WorkExperience } from "../../../models/models";
 import { jobMateStore } from "../../../store/jobMateStore";
 
@@ -68,8 +62,8 @@ function OverviewBox({
 
   return (
     <div>
-      <div className='flex items-center justify-between mb-2'>
-        <span className='text-sm font-medium text-primary-text'>{label}</span>
+      <div className='mb-2 flex items-center justify-between'>
+        <span className='text-primary-text text-sm font-medium'>{label}</span>
         <button
           onClick={() => {
             setDraft(value);
@@ -78,7 +72,7 @@ function OverviewBox({
           className='text-accent hover:text-primary-600 transition-colors'
           aria-label={`Edit ${label}`}
         >
-          <SquarePen className='w-4 h-4' />
+          <SquarePen className='h-4 w-4' />
         </button>
       </div>
       {editing ? (
@@ -91,20 +85,18 @@ function OverviewBox({
               if (e.key === "Enter") void commit();
               if (e.key === "Escape") cancel();
             }}
-            className='flex-1 text-sm bg-background border border-accent rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent/30'
+            className='bg-background border-accent focus:ring-accent/30 flex-1 rounded-lg border px-4 py-3 text-sm focus:ring-2 focus:outline-none'
           />
           <button onClick={commit} className='text-accent'>
-            <Check className='w-4 h-4' />
+            <Check className='h-4 w-4' />
           </button>
           <button onClick={cancel} className='text-secondary-text'>
-            <XIcon className='w-4 h-4' />
+            <XIcon className='h-4 w-4' />
           </button>
         </div>
       ) : (
-        <div className='text-sm border border-border-col rounded-lg px-4 py-3 bg-background text-primary-text min-h-[46px] flex items-center'>
-          {value || (
-            <span className='text-secondary-text italic'>{placeholder}</span>
-          )}
+        <div className='border-brand-border bg-background text-primary-text flex min-h-[46px] items-center rounded-lg border px-4 py-3 text-sm'>
+          {value || <span className='text-secondary-text italic'>{placeholder}</span>}
         </div>
       )}
     </div>
@@ -130,8 +122,8 @@ function SocialInput({
   };
 
   return (
-    <div className='flex items-center border border-border-col rounded-lg overflow-hidden bg-background'>
-      <div className='px-3 shrink-0 text-primary-text'>{icon}</div>
+    <div className='border-brand-border bg-background flex items-center overflow-hidden rounded-lg border'>
+      <div className='text-primary-text shrink-0 px-3'>{icon}</div>
       <input
         type='url'
         value={draft}
@@ -143,7 +135,7 @@ function SocialInput({
           }
         }}
         placeholder={placeholder}
-        className='flex-1 py-3 pr-3 text-sm bg-transparent text-primary-text focus:outline-none placeholder:text-secondary-text'
+        className='text-primary-text placeholder:text-secondary-text flex-1 bg-transparent py-3 pr-3 text-sm focus:outline-none'
       />
     </div>
   );
@@ -162,7 +154,7 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
   const expectedSalary = formatSalary(
     profile.compensation.expectedMin,
     profile.compensation.expectedMax,
-    profile.compensation.currency
+    profile.compensation.currency,
   );
   const saveSalary = (raw: string) => {
     const clean = raw.replace(/[$,\s]/g, "");
@@ -239,18 +231,14 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
     setWorkDraft(null);
   };
 
-  const deleteWork = (id: string) =>
-    save({ work: profile.work.filter((w) => w.id !== id) });
+  const deleteWork = (id: string) => save({ work: profile.work.filter((w) => w.id !== id) });
 
   return (
     <div className='space-y-10'>
-
       {/* ── Overview ── */}
       <section>
-        <h2 className='text-xl font-semibold text-primary-text mb-5'>
-          Overview
-        </h2>
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+        <h2 className='text-primary-text mb-5 text-xl font-semibold'>Overview</h2>
+        <div className='grid grid-cols-1 gap-5 sm:grid-cols-2'>
           <OverviewBox
             label='Years of experience'
             value={yearsOfExperience}
@@ -268,18 +256,16 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
 
       {/* ── Primary skills ── */}
       <section>
-        <h2 className='text-xl font-semibold text-primary-text mb-1.5'>
-          Primary skills
-        </h2>
-        <p className='text-sm text-secondary-text mb-4'>
+        <h2 className='text-primary-text mb-1.5 text-xl font-semibold'>Primary skills</h2>
+        <p className='text-secondary-text mb-4 text-sm'>
           Keywords recruiters and AI use to match you with roles.
         </p>
 
-        <div className='flex items-center gap-3 border border-border-col rounded-lg px-4 py-3 bg-background flex-wrap'>
+        <div className='border-brand-border bg-background flex flex-wrap items-center gap-3 rounded-lg border px-4 py-3'>
           {profile.skills.map((s) => (
             <span
               key={s}
-              className='inline-flex items-center gap-1.5 px-3 py-1.5 border border-border-col rounded-full text-sm text-primary-text bg-foreground'
+              className='border-brand-border text-primary-text bg-foreground inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm'
             >
               {s}
               <button
@@ -287,7 +273,7 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
                 className='text-secondary-text hover:text-danger-500 transition-colors'
                 aria-label={`Remove ${s}`}
               >
-                <XIcon className='w-3 h-3' />
+                <XIcon className='h-3 w-3' />
               </button>
             </span>
           ))}
@@ -300,39 +286,35 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
                 addSkill();
               }
             }}
-            placeholder={
-              profile.skills.length === 0 ? "Add a skill and press Enter" : ""
-            }
-            className='flex-1 min-w-[140px] text-sm bg-transparent text-primary-text focus:outline-none placeholder:text-secondary-text'
+            placeholder={profile.skills.length === 0 ? "Add a skill and press Enter" : ""}
+            className='text-primary-text placeholder:text-secondary-text min-w-[140px] flex-1 bg-transparent text-sm focus:outline-none'
           />
           <button
             onClick={addSkill}
-            className='flex items-center gap-1.5 px-4 py-2 text-sm font-medium border border-border-col rounded-lg bg-foreground text-primary-text hover:bg-button-col transition-colors shrink-0'
+            className='border-brand-border bg-foreground text-primary-text hover:bg-button-col flex shrink-0 items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
           >
             Add a new skill
-            <Plus className='w-4 h-4' />
+            <Plus className='h-4 w-4' />
           </button>
         </div>
       </section>
 
       {/* ── Social Media Links ── */}
       <section>
-        <div className='flex items-center justify-between mb-4'>
+        <div className='mb-4 flex items-center justify-between'>
           <div>
-            <h2 className='text-xl font-semibold text-primary-text'>
-              Social Media Links
-            </h2>
-            <p className='text-sm text-secondary-text mt-1'>
+            <h2 className='text-primary-text text-xl font-semibold'>Social Media Links</h2>
+            <p className='text-secondary-text mt-1 text-sm'>
               Recruiters click through these straight from your profile.
             </p>
           </div>
-          <button className='flex items-center gap-1.5 px-4 py-2 text-sm font-medium border border-border-col rounded-lg text-primary-text hover:bg-button-col transition-colors'>
+          <button className='border-brand-border text-primary-text hover:bg-button-col flex items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'>
             Add another link
-            <Plus className='w-4 h-4' />
+            <Plus className='h-4 w-4' />
           </button>
         </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
+        <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
           <SocialInput
             icon={<XLogo />}
             value={profile.links.twitter ?? ""}
@@ -362,22 +344,18 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
 
       {/* ── Work experience ── */}
       <section>
-        <div className='flex items-center justify-between mb-4'>
+        <div className='mb-4 flex items-center justify-between'>
           <div>
-            <h2 className='text-xl font-semibold text-primary-text'>
-              Work experience
-            </h2>
-            <p className='text-sm text-secondary-text mt-1'>
-              Most recent roles first.
-            </p>
+            <h2 className='text-primary-text text-xl font-semibold'>Work experience</h2>
+            <p className='text-secondary-text mt-1 text-sm'>Most recent roles first.</p>
           </div>
           {!addingWork && (
             <button
               onClick={startAddWork}
-              className='flex items-center gap-1.5 px-4 py-2 text-sm font-medium border border-border-col rounded-lg text-primary-text hover:bg-button-col transition-colors'
+              className='border-brand-border text-primary-text hover:bg-button-col flex items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
             >
               Add new experience
-              <Plus className='w-4 h-4' />
+              <Plus className='h-4 w-4' />
             </button>
           )}
         </div>
@@ -405,7 +383,7 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
                 }}
                 onDelete={() => deleteWork(w.id)}
               />
-            )
+            ),
           )}
 
           {addingWork && workDraft && (
@@ -446,59 +424,57 @@ function WorkCard({
     .join(" - ");
 
   return (
-    <div className='border border-border-col rounded-xl p-5 bg-background'>
+    <div className='border-brand-border bg-background rounded-xl border p-5'>
       <div className='flex items-start gap-4'>
         {/* Avatar */}
         <div
-          className={`w-11 h-11 rounded-full flex items-center justify-center text-white font-semibold text-base shrink-0 ${color}`}
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-base font-semibold text-white ${color}`}
         >
           {initial}
         </div>
 
         {/* Body */}
-        <div className='flex-1 min-w-0'>
+        <div className='min-w-0 flex-1'>
           <div className='flex items-start justify-between gap-4'>
             <div>
-              <div className='text-base font-semibold text-primary-text'>
+              <div className='text-primary-text text-base font-semibold'>
                 {work.jobTitle || "Untitled role"}
               </div>
-              <div className='flex items-center gap-2 text-sm text-secondary-text mt-0.5'>
+              <div className='text-secondary-text mt-0.5 flex items-center gap-2 text-sm'>
                 <span>{work.company}</span>
                 {work.location && (
                   <>
-                    <span className='w-1.5 h-1.5 rounded-full bg-secondary-text shrink-0' />
+                    <span className='bg-secondary-text h-1.5 w-1.5 shrink-0 rounded-full' />
                     <span>{work.location}</span>
                   </>
                 )}
               </div>
             </div>
-            <div className='flex items-center gap-1 shrink-0'>
+            <div className='flex shrink-0 items-center gap-1'>
               <button
                 onClick={onEdit}
-                className='p-1.5 text-accent hover:text-primary-600 transition-colors'
+                className='text-accent hover:text-primary-600 p-1.5 transition-colors'
                 aria-label='Edit'
               >
-                <SquarePen className='w-4 h-4' />
+                <SquarePen className='h-4 w-4' />
               </button>
               <button
                 onClick={onDelete}
-                className='p-1.5 text-rose-500 hover:text-rose-600 transition-colors'
+                className='p-1.5 text-rose-500 transition-colors hover:text-rose-600'
                 aria-label='Delete'
               >
-                <Trash2 className='w-4 h-4' />
+                <Trash2 className='h-4 w-4' />
               </button>
             </div>
           </div>
 
           {work.responsibilities.length > 0 && (
-            <p className='text-sm text-primary-text mt-3 leading-relaxed'>
+            <p className='text-primary-text mt-3 text-sm leading-relaxed'>
               {work.responsibilities.join(" ")}
             </p>
           )}
 
-          {dateRange && (
-            <div className='text-xs text-secondary-text mt-3'>{dateRange}</div>
-          )}
+          {dateRange && <div className='text-secondary-text mt-3 text-xs'>{dateRange}</div>}
         </div>
       </div>
     </div>
@@ -508,7 +484,7 @@ function WorkCard({
 // ---- Work editor ----
 
 const inputCls =
-  "w-full text-sm bg-background border border-border-col text-primary-text rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent placeholder:text-secondary-text";
+  "w-full text-sm bg-background border border-brand-border text-primary-text rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent placeholder:text-secondary-text";
 
 function WorkEditor({
   draft,
@@ -522,12 +498,10 @@ function WorkEditor({
   onCancel: () => void;
 }) {
   return (
-    <div className='border border-accent rounded-xl p-5 bg-background space-y-4'>
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+    <div className='border-accent bg-background space-y-4 rounded-xl border p-5'>
+      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
         <div>
-          <label className='block text-xs font-medium text-secondary-text mb-1.5'>
-            Job title
-          </label>
+          <label className='text-secondary-text mb-1.5 block text-xs font-medium'>Job title</label>
           <input
             value={draft.jobTitle}
             onChange={(e) => setDraft({ ...draft, jobTitle: e.target.value })}
@@ -536,9 +510,7 @@ function WorkEditor({
           />
         </div>
         <div>
-          <label className='block text-xs font-medium text-secondary-text mb-1.5'>
-            Company
-          </label>
+          <label className='text-secondary-text mb-1.5 block text-xs font-medium'>Company</label>
           <input
             value={draft.company}
             onChange={(e) => setDraft({ ...draft, company: e.target.value })}
@@ -547,9 +519,7 @@ function WorkEditor({
           />
         </div>
         <div>
-          <label className='block text-xs font-medium text-secondary-text mb-1.5'>
-            Location
-          </label>
+          <label className='text-secondary-text mb-1.5 block text-xs font-medium'>Location</label>
           <input
             value={draft.location ?? ""}
             onChange={(e) => setDraft({ ...draft, location: e.target.value })}
@@ -559,9 +529,7 @@ function WorkEditor({
         </div>
         <div />
         <div>
-          <label className='block text-xs font-medium text-secondary-text mb-1.5'>
-            Start date
-          </label>
+          <label className='text-secondary-text mb-1.5 block text-xs font-medium'>Start date</label>
           <input
             type='month'
             value={draft.startDate}
@@ -570,9 +538,7 @@ function WorkEditor({
           />
         </div>
         <div>
-          <label className='block text-xs font-medium text-secondary-text mb-1.5'>
-            End date
-          </label>
+          <label className='text-secondary-text mb-1.5 block text-xs font-medium'>End date</label>
           <input
             type='month'
             value={draft.endDate ?? ""}
@@ -582,7 +548,7 @@ function WorkEditor({
           />
         </div>
         <div className='sm:col-span-2'>
-          <label className='flex items-center gap-2 text-xs text-secondary-text mb-3 cursor-pointer'>
+          <label className='text-secondary-text mb-3 flex cursor-pointer items-center gap-2 text-xs'>
             <input
               type='checkbox'
               checked={draft.isCurrent}
@@ -596,7 +562,7 @@ function WorkEditor({
             />
             I currently work here
           </label>
-          <label className='block text-xs font-medium text-secondary-text mb-1.5'>
+          <label className='text-secondary-text mb-1.5 block text-xs font-medium'>
             Description
           </label>
           <textarea
@@ -604,9 +570,7 @@ function WorkEditor({
             onChange={(e) =>
               setDraft({
                 ...draft,
-                responsibilities: e.target.value
-                  ? [e.target.value]
-                  : [],
+                responsibilities: e.target.value ? [e.target.value] : [],
               })
             }
             rows={3}
@@ -618,15 +582,15 @@ function WorkEditor({
       <div className='flex justify-end gap-2'>
         <button
           onClick={onCancel}
-          className='px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-text transition-colors'
+          className='text-secondary-text hover:text-primary-text px-4 py-2 text-sm font-medium transition-colors'
         >
           Cancel
         </button>
         <button
           onClick={onSave}
-          className='flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-accent hover:bg-primary-600 rounded-lg transition-colors'
+          className='bg-accent hover:bg-primary-600 flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors'
         >
-          <Check className='w-4 h-4' />
+          <Check className='h-4 w-4' />
           Save
         </button>
       </div>
@@ -636,14 +600,9 @@ function WorkEditor({
 
 // ---- helpers ----
 
-function formatSalary(
-  min: number | undefined,
-  max: number | undefined,
-  _currency: string
-): string {
+function formatSalary(min: number | undefined, max: number | undefined, _currency: string): string {
   if (!min && !max) return "";
-  const fmt = (n: number) =>
-    n >= 1000 ? `$${Math.round(n / 1000)}k` : `$${n}`;
+  const fmt = (n: number) => (n >= 1000 ? `$${Math.round(n / 1000)}k` : `$${n}`);
   if (min && max) return `${fmt(min)} – ${fmt(max)}`;
   if (min) return `${fmt(min)}+`;
   return "";
@@ -656,11 +615,7 @@ function calculateYearsOfExperience(work: WorkExperience[]): string {
   for (const w of work) {
     if (!w.startDate) continue;
     const start = new Date(w.startDate).getTime();
-    const end = w.isCurrent
-      ? Date.now()
-      : w.endDate
-        ? new Date(w.endDate).getTime()
-        : Date.now();
+    const end = w.isCurrent ? Date.now() : w.endDate ? new Date(w.endDate).getTime() : Date.now();
     if (end > start) ms += end - start;
   }
   const years = ms / msPerYear;
@@ -685,7 +640,7 @@ function formatMonth(dateStr?: string): string {
 
 function XLogo() {
   return (
-    <svg viewBox='0 0 24 24' className='w-4 h-4 fill-current text-primary-text'>
+    <svg viewBox='0 0 24 24' className='text-primary-text h-4 w-4 fill-current'>
       <path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.264 5.634L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z' />
     </svg>
   );
@@ -693,7 +648,7 @@ function XLogo() {
 
 function GithubLogo() {
   return (
-    <svg viewBox='0 0 24 24' className='w-4 h-4 fill-current text-primary-text'>
+    <svg viewBox='0 0 24 24' className='text-primary-text h-4 w-4 fill-current'>
       <path d='M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z' />
     </svg>
   );
@@ -701,7 +656,7 @@ function GithubLogo() {
 
 function BehanceLogo() {
   return (
-    <svg viewBox='0 0 24 24' className='w-4 h-4 fill-current text-indigo-600'>
+    <svg viewBox='0 0 24 24' className='h-4 w-4 fill-current text-indigo-600'>
       <path d='M7.799 5.698C8.667 5.698 9.471 5.807 10.234 6.025 10.997 6.243 11.657 6.571 12.213 7.009 12.771 7.447 13.207 8.005 13.525 8.683 13.843 9.361 14.002 10.169 14.002 11.107 14.002 12.148 13.791 13.044 13.369 13.795 12.947 14.547 12.298 15.165 11.421 15.65 12.662 16.006 13.591 16.658 14.207 17.607 14.825 18.555 15.133 19.706 15.133 21.059L15.133 21.205 8.819 21.205C8.819 21.205 8.819 21.205 8.819 21.205 8.22 21.205 5.762 21.205 4 21.205L4 3.795C4 3.795 7.23 3.795 7.799 3.795L7.799 5.698Z' />
       <path
         fill='white'
@@ -718,7 +673,7 @@ function BehanceLogo() {
 
 function InstagramLogo() {
   return (
-    <svg viewBox='0 0 24 24' className='w-4 h-4' fill='none'>
+    <svg viewBox='0 0 24 24' className='h-4 w-4' fill='none'>
       <defs>
         <linearGradient id='ig' x1='0%' y1='100%' x2='100%' y2='0%'>
           <stop offset='0%' stopColor='#feda75' />

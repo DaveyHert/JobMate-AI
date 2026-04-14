@@ -78,7 +78,7 @@ export function SettingsPage() {
                 onClick={() => selectTab(tab.id)}
                 className={`rounded-md px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
                   isActive
-                    ? "bg-neutral-01 border-border-col text-neutral-06 border shadow-sm"
+                    ? "bg-neutral-01 border-brand-border text-neutral-06 border shadow-sm"
                     : "text-neutral-04 hover:text-primary-text"
                 }`}
               >
@@ -97,7 +97,7 @@ export function SettingsPage() {
                 onChange={(e) => {
                   void jobMateStore.setActiveProfile(e.target.value);
                 }}
-                className='bg-primary-01 border-primary-02 focus:ring-accent/30 text-neutral-06 cursor-pointer appearance-none rounded-lg border py-2 pr-10 pl-4 text-sm font-medium focus:ring-2 focus:outline-none'
+                className='bg-primary-01 border-primary-02 focus:ring-brand-accent/30 text-neutral-06 cursor-pointer appearance-none rounded-lg border py-2 pr-10 pl-4 text-sm font-medium focus:ring-2 focus:outline-none'
               >
                 {profiles.map((p) => (
                   <option key={p.id} value={p.id}>

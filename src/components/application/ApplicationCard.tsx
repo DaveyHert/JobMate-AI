@@ -9,61 +9,58 @@ interface ApplicationCardProps {
   onStatusChange: (id: number, newStatus: Application["status"]) => void;
 }
 
-const ApplicationCard: React.FC<ApplicationCardProps> = ({
-  application,
-  onStatusChange,
-}) => {
+const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, onStatusChange }) => {
   const getCompanyLogo = (company: string): React.ReactNode => {
     const logoMap: Record<string, React.ReactNode> = {
       Narvar: (
-        <div className='w-10 h-10 rounded-full bg-black flex items-center justify-center text-white text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-full bg-black text-sm font-bold text-white'>
           N
         </div>
       ),
       Stripe: (
-        <div className='w-10 h-10 rounded-lg bg-purple-600 flex items-center justify-center text-white text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-purple-600 text-sm font-bold text-white'>
           S
         </div>
       ),
       Slack: (
-        <div className='w-10 h-10 rounded-lg bg-green-500 flex items-center justify-center text-white text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-green-500 text-sm font-bold text-white'>
           ⚡
         </div>
       ),
       AirBnB: (
-        <div className='w-10 h-10 rounded-lg bg-red-500 flex items-center justify-center text-white text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-red-500 text-sm font-bold text-white'>
           A
         </div>
       ),
       X: (
-        <div className='w-10 h-10 rounded-full bg-black flex items-center justify-center text-white text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-full bg-black text-sm font-bold text-white'>
           X
         </div>
       ),
       Google: (
-        <div className='w-10 h-10 rounded-lg bg-white border flex items-center justify-center text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-lg border bg-white text-sm font-bold'>
           G
         </div>
       ),
       Mimi: (
-        <div className='w-10 h-10 rounded-lg bg-yellow-500 flex items-center justify-center text-white text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-yellow-500 text-sm font-bold text-white'>
           M
         </div>
       ),
       Figma: (
-        <div className='w-10 h-10 rounded-lg bg-purple-500 flex items-center justify-center text-white text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500 text-sm font-bold text-white'>
           F
         </div>
       ),
       Apple: (
-        <div className='w-10 h-10 rounded-full bg-black flex items-center justify-center text-white text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-full bg-black text-sm font-bold text-white'>
           🍎
         </div>
       ),
     };
     return (
       logoMap[company] || (
-        <div className='w-10 h-10 rounded-lg bg-gray-500 flex items-center justify-center text-white text-sm font-bold'>
+        <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-gray-500 text-sm font-bold text-white'>
           {company.charAt(0)}
         </div>
       )
@@ -85,23 +82,23 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
 
   return (
     <div
-      className='bg-foreground rounded-lg px-2 py-3.5 hover:shadow-xs transition-all border border-border-col font-poppins '
+      className='bg-foreground border-brand-border font-poppins rounded-lg border px-2 py-3.5 transition-all hover:shadow-xs'
       style={{ boxShadow: "box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.15)" }}
     >
       <div className='flex items-center gap-4'>
         {getCompanyLogo(application.company)}
-        <div className='flex-1 min-w-0'>
-          <div className='text-sm font-medium text-primary-text mb-1'>
+        <div className='min-w-0 flex-1'>
+          <div className='text-primary-text mb-1 text-sm font-medium'>
             {application.title} at {application.company}
           </div>
-          <div className='flex items-center gap-4 text-xs text-secondary-text'>
+          <div className='text-secondary-text flex items-center gap-4 text-xs'>
             <span className='flex items-center gap-1'>
               <span>{getSourceIcon(application.source)}</span>
               {application.source}
             </span>
 
             <span className='flex items-center gap-1'>
-              <Calendar className='w-4 h-4' />
+              <Calendar className='h-4 w-4' />
               {formatDate(application.dateApplied)}
             </span>
           </div>
@@ -112,13 +109,10 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
           <select
             value={application.status}
             onChange={(e) =>
-              onStatusChange(
-                application.id,
-                e.target.value as Application["status"]
-              )
+              onStatusChange(application.id, e.target.value as Application["status"])
             }
-            className={`appearance-none px-3 py-1 pr-8 rounded-full text-xs font-medium border cursor-pointer ${getStatusColor(
-              application.status
+            className={`cursor-pointer appearance-none rounded-full border px-3 py-1 pr-8 text-xs font-medium ${getStatusColor(
+              application.status,
             )} focus:outline-hidden`}
           >
             <option value='applied'>Applied</option>
@@ -129,8 +123,8 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
             <option value='ghosted'>Ghosted</option>
           </select>
           <ChevronDown
-            className={`absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 pointer-events-none ${getStatusColor(
-              application.status
+            className={`pointer-events-none absolute top-1/2 right-2 h-4 w-4 -translate-y-1/2 transform ${getStatusColor(
+              application.status,
             )}`}
           />
         </div>

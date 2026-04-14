@@ -85,11 +85,11 @@ const QuickActions: React.FC<QuickActionsProps> = ({
 
   return (
     <div className='quick-actions-control'>
-      <h3 className='text-base pl-2 font-medium mb-1.5 text-primary-text font-poppins'>
+      <h3 className='text-primary-text font-poppins mb-1.5 pl-2 text-base font-medium'>
         Quick Actions
       </h3>
 
-      <div className='grid grid-cols-3 gap-4 mb-4 bg-foreground border border-border-col rounded-[10px] px-3 py-4'>
+      <div className='bg-foreground border-brand-border mb-4 grid grid-cols-3 gap-4 rounded-[10px] border px-3 py-4'>
         {actions.map((action, index) => (
           <button
             key={index}
@@ -98,12 +98,12 @@ const QuickActions: React.FC<QuickActionsProps> = ({
             className='btn-primary'
           >
             <div
-              className={`w-8 h-8 p-[4.5px] flex items-center justify-center rounded-full  ${action.iconBg}`}
+              className={`flex h-8 w-8 items-center justify-center rounded-full p-[4.5px] ${action.iconBg}`}
               style={{ boxShadow: "inset 0px 1px 3px rgba(0, 0, 0, 0.1)" }}
             >
-              <action.icon className={`w-6 h-6  ${action.iconColor}`} />
+              <action.icon className={`h-6 w-6 ${action.iconColor}`} />
             </div>
-            <span className='text-xs block my-1 font-medium'>{action.label}</span>
+            <span className='my-1 block text-xs font-medium'>{action.label}</span>
           </button>
         ))}
       </div>

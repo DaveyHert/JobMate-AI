@@ -19,14 +19,14 @@ export function ApplicationListRow({
 
   return (
     <tr
-      className='border-b border-border-col last:border-b-0 hover:bg-button-col/40 transition-colors cursor-pointer'
+      className='border-brand-border hover:bg-button-col/40 cursor-pointer border-b transition-colors last:border-b-0'
       onClick={() => onClick(app)}
     >
-      <td className='px-5 py-4 text-sm font-semibold text-primary-text whitespace-nowrap'>
+      <td className='text-primary-text px-5 py-4 text-sm font-semibold whitespace-nowrap'>
         {app.title}
       </td>
-      <td className='px-5 py-4 text-sm text-secondary-text whitespace-nowrap'>{app.company}</td>
-      <td className='px-5 py-4 text-sm text-secondary-text whitespace-nowrap'>
+      <td className='text-secondary-text px-5 py-4 text-sm whitespace-nowrap'>{app.company}</td>
+      <td className='text-secondary-text px-5 py-4 text-sm whitespace-nowrap'>
         {formatDetailDate(lastUpdated)}
       </td>
       <td className='px-5 py-4' onClick={(e) => e.stopPropagation()}>
@@ -39,23 +39,23 @@ export function ApplicationListRow({
               href={app.url}
               target='_blank'
               rel='noopener noreferrer'
-              className='flex items-center gap-1.5 text-sm text-secondary-text hover:text-primary-text transition-colors'
+              className='text-secondary-text hover:text-primary-text flex items-center gap-1.5 text-sm transition-colors'
             >
-              <ExternalLink className='w-3.5 h-3.5' />
+              <ExternalLink className='h-3.5 w-3.5' />
               View
             </a>
           ) : (
-            <span className='flex items-center gap-1.5 text-sm text-secondary-text opacity-40 cursor-not-allowed select-none'>
-              <ExternalLink className='w-3.5 h-3.5' />
+            <span className='text-secondary-text flex cursor-not-allowed items-center gap-1.5 text-sm opacity-40 select-none'>
+              <ExternalLink className='h-3.5 w-3.5' />
               View
             </span>
           )}
           <button
             onClick={() => onDelete(app.id)}
-            className='text-rose-400 hover:text-rose-600 transition-colors'
+            className='text-rose-400 transition-colors hover:text-rose-600'
             aria-label='Delete application'
           >
-            <Trash2 className='w-4 h-4' />
+            <Trash2 className='h-4 w-4' />
           </button>
         </div>
       </td>

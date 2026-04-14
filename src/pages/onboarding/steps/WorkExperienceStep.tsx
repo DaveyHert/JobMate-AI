@@ -85,14 +85,14 @@ export function WorkExperienceStep({
       <StepTopNav onBack={onBack} profileLabel={profileLabel} />
 
       <StepHeader
-        icon={<BriefCase className='w-5 h-5 text-primary-04' />}
+        icon={<BriefCase className='text-primary-04 h-5 w-5' />}
         title='Work Experience'
         action={
           <button
             onClick={() => onChange({ entries: [...data.entries, emptyEntry()] })}
-            className='flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors'
+            className='flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50'
           >
-            Add new <Plus className='w-4 h-4' />
+            Add new <Plus className='h-4 w-4' />
           </button>
         }
       />
@@ -138,16 +138,18 @@ export function WorkExperienceStep({
             </div>
 
             {/* Current role checkbox */}
-            <label className='flex items-center gap-3 cursor-pointer select-none'>
+            <label className='flex cursor-pointer items-center gap-3 select-none'>
               <div
                 onClick={() => setEntry(i, { isCurrent: !entry.isCurrent, endDate: "" })}
-                className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
-                  entry.isCurrent ? "bg-accent border-accent" : "border-gray-300 bg-white"
+                className={`flex h-5 w-5 items-center justify-center rounded border-2 transition-colors ${
+                  entry.isCurrent
+                    ? "bg-brand-accent border-brand-accent"
+                    : "border-gray-300 bg-white"
                 }`}
               >
                 {entry.isCurrent && (
                   <svg
-                    className='w-3 h-3 text-white'
+                    className='h-3 w-3 text-white'
                     fill='none'
                     viewBox='0 0 24 24'
                     stroke='currentColor'

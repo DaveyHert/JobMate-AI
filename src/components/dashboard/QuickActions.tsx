@@ -9,20 +9,17 @@ interface QuickActions {
 
 function QuickActions({ applications, stats }: QuickActions) {
   return (
-    <div className='bg-foreground rounded-xl border border-border-col p-6'>
-      <h3 className='text-lg font-semibold text-gray-900 dark:text-[#F3F4F6] mb-4'>
+    <div className='bg-foreground border-brand-border rounded-xl border p-6'>
+      <h3 className='mb-4 text-lg font-semibold text-gray-900 dark:text-[#F3F4F6]'>
         Quick Actions
       </h3>
       <div className='flex space-x-4'>
-        <button
-          onClick={() => exportData(applications, stats)}
-          className='btn-secondary'
-        >
-          <Download className='w-5 h-5' />
+        <button onClick={() => exportData(applications, stats)} className='btn-secondary'>
+          <Download className='h-5 w-5' />
           <span>Export Data</span>
         </button>
         <button className='btn-secondary'>
-          <User className='w-5 h-5' />
+          <User className='h-5 w-5' />
           <span>Update Profile</span>
         </button>
       </div>

@@ -7,11 +7,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export function ApplicationsPagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: PaginationProps) {
+export function ApplicationsPagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
   const pages = useMemo((): (number | "...")[] => {
     if (totalPages <= 7) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -27,54 +23,53 @@ export function ApplicationsPagination({
 
   return (
     // 3-column layout: label left | page buttons center | arrows right
-    <div className='flex items-center px-5 py-4 border-t border-border-col'>
+    <div className='border-brand-border flex items-center border-t px-5 py-4'>
       {/* Left: "Showing Page X of Y pages" */}
-      <span className='text-sm text-secondary-text flex-1'>
-        Showing{" "}
-        <span className='font-medium text-primary-text'>Page {currentPage}</span>{" "}
-        of {totalPages} {totalPages === 1 ? "page" : "pages"}
+      <span className='text-secondary-text flex-1 text-sm'>
+        Showing <span className='text-primary-text font-medium'>Page {currentPage}</span> of{" "}
+        {totalPages} {totalPages === 1 ? "page" : "pages"}
       </span>
 
       {/* Center: page number buttons */}
-      <div className='flex items-center gap-1 flex-1 justify-center'>
+      <div className='flex flex-1 items-center justify-center gap-1'>
         {pages.map((p, i) =>
           p === "..." ? (
-            <span key={`ellipsis-${i}`} className='w-8 text-center text-sm text-secondary-text'>
+            <span key={`ellipsis-${i}`} className='text-secondary-text w-8 text-center text-sm'>
               …
             </span>
           ) : (
             <button
               key={p}
               onClick={() => onPageChange(p as number)}
-              className={`w-8 h-8 rounded-md text-sm font-medium transition-colors ${
+              className={`h-8 w-8 rounded-md text-sm font-medium transition-colors ${
                 currentPage === p
-                  ? "bg-foreground border border-border-col text-primary-text shadow-sm"
+                  ? "bg-foreground border-brand-border text-primary-text border shadow-sm"
                   : "text-secondary-text hover:text-primary-text hover:bg-button-col"
               }`}
             >
               {p}
             </button>
-          )
+          ),
         )}
       </div>
 
       {/* Right: prev / next arrows */}
-      <div className='flex items-center gap-1 flex-1 justify-end'>
+      <div className='flex flex-1 items-center justify-end gap-1'>
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className='p-1.5 rounded-md text-secondary-text hover:text-primary-text hover:bg-button-col disabled:opacity-30 disabled:cursor-not-allowed transition-colors'
+          className='text-secondary-text hover:text-primary-text hover:bg-button-col rounded-md p-1.5 transition-colors disabled:cursor-not-allowed disabled:opacity-30'
           aria-label='Previous page'
         >
-          <ChevronLeft className='w-4 h-4' />
+          <ChevronLeft className='h-4 w-4' />
         </button>
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className='p-1.5 rounded-md text-secondary-text hover:text-primary-text hover:bg-button-col disabled:opacity-30 disabled:cursor-not-allowed transition-colors'
+          className='text-secondary-text hover:text-primary-text hover:bg-button-col rounded-md p-1.5 transition-colors disabled:cursor-not-allowed disabled:opacity-30'
           aria-label='Next page'
         >
-          <ChevronRight className='w-4 h-4' />
+          <ChevronRight className='h-4 w-4' />
         </button>
       </div>
     </div>

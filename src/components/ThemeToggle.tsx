@@ -35,7 +35,7 @@ export default function ThemeToggle({
 }: ThemeToggleProps) {
   return (
     <div 
-      className={`bg-brand-muted inline-flex items-center rounded-full p-1 ${className}`}
+      className={`bg-brand-brand-muted inline-flex items-center rounded-full p-1 ${className}`}
       role="radiogroup"
       aria-label="Theme preference"
     >
@@ -54,7 +54,7 @@ export default function ThemeToggle({
               relative flex h-8 w-10 items-center justify-center rounded-full 
               transition-colors duration-200 outline-none focus-visible:ring-2 
               focus-visible:ring-ring focus-visible:ring-offset-2
-              ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}
+              ${isActive ? "text-foreground" : "text-brand-muted-foreground hover:text-foreground"}
             `}
           >
             {isActive && (

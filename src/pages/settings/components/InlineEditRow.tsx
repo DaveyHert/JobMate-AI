@@ -77,15 +77,13 @@ export function InlineEditRow({
   const isEmpty = !value;
 
   return (
-    <div className='flex items-start gap-4 py-6 border-b border-border-col last:border-b-0'>
-      <div className='flex-1 min-w-0'>
-        <div className='text-sm font-medium text-primary-text'>{label}</div>
-        {description && (
-          <div className='text-xs text-secondary-text mt-1'>{description}</div>
-        )}
+    <div className='border-brand-border flex items-start gap-4 border-b py-6 last:border-b-0'>
+      <div className='min-w-0 flex-1'>
+        <div className='text-primary-text text-sm font-medium'>{label}</div>
+        {description && <div className='text-secondary-text mt-1 text-xs'>{description}</div>}
       </div>
 
-      <div className='flex items-center gap-3 shrink-0'>
+      <div className='flex shrink-0 items-center gap-3'>
         {editing ? (
           <>
             <input
@@ -96,37 +94,37 @@ export function InlineEditRow({
               disabled={saving}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={onKeyDown}
-              className='text-sm text-right text-primary-text bg-background border border-border-col rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent min-w-[220px]'
+              className='text-primary-text bg-background border-brand-border focus:ring-brand-accent/30 focus:border-brand-accent min-w-[220px] rounded-md border px-3 py-1.5 text-right text-sm focus:ring-2 focus:outline-none'
             />
             <button
               onClick={commit}
               disabled={saving}
-              className='p-1 text-accent hover:text-primary-600 disabled:opacity-50'
+              className='text-brand-accent hover:text-primary-600 p-1 disabled:opacity-50'
               aria-label='Save'
             >
-              <Check className='w-4 h-4' />
+              <Check className='h-4 w-4' />
             </button>
             <button
               onClick={cancel}
               disabled={saving}
-              className='p-1 text-secondary-text hover:text-primary-text disabled:opacity-50'
+              className='text-secondary-text hover:text-primary-text p-1 disabled:opacity-50'
               aria-label='Cancel'
             >
-              <X className='w-4 h-4' />
+              <X className='h-4 w-4' />
             </button>
           </>
         ) : (
           <>
             <span
-              className={`text-sm text-right ${
+              className={`text-right text-sm ${
                 isEmpty ? "text-secondary-text italic" : "text-primary-text"
               }`}
             >
-              {isEmpty ? placeholder ?? "Not set" : display}
+              {isEmpty ? (placeholder ?? "Not set") : display}
             </span>
             <button
               onClick={() => setEditing(true)}
-              className='text-sm font-medium text-accent hover:text-primary-600 underline-offset-2 hover:underline transition-colors'
+              className='text-brand-accent hover:text-primary-600 text-sm font-medium underline-offset-2 transition-colors hover:underline'
             >
               Edit
             </button>

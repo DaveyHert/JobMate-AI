@@ -40,11 +40,7 @@ const EMPTY: FormState = {
   notes: "",
 };
 
-export function AddApplicationModal({
-  open,
-  onClose,
-  onCreated,
-}: AddApplicationModalProps) {
+export function AddApplicationModal({ open, onClose, onCreated }: AddApplicationModalProps) {
   const [form, setForm] = useState<FormState>(EMPTY);
   const [saving, setSaving] = useState(false);
 
@@ -80,22 +76,20 @@ export function AddApplicationModal({
   };
 
   return (
-    <div className='fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center z-50 p-4'>
-      <div className='bg-foreground rounded-2xl w-full max-w-md border border-border-col shadow-xl max-h-[90vh] overflow-y-auto'>
-        <div className='flex justify-between items-center p-6 border-b border-border-col'>
-          <h3 className='text-xl font-semibold text-primary-text'>
-            Add Job Application
-          </h3>
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs'>
+      <div className='bg-foreground border-brand-border max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border shadow-xl'>
+        <div className='border-brand-border flex items-center justify-between border-b p-6'>
+          <h3 className='text-primary-text text-xl font-semibold'>Add Job Application</h3>
           <button
             onClick={close}
-            className='p-2 hover:bg-button-col rounded-lg transition-colors'
+            className='hover:bg-button-col rounded-lg p-2 transition-colors'
             aria-label='Close'
           >
-            <X className='w-5 h-5 text-secondary-text' />
+            <X className='text-secondary-text h-5 w-5' />
           </button>
         </div>
 
-        <div className='p-6 space-y-4'>
+        <div className='space-y-4 p-6'>
           <Field label='Job Title'>
             <input
               type='text'
@@ -145,9 +139,7 @@ export function AddApplicationModal({
             <Field label='Job Type'>
               <select
                 value={form.jobType}
-                onChange={(e) =>
-                  setForm({ ...form, jobType: e.target.value as JobType })
-                }
+                onChange={(e) => setForm({ ...form, jobType: e.target.value as JobType })}
                 className={inputCls}
               >
                 <option value='fulltime'>Full-time</option>
@@ -180,18 +172,18 @@ export function AddApplicationModal({
           </Field>
         </div>
 
-        <div className='flex gap-3 p-6 border-t border-border-col'>
+        <div className='border-brand-border flex gap-3 border-t p-6'>
           <button
             onClick={close}
             disabled={saving}
-            className='flex-1 px-4 py-2 border border-border-col rounded-lg text-primary-text hover:bg-button-col transition-colors disabled:opacity-50'
+            className='border-brand-border text-primary-text hover:bg-button-col flex-1 rounded-lg border px-4 py-2 transition-colors disabled:opacity-50'
           >
             Cancel
           </button>
           <button
             onClick={submit}
             disabled={!form.title || !form.company || saving}
-            className='flex-1 px-4 py-2 bg-accent hover:bg-primary-600 disabled:bg-button-col disabled:text-secondary-text text-white rounded-lg transition-colors'
+            className='bg-brand-accent hover:bg-primary-600 disabled:bg-button-col disabled:text-secondary-text flex-1 rounded-lg px-4 py-2 text-white transition-colors'
           >
             {saving ? "Adding..." : "Add Application"}
           </button>
@@ -202,20 +194,12 @@ export function AddApplicationModal({
 }
 
 const inputCls =
-  "w-full px-3 py-2 bg-background border border-border-col text-primary-text rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent placeholder:text-secondary-text";
+  "w-full px-3 py-2 bg-background border border-brand-border text-primary-text rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text";
 
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className='block text-sm font-medium text-primary-text mb-2'>
-        {label}
-      </label>
+      <label className='text-primary-text mb-2 block text-sm font-medium'>{label}</label>
       {children}
     </div>
   );

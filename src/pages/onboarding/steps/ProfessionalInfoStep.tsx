@@ -71,7 +71,7 @@ export function ProfessionalInfoStep({
       <StepTopNav onBack={onBack} profileLabel={profileLabel} />
 
       <StepHeader
-        icon={<Briefcase className='text-accent h-5 w-5' />}
+        icon={<Briefcase className='text-brand-accent h-5 w-5' />}
         title='Professional Information'
         action={
           <button className='flex items-center gap-2 rounded-lg border border-blue-200 px-4 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50'>
@@ -115,7 +115,7 @@ export function ProfessionalInfoStep({
                   type='radio'
                   checked={data.authorizedUS === val}
                   onChange={() => onChange({ ...data, authorizedUS: val })}
-                  className='checked:bg-accent checked:border-accent focus:outline-accent size-5 cursor-pointer appearance-none rounded-full border border-[#D4D4D4] bg-[#FAFAFA] transition-all duration-200 checked:bg-none checked:bg-clip-content checked:p-[4px]'
+                  className='checked:bg-brand-accent checked:border-brand-accent focus:outline-brand-accent size-5 cursor-pointer appearance-none rounded-full border border-[#D4D4D4] bg-[#FAFAFA] transition-all duration-200 checked:bg-none checked:bg-clip-content checked:p-[4px]'
                 />
                 <span className='text-neutral-06 text-sm'>{val ? "Yes" : "No"}</span>
               </label>

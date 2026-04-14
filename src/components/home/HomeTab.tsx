@@ -192,7 +192,7 @@ function HomeTab({
           </h3>
           <button
             onClick={() => setActiveTab("applications")}
-            className='text-accent hover:text-brand-muted cursor-pointer text-xs font-medium'
+            className='text-brand-accent hover:text-brand-brand-muted cursor-pointer text-xs font-medium'
           >
             View All
           </button>

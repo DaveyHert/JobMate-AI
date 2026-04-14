@@ -25,16 +25,16 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   ];
 
   return (
-    <div className='absolute bottom-0 left-0 right-0 bg-foreground border-t border-border-col px-6 py-3 flex justify-between items-center'>
+    <div className='bg-foreground border-brand-border absolute right-0 bottom-0 left-0 flex items-center justify-between border-t px-6 py-3'>
       {navigationItems.map((item) => (
         <button
           key={item.key}
           onClick={item.key === "dashboard" ? item.action : () => setActiveTab(item.key)}
-          className={`flex flex-col items-center gap-1 cursor-pointer ${
-            activeTab === item.key ? "text-accent" : "text-gray-400 hover:text-gray-600"
+          className={`flex cursor-pointer flex-col items-center gap-1 ${
+            activeTab === item.key ? "text-brand-accent" : "text-gray-400 hover:text-gray-600"
           }`}
         >
-          <item.icon className='w-5 h-5' />
+          <item.icon className='h-5 w-5' />
           <span className='text-xs font-medium'>{item.label}</span>
         </button>
       ))}

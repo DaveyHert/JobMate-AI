@@ -35,16 +35,15 @@ export function ApplicationsPage() {
   const [endDate, setEndDate] = useState("");
   // Store ID only so the modal always reflects the latest store state
   const [selectedAppId, setSelectedAppId] = useState<number | null>(null);
-  const selectedApp = selectedAppId != null
-    ? (data?.applications.find((a) => a.id === selectedAppId) ?? null)
-    : null;
+  const selectedApp =
+    selectedAppId != null ? (data?.applications.find((a) => a.id === selectedAppId) ?? null) : null;
 
   const applications = useMemo(
     () =>
       [...(data?.applications ?? [])].sort(
-        (a, b) => getLastUpdatedDate(b).getTime() - getLastUpdatedDate(a).getTime()
+        (a, b) => getLastUpdatedDate(b).getTime() - getLastUpdatedDate(a).getTime(),
       ),
-    [data?.applications]
+    [data?.applications],
   );
 
   const filtered = useMemo(() => {
@@ -133,7 +132,7 @@ export function ApplicationsPage() {
   // ── Loading ────────────────────────────────────────────────────────────────
 
   if (!data) {
-    return <div className='px-8 pt-8 text-sm text-secondary-text'>Loading…</div>;
+    return <div className='text-secondary-text px-8 pt-8 text-sm'>Loading…</div>;
   }
 
   return (
@@ -157,8 +156,8 @@ export function ApplicationsPage() {
 
       {/* ── Empty state ── */}
       {filtered.length === 0 && (
-        <div className='flex flex-col items-center justify-center py-32 text-secondary-text'>
-          <Search className='w-10 h-10 mb-3 opacity-30' />
+        <div className='text-secondary-text flex flex-col items-center justify-center py-32'>
+          <Search className='mb-3 h-10 w-10 opacity-30' />
           <p className='text-sm'>No applications match your filters.</p>
           {(search || startDate || endDate) && (
             <button
@@ -167,7 +166,7 @@ export function ApplicationsPage() {
                 setStartDate("");
                 setEndDate("");
               }}
-              className='mt-3 text-sm text-accent hover:underline'
+              className='text-brand-accent mt-3 text-sm hover:underline'
             >
               Clear filters
             </button>
@@ -202,25 +201,25 @@ export function ApplicationsPage() {
 
       {/* ── List view ── */}
       {filtered.length > 0 && view === "list" && (
-        <div className='bg-foreground border border-border-col rounded-xl overflow-hidden'>
+        <div className='bg-foreground border-brand-border overflow-hidden rounded-xl border'>
           <table className='w-full'>
             <thead>
-              <tr className='border-b border-border-col bg-background'>
-                <th className='px-5 py-3 text-left text-xs font-medium text-secondary-text'>
+              <tr className='border-brand-border bg-background border-b'>
+                <th className='text-secondary-text px-5 py-3 text-left text-xs font-medium'>
                   Job Title
                 </th>
-                <th className='px-5 py-3 text-left text-xs font-medium text-secondary-text'>
+                <th className='text-secondary-text px-5 py-3 text-left text-xs font-medium'>
                   Company Name
                 </th>
-                <th className='px-5 py-3 text-left text-xs font-medium text-secondary-text'>
+                <th className='text-secondary-text px-5 py-3 text-left text-xs font-medium'>
                   Last Updated
                 </th>
-                <th className='px-5 py-3 text-left text-xs font-medium text-secondary-text'>
+                <th className='text-secondary-text px-5 py-3 text-left text-xs font-medium'>
                   <div className='flex items-center gap-1'>
-                    Job Status <ChevronDown className='w-3 h-3' />
+                    Job Status <ChevronDown className='h-3 w-3' />
                   </div>
                 </th>
-                <th className='px-5 py-3 text-left text-xs font-medium text-secondary-text'>
+                <th className='text-secondary-text px-5 py-3 text-left text-xs font-medium'>
                   Actions
                 </th>
               </tr>

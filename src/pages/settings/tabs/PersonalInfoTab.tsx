@@ -69,46 +69,40 @@ export function PersonalInfoTab({ profile }: PersonalInfoTabProps) {
 
   return (
     <section>
-      <h2 className='text-xl font-semibold text-primary-text mb-6'>
-        My profile
-      </h2>
+      <h2 className='text-primary-text mb-6 text-xl font-semibold'>My profile</h2>
 
       {/* Profile picture row */}
-      <div className='flex items-start gap-5 pb-6 border-b border-border-col'>
-        <div className='w-16 h-16 rounded-full overflow-hidden bg-button-col border border-border-col flex items-center justify-center shrink-0'>
+      <div className='border-brand-border flex items-start gap-5 border-b pb-6'>
+        <div className='bg-button-col border-brand-border flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border'>
           {profile.identity.profilePictureUrl ? (
             <img
               src={profile.identity.profilePictureUrl}
               alt={profile.identity.fullName}
-              className='w-full h-full object-cover'
+              className='h-full w-full object-cover'
             />
           ) : (
-            <span className='text-xl font-semibold text-secondary-text'>
+            <span className='text-secondary-text text-xl font-semibold'>
               {profile.identity.firstName?.[0]?.toUpperCase() ?? "?"}
             </span>
           )}
         </div>
 
-        <div className='flex-1 min-w-0'>
-          <div className='text-sm font-medium text-primary-text'>
-            Profile picture
-          </div>
-          <div className='text-xs text-secondary-text mt-1'>
-            PNG, JPEG under 15MB
-          </div>
+        <div className='min-w-0 flex-1'>
+          <div className='text-primary-text text-sm font-medium'>Profile picture</div>
+          <div className='text-secondary-text mt-1 text-xs'>PNG, JPEG under 15MB</div>
         </div>
 
-        <div className='flex items-center gap-2 shrink-0'>
+        <div className='flex shrink-0 items-center gap-2'>
           <button
             onClick={() => fileRef.current?.click()}
-            className='px-4 py-2 text-sm font-medium text-primary-text bg-foreground border border-border-col rounded-lg hover:bg-button-col transition-colors'
+            className='text-primary-text bg-foreground border-brand-border hover:bg-button-col rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
           >
             Upload new picture
           </button>
           {profile.identity.profilePictureUrl && (
             <button
               onClick={deletePhoto}
-              className='px-4 py-2 text-sm font-medium text-primary-text bg-foreground border border-border-col rounded-lg hover:bg-button-col transition-colors'
+              className='text-primary-text bg-foreground border-brand-border hover:bg-button-col rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
             >
               Delete
             </button>

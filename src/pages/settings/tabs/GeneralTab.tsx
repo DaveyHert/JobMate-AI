@@ -116,7 +116,9 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
 
   const handleDeleteProfile = (rowProfile: UserProfile) => {
     if (profiles.length <= 1) {
-      toast.error("You need at least one resume profile. Upload a new resume first before deleting this one.");
+      toast.error(
+        "You need at least one resume profile. Upload a new resume first before deleting this one.",
+      );
       return;
     }
     const label = rowProfile.documents.resumes[0]?.label ?? rowProfile.label;
@@ -138,60 +140,60 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
     <div className='space-y-10'>
       {/* ── Resumes ── */}
       <section>
-        <div className='flex items-start justify-between mb-6'>
+        <div className='mb-6 flex items-start justify-between'>
           <div>
-            <h2 className='text-xl font-semibold text-primary-text'>Resumes</h2>
-            <p className='text-sm text-secondary-text mt-1'>
+            <h2 className='text-primary-text text-xl font-semibold'>Resumes</h2>
+            <p className='text-secondary-text mt-1 text-sm'>
               Each resume is a separate profile. Switching profiles loads the personal info, skills,
               and credentials saved for that resume.
             </p>
           </div>
           <button
             onClick={() => setShowUpload(true)}
-            className='flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-accent hover:bg-primary-600 rounded-lg transition-colors shrink-0'
+            className='bg-brand-accent hover:bg-primary-600 flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors'
           >
-            <Plus className='w-4 h-4' />
+            <Plus className='h-4 w-4' />
             Upload new resume
           </button>
         </div>
 
         {resumeRows.length === 0 ? (
-          <div className='text-sm text-secondary-text py-10 text-center border border-dashed border-border-col rounded-lg'>
+          <div className='text-secondary-text border-brand-border rounded-lg border border-dashed py-10 text-center text-sm'>
             No resume uploaded yet. Upload one to get started.
           </div>
         ) : (
-          <div className='border border-border-col rounded-lg overflow-hidden'>
+          <div className='border-brand-border overflow-hidden rounded-lg border'>
             {resumeRows.map(({ profile, resume }) => {
               const isActive = profile.id === data.activeProfileId;
               return (
                 <div
                   key={profile.id}
-                  className='group flex items-center gap-4 px-4 py-4 bg-foreground hover:bg-button-col/50 border-b border-border-col last:border-b-0 transition-colors'
+                  className='group bg-foreground hover:bg-button-col/50 border-brand-border flex items-center gap-4 border-b px-4 py-4 transition-colors last:border-b-0'
                 >
-                  <div className='w-10 h-10 rounded-lg bg-accent-soft flex items-center justify-center shrink-0'>
-                    <FileText className='w-5 h-5 text-accent' />
+                  <div className='bg-brand-accent-soft flex h-10 w-10 shrink-0 items-center justify-center rounded-lg'>
+                    <FileText className='text-brand-accent h-5 w-5' />
                   </div>
-                  <div className='flex-1 min-w-0'>
+                  <div className='min-w-0 flex-1'>
                     <div className='flex items-center gap-2'>
-                      <span className='text-sm font-medium text-primary-text truncate'>
+                      <span className='text-primary-text truncate text-sm font-medium'>
                         {resume.label}
                       </span>
                       {isActive && (
-                        <span className='text-[10px] uppercase tracking-wide bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-medium'>
+                        <span className='rounded border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-medium tracking-wide text-emerald-700 uppercase'>
                           Active
                         </span>
                       )}
                     </div>
-                    <div className='text-xs text-secondary-text truncate mt-0.5'>
+                    <div className='text-secondary-text mt-0.5 truncate text-xs'>
                       {resume.fileName} · {Math.round(resume.sizeBytes / 1024)} KB
                     </div>
                   </div>
 
-                  <div className='flex items-center gap-1 shrink-0'>
+                  <div className='flex shrink-0 items-center gap-1'>
                     {!isActive && (
                       <button
                         onClick={() => handleMakeActive(profile)}
-                        className='px-3 py-1.5 text-xs font-medium text-accent bg-accent-soft hover:bg-accent hover:text-white rounded-md transition-colors mr-1 opacity-0 group-hover:opacity-100 focus:opacity-100'
+                        className='text-brand-accent bg-brand-accent-soft hover:bg-brand-accent mr-1 rounded-md px-3 py-1.5 text-xs font-medium opacity-0 transition-colors group-hover:opacity-100 hover:text-white focus:opacity-100'
                         title='Switch to this profile'
                       >
                         Make active
@@ -201,21 +203,21 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
                     {/* Edit label and/or replace file */}
                     <button
                       onClick={() => setEditingRow({ profile, resume })}
-                      className='p-2 text-secondary-text hover:text-accent transition-colors'
+                      className='text-secondary-text hover:text-brand-accent p-2 transition-colors'
                       aria-label='Edit resume'
                       title='Edit label or replace file'
                     >
-                      <Pencil className='w-4 h-4' />
+                      <Pencil className='h-4 w-4' />
                     </button>
 
                     {/* Delete profile */}
                     <button
                       onClick={() => handleDeleteProfile(profile)}
-                      className='p-2 text-secondary-text hover:text-danger-500 transition-colors'
+                      className='text-secondary-text hover:text-danger-500 p-2 transition-colors'
                       aria-label='Delete this resume profile'
                       title='Delete resume & profile'
                     >
-                      <Trash2 className='w-4 h-4' />
+                      <Trash2 className='h-4 w-4' />
                     </button>
                   </div>
                 </div>
@@ -227,12 +229,12 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
 
       {/* ── AI Preferences ── */}
       <section>
-        <h2 className='text-xl font-semibold text-primary-text mb-2'>AI Preferences</h2>
-        <p className='text-sm text-secondary-text mb-4'>
+        <h2 className='text-primary-text mb-2 text-xl font-semibold'>AI Preferences</h2>
+        <p className='text-secondary-text mb-4 text-sm'>
           Tune how JobMate generates cover letters and scores jobs.
         </p>
 
-        <div className='border border-border-col rounded-lg bg-foreground'>
+        <div className='border-brand-border bg-foreground rounded-lg border'>
           <Row
             label='Cover letter tone'
             description='The voice used when the AI drafts a cover letter.'
@@ -244,7 +246,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
                   coverLetterTone: e.target.value as CoverLetterTone,
                 })
               }
-              className='text-sm bg-background border border-border-col text-primary-text rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent min-w-[180px]'
+              className='bg-background border-brand-border text-primary-text focus:ring-brand-accent/30 focus:border-brand-accent min-w-[180px] rounded-md border px-3 py-1.5 text-sm focus:ring-2 focus:outline-none'
             >
               {TONE_OPTIONS.map((o) => (
                 <option key={o.value} value={o.value}>
@@ -279,7 +281,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
               step={5}
               value={settings.minimumMatchScore}
               onChange={(e) => updateSettings({ minimumMatchScore: Number(e.target.value) })}
-              className='w-40 accent-accent'
+              className='accent-brand-accent w-40'
             />
           </Row>
         </div>
@@ -287,12 +289,12 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
 
       {/* ── Integrations ── */}
       <section>
-        <h2 className='text-xl font-semibold text-primary-text mb-2'>Integrations</h2>
-        <p className='text-sm text-secondary-text mb-4'>
+        <h2 className='text-primary-text mb-2 text-xl font-semibold'>Integrations</h2>
+        <p className='text-secondary-text mb-4 text-sm'>
           Connect external services to speed up data entry.
         </p>
 
-        <div className='border border-border-col rounded-lg bg-foreground'>
+        <div className='border-brand-border bg-foreground rounded-lg border'>
           <Row label='LinkedIn' description='Sync your headline and work history.'>
             <button
               onClick={() =>
@@ -300,13 +302,13 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
                   linkedInConnected: !settings.linkedInConnected,
                 })
               }
-              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 settings.linkedInConnected
-                  ? "bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"
-                  : "bg-accent text-white hover:bg-primary-600"
+                  ? "border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                  : "bg-brand-accent hover:bg-primary-600 text-white"
               }`}
             >
-              <Linkedin className='w-4 h-4' />
+              <Linkedin className='h-4 w-4' />
               {settings.linkedInConnected ? "Connected" : "Connect"}
             </button>
           </Row>
@@ -316,24 +318,21 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
       {/* ── Appearance (popup-only — dashboard has its own sidebar toggle) ── */}
       {context === "popup" && (
         <section>
-          <h2 className='text-xl font-semibold text-primary-text mb-2'>Appearance</h2>
-          <p className='text-sm text-secondary-text mb-4'>
+          <h2 className='text-primary-text mb-2 text-xl font-semibold'>Appearance</h2>
+          <p className='text-secondary-text mb-4 text-sm'>
             Choose between system, light, or dark mode. Syncs to the dashboard.
           </p>
 
-          <div className='border border-border-col rounded-lg bg-foreground'>
-            <Row
-              label='Color theme'
-              description='System follows your OS setting.'
-            >
-              <div className='inline-flex items-center border border-border-col rounded-lg overflow-hidden text-xs font-medium'>
+          <div className='border-brand-border bg-foreground rounded-lg border'>
+            <Row label='Color theme' description='System follows your OS setting.'>
+              <div className='border-brand-border inline-flex items-center overflow-hidden rounded-lg border text-xs font-medium'>
                 {(["system", "light", "dark"] as const).map((p) => (
                   <button
                     key={p}
                     onClick={() => setPreference(p)}
-                    className={`px-3 py-1.5 capitalize transition-colors border-r border-border-col last:border-r-0 ${
+                    className={`border-brand-border border-r px-3 py-1.5 capitalize transition-colors last:border-r-0 ${
                       preference === p
-                        ? "bg-accent text-white"
+                        ? "bg-brand-accent text-white"
                         : "text-secondary-text hover:text-primary-text hover:bg-button-col"
                     }`}
                   >
@@ -372,9 +371,9 @@ function Row({
 }) {
   return (
     <div className='flex items-center gap-4 px-5 py-5'>
-      <div className='flex-1 min-w-0'>
-        <div className='text-sm font-medium text-primary-text'>{label}</div>
-        {description && <div className='text-xs text-secondary-text mt-1'>{description}</div>}
+      <div className='min-w-0 flex-1'>
+        <div className='text-primary-text text-sm font-medium'>{label}</div>
+        {description && <div className='text-secondary-text mt-1 text-xs'>{description}</div>}
       </div>
       <div className='shrink-0'>{children}</div>
     </div>
@@ -382,7 +381,7 @@ function Row({
 }
 
 function Divider() {
-  return <div className='border-t border-dashed border-border-col mx-5' />;
+  return <div className='border-brand-border mx-5 border-t border-dashed' />;
 }
 
 function Toggle({ checked, onChange }: { checked: boolean; onChange: (next: boolean) => void }) {
@@ -393,7 +392,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (next: bool
       aria-checked={checked}
       onClick={() => onChange(!checked)}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        checked ? "bg-accent" : "bg-button-col border border-border-col"
+        checked ? "bg-brand-accent" : "bg-button-col border-brand-border border"
       }`}
     >
       <span

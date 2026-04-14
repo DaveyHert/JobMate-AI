@@ -204,17 +204,17 @@ const Dashboard: React.FC = () => {
         <StatsGrid stats={stats} />
 
         {/* Main Content */}
-        <div className='grid grid-cols-1 lg:grid-cols-9 gap-6'>
+        <div className='grid grid-cols-1 gap-6 lg:grid-cols-9'>
           {/* Applications List */}
           <div className='lg:col-span-6'>
-            <div className='bg-foreground rounded-xl border border-border-col p-6'>
-              <div className='flex justify-between items-center mb-6'>
-                <h2 className='text-xl font-semibold text-primary-text'>Recent Applications</h2>
+            <div className='bg-foreground border-brand-border rounded-xl border p-6'>
+              <div className='mb-6 flex items-center justify-between'>
+                <h2 className='text-primary-text text-xl font-semibold'>Recent Applications</h2>
                 <button
                   onClick={() => setShowAddModal(true)}
-                  className='px-3 py-2 bg-accent hover:bg-indigo-700 rounded-4xl text-white font-medium text-sm transition-all flex items-center gap-1'
+                  className='bg-brand-accent flex items-center gap-1 rounded-4xl px-3 py-2 text-sm font-medium text-white transition-all hover:bg-indigo-700'
                 >
-                  <AddIcon className='w-4 h-4 text-white' />
+                  <AddIcon className='h-4 w-4 text-white' />
                   Add Application
                 </button>
               </div>
@@ -230,42 +230,42 @@ const Dashboard: React.FC = () => {
 
               {/* Applications */}
               <div
-                className='space-y-3 overflow-y-auto custom-scrollbar'
+                className='custom-scrollbar space-y-3 overflow-y-auto'
                 style={{ maxHeight: "calc(100vh - 400px)" }}
               >
                 {filteredApplications.length === 0 ? (
-                  <div className='text-center py-12 text-gray-500'>
-                    <Briefcase className='w-12 h-12 mx-auto mb-4 text-gray-400' />
-                    <p className='text-lg mb-2'>No applications found</p>
+                  <div className='py-12 text-center text-gray-500'>
+                    <Briefcase className='mx-auto mb-4 h-12 w-12 text-gray-400' />
+                    <p className='mb-2 text-lg'>No applications found</p>
                     <p className='text-sm'>Start tracking your job applications to see them here</p>
                   </div>
                 ) : (
                   filteredApplications.map((app) => (
                     <div
                       key={app.id}
-                      className='bg-foreground border border-border-col rounded-xl overflow-hidden hover:shadow-md transition-all.  '
+                      className='bg-foreground border-brand-border transition-all. overflow-hidden rounded-xl border hover:shadow-md'
                     >
-                      <div className='p-4 cursor-pointer' onClick={() => toggleExpanded(app.id)}>
+                      <div className='cursor-pointer p-4' onClick={() => toggleExpanded(app.id)}>
                         <div className='flex items-center gap-4'>
                           <div
-                            className={`w-12 h-12 rounded-full ${getCompanyColor(
+                            className={`h-12 w-12 rounded-full ${getCompanyColor(
                               app.company,
-                            )} flex items-center justify-center text-white font-semibold text-lg shrink-0 bg-background`}
+                            )} bg-background flex shrink-0 items-center justify-center text-lg font-semibold text-white`}
                           >
                             {getCompanyInitial(app.company)}
                           </div>
-                          <div className='flex-1 min-w-0'>
-                            <div className='text-base font-semibold text-primary-text mb-1'>
+                          <div className='min-w-0 flex-1'>
+                            <div className='text-primary-text mb-1 text-base font-semibold'>
                               {app.title}
                             </div>
-                            <div className='text-sm text-secondary-text mb-2'>{app.company}</div>
+                            <div className='text-secondary-text mb-2 text-sm'>{app.company}</div>
                             <div className='flex items-center gap-4 text-xs text-gray-500'>
                               <span className='flex items-center gap-1'>
-                                <Building className='w-3 h-3' />
+                                <Building className='h-3 w-3' />
                                 {getSourceDisplayName(app.source)}
                               </span>
                               <span className='flex items-center gap-1'>
-                                <Calendar className='w-3 h-3' />
+                                <Calendar className='h-3 w-3' />
                                 {formatDate(app.dateApplied)}
                               </span>
                               {app.url && (
@@ -273,10 +273,10 @@ const Dashboard: React.FC = () => {
                                   href={app.url}
                                   target='_blank'
                                   rel='noopener noreferrer'
-                                  className='flex items-center gap-1 hover:text-gray-700 transition-colors'
+                                  className='flex items-center gap-1 transition-colors hover:text-gray-700'
                                   onClick={(e) => e.stopPropagation()}
                                 >
-                                  <ExternalLink className='w-3 h-3' />
+                                  <ExternalLink className='h-3 w-3' />
                                   View
                                 </a>
                               )}
@@ -286,9 +286,9 @@ const Dashboard: React.FC = () => {
                             <select
                               value={app.status}
                               onChange={(e) => updateApplicationStatus(app.id, e.target.value)}
-                              className={`appearance-none px-3 py-1 pr-5 rounded-2xl text-sm font-medium border cursor-pointer ${getStatusColor(
+                              className={`cursor-pointer appearance-none rounded-2xl border px-3 py-1 pr-5 text-sm font-medium ${getStatusColor(
                                 app.status,
-                              )} focus:outline-hidden focus:border-2`}
+                              )} focus:border-2 focus:outline-hidden`}
                             >
                               <option value='applied'>Applied</option>
                               <option value='interviewing'>Interviewing</option>
@@ -296,13 +296,13 @@ const Dashboard: React.FC = () => {
                               <option value='offer'>Offer</option>
                               <option value='ghosted'>Ghosted</option>
                             </select>
-                            <ChevronDown className='absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none' />
+                            <ChevronDown className='pointer-events-none absolute top-1/2 right-2 h-4 w-4 -translate-y-1/2 transform text-gray-500' />
                           </div>
                           <div className='shrink-0'>
                             {expandedApp === app.id ? (
-                              <ChevronUp className='w-5 h-5 text-gray-400' />
+                              <ChevronUp className='h-5 w-5 text-gray-400' />
                             ) : (
-                              <ChevronDown className='w-5 h-5 text-gray-400' />
+                              <ChevronDown className='h-5 w-5 text-gray-400' />
                             )}
                           </div>
                         </div>
@@ -310,12 +310,12 @@ const Dashboard: React.FC = () => {
 
                       {/* Expanded Content */}
                       {expandedApp === app.id && (
-                        <div className='border-t border-border-col bg-background'>
-                          <div className='flex justify-between items-center border-b border-border-col bg-foreground px-6 py-3'>
+                        <div className='border-brand-border bg-background border-t'>
+                          <div className='border-brand-border bg-foreground flex items-center justify-between border-b px-6 py-3'>
                             <div className='flex'>
                               <button
                                 onClick={() => setActiveTabForApp(app.id, "notes")}
-                                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                                className={`border-b-2 px-4 py-2 text-sm font-medium transition-colors ${
                                   activeTab[app.id] === "notes" || !activeTab[app.id]
                                     ? "border-indigo-500 text-indigo-600"
                                     : "border-transparent text-gray-500 hover:text-gray-700"
@@ -325,7 +325,7 @@ const Dashboard: React.FC = () => {
                               </button>
                               <button
                                 onClick={() => setActiveTabForApp(app.id, "brief")}
-                                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                                className={`border-b-2 px-4 py-2 text-sm font-medium transition-colors ${
                                   activeTab[app.id] === "brief"
                                     ? "border-indigo-500 text-indigo-600"
                                     : "border-transparent text-gray-500 hover:text-gray-700"
@@ -349,7 +349,7 @@ const Dashboard: React.FC = () => {
                                           [`${app.id}-jobType`]: e.target.value,
                                         })
                                       }
-                                      className='px-2 py-1 border border-gray-300 rounded-sm text-xs'
+                                      className='rounded-sm border border-gray-300 px-2 py-1 text-xs'
                                     >
                                       <option value='fulltime'>Full-time</option>
                                       <option value='contract'>Contract</option>
@@ -359,19 +359,19 @@ const Dashboard: React.FC = () => {
                                       onClick={() => saveEdit(app.id, "jobType")}
                                       className='text-green-600 hover:text-green-700'
                                     >
-                                      <Save className='w-3 h-3' />
+                                      <Save className='h-3 w-3' />
                                     </button>
                                     <button
                                       onClick={() => cancelEdit(app.id, "jobType")}
                                       className='text-gray-400 hover:text-gray-600'
                                     >
-                                      <X className='w-3 h-3' />
+                                      <X className='h-3 w-3' />
                                     </button>
                                   </div>
                                 ) : (
                                   <div className='flex items-center gap-1'>
                                     <span
-                                      className={`px-2 py-1 rounded text-xs font-medium ${getJobTypeColor(
+                                      className={`rounded px-2 py-1 text-xs font-medium ${getJobTypeColor(
                                         app.jobType || "fulltime",
                                       )}`}
                                     >
@@ -387,17 +387,17 @@ const Dashboard: React.FC = () => {
                                       }
                                       className='text-gray-400 hover:text-gray-600'
                                     >
-                                      <PenLine className='w-3 h-3' />
+                                      <PenLine className='h-3 w-3' />
                                     </button>
                                   </div>
                                 )}
                               </div>
                               <button
                                 onClick={() => deleteApplication(app.id)}
-                                className='text-red-400 hover:text-red-600 ml-4'
+                                className='ml-4 text-red-400 hover:text-red-600'
                                 title='Delete Application'
                               >
-                                <Trash2 className='w-4 h-4' />
+                                <Trash2 className='h-4 w-4' />
                               </button>
                             </div>
                           </div>
@@ -415,19 +415,19 @@ const Dashboard: React.FC = () => {
                                         })
                                       }
                                       rows={4}
-                                      className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'
+                                      className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500'
                                       placeholder='Add your notes about this application...'
                                     />
                                     <div className='flex gap-2'>
                                       <button
                                         onClick={() => saveEdit(app.id, "notes")}
-                                        className='px-3 py-1 bg-indigo-600 text-white rounded-sm text-sm hover:bg-indigo-700'
+                                        className='rounded-sm bg-indigo-600 px-3 py-1 text-sm text-white hover:bg-indigo-700'
                                       >
                                         Save
                                       </button>
                                       <button
                                         onClick={() => cancelEdit(app.id, "notes")}
-                                        className='px-3 py-1 bg-gray-200 text-gray-700 rounded-sm text-sm hover:bg-gray-300'
+                                        className='rounded-sm bg-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-300'
                                       >
                                         Cancel
                                       </button>
@@ -436,16 +436,16 @@ const Dashboard: React.FC = () => {
                                 ) : (
                                   <div className='group'>
                                     <div className='flex items-start justify-between'>
-                                      <p className='text-sm text-gray-700 leading-relaxed flex-1'>
+                                      <p className='flex-1 text-sm leading-relaxed text-gray-700'>
                                         {app.notes || "No notes added yet."}
                                       </p>
                                       <button
                                         onClick={() =>
                                           startEditing(app.id, "notes", app.notes || "")
                                         }
-                                        className='opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 ml-2'
+                                        className='ml-2 text-gray-400 opacity-0 group-hover:opacity-100 hover:text-gray-600'
                                       >
-                                        <Edit3 className='w-4 h-4' />
+                                        <Edit3 className='h-4 w-4' />
                                       </button>
                                     </div>
                                   </div>
@@ -465,19 +465,19 @@ const Dashboard: React.FC = () => {
                                         })
                                       }
                                       rows={4}
-                                      className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'
+                                      className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500'
                                       placeholder='Add job brief or description...'
                                     />
                                     <div className='flex gap-2'>
                                       <button
                                         onClick={() => saveEdit(app.id, "jobBrief")}
-                                        className='px-3 py-1 bg-indigo-600 text-white rounded-sm text-sm hover:bg-indigo-700'
+                                        className='rounded-sm bg-indigo-600 px-3 py-1 text-sm text-white hover:bg-indigo-700'
                                       >
                                         Save
                                       </button>
                                       <button
                                         onClick={() => cancelEdit(app.id, "jobBrief")}
-                                        className='px-3 py-1 bg-gray-200 text-gray-700 rounded-sm text-sm hover:bg-gray-300'
+                                        className='rounded-sm bg-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-300'
                                       >
                                         Cancel
                                       </button>
@@ -486,16 +486,16 @@ const Dashboard: React.FC = () => {
                                 ) : (
                                   <div className='group'>
                                     <div className='flex items-start justify-between'>
-                                      <p className='text-sm text-gray-700 leading-relaxed flex-1'>
+                                      <p className='flex-1 text-sm leading-relaxed text-gray-700'>
                                         {app.jobBrief || "No job brief available."}
                                       </p>
                                       <button
                                         onClick={() =>
                                           startEditing(app.id, "jobBrief", app.jobBrief || "")
                                         }
-                                        className='opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 ml-2'
+                                        className='ml-2 text-gray-400 opacity-0 group-hover:opacity-100 hover:text-gray-600'
                                       >
-                                        <Edit3 className='w-4 h-4' />
+                                        <Edit3 className='h-4 w-4' />
                                       </button>
                                     </div>
                                   </div>
@@ -513,43 +513,43 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className='lg:col-span-3 space-y-6'>
+          <div className='space-y-6 lg:col-span-3'>
             {/* Chart */}
-            <div className='bg-foreground rounded-xl border border-border-col p-6'>
-              <div className='flex justify-between items-center mb-6'>
-                <div className='flex bg-background rounded-lg p-1'>
+            <div className='bg-foreground border-brand-border rounded-xl border p-6'>
+              <div className='mb-6 flex items-center justify-between'>
+                <div className='bg-background flex rounded-lg p-1'>
                   <button
                     onClick={() => setChartView("timeline")}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all ${
+                    className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all ${
                       chartView === "timeline"
                         ? "bg-foreground text-secondary-text shadow-xs"
                         : "text-secondary-text hover:text-primary-text"
                     } cursor-pointer`}
                   >
-                    <Calendar className='w-4 h-4' />
+                    <Calendar className='h-4 w-4' />
                     Timeline
                   </button>
                   <button
                     onClick={() => setChartView("sources")}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all ${
+                    className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all ${
                       chartView === "sources"
                         ? "bg-white text-gray-900 shadow-xs"
                         : "text-secondary-text hover:text-primary-text"
                     } cursor-pointer`}
                   >
-                    <PieChart className='w-4 h-4' />
+                    <PieChart className='h-4 w-4' />
                     Sources
                   </button>
                 </div>
-                <button className='text-gray-400 hover:text-gray-600 '>
-                  <Settings className='w-4 h-4' />
+                <button className='text-gray-400 hover:text-gray-600'>
+                  <Settings className='h-4 w-4' />
                 </button>
               </div>
 
               {chartView === "timeline" ? (
                 <>
-                  <div className='flex justify-between items-center mb-4'>
-                    <h3 className='text-lg font-semibold text-primary-text'>
+                  <div className='mb-4 flex items-center justify-between'>
+                    <h3 className='text-primary-text text-lg font-semibold'>
                       Applications Overview
                     </h3>
                     <div className='flex gap-1'>
@@ -561,10 +561,10 @@ const Dashboard: React.FC = () => {
                         <button
                           key={option.key}
                           onClick={() => setTimeRange(option.key)}
-                          className={`px-3 py-1 rounded text-sm font-medium transition-all ${
+                          className={`rounded px-3 py-1 text-sm font-medium transition-all ${
                             timeRange === option.key
-                              ? "bg-gray-900 text-white border border-border-col"
-                              : "bg-button-col text-primary-text hover:bg-button-hov border border-border-col rounded"
+                              ? "border-brand-border border bg-gray-900 text-white"
+                              : "bg-button-col text-primary-text hover:bg-button-hov border-brand-border rounded border"
                           } cursor-pointer`}
                         >
                           {option.label}
@@ -573,32 +573,32 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className='bg-foreground rounded-xl p-4'>
-                    <canvas ref={canvasRef} width={320} height={200} className='w-full h-auto' />
+                    <canvas ref={canvasRef} width={320} height={200} className='h-auto w-full' />
                   </div>
-                  <div className='flex items-center gap-4 mt-4 text-xs'>
+                  <div className='mt-4 flex items-center gap-4 text-xs'>
                     <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 bg-[#989AFF] rounded-sm'></div>
+                      <div className='h-2 w-2 rounded-sm bg-[#989AFF]'></div>
                       <span className='text-secondary-text'>Applications</span>
                     </div>
                     <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 bg-[#6366F1] rounded-sm'></div>
+                      <div className='h-2 w-2 rounded-sm bg-[#6366F1]'></div>
                       <span className='text-secondary-text'>Interviews</span>
                     </div>
                   </div>
                 </>
               ) : (
                 <>
-                  <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                  <h3 className='mb-4 text-lg font-semibold text-gray-900'>
                     Application by Sources
                   </h3>
                   <div className='space-y-4'>
                     {getSourceData().map((item, index) => (
                       <div key={item.source} className='space-y-2'>
-                        <div className='flex justify-between items-center'>
+                        <div className='flex items-center justify-between'>
                           <span className='text-sm font-medium text-gray-700'>{item.source}</span>
                           <span className='text-sm font-semibold text-gray-900'>{item.count}</span>
                         </div>
-                        <div className='w-full bg-gray-200 rounded-full h-2'>
+                        <div className='h-2 w-full rounded-full bg-gray-200'>
                           <div
                             className='h-2 rounded-full transition-all duration-300'
                             style={{
@@ -610,8 +610,8 @@ const Dashboard: React.FC = () => {
                       </div>
                     ))}
                   </div>
-                  <div className='mt-6 pt-4 border-t border-gray-200 text-center'>
-                    <div className='text-sm text-indigo-600 font-medium'>Total Applications</div>
+                  <div className='mt-6 border-t border-gray-200 pt-4 text-center'>
+                    <div className='text-sm font-medium text-indigo-600'>Total Applications</div>
                     <div className='text-2xl font-bold text-gray-900'>{applications.length}</div>
                   </div>
                 </>
