@@ -1,6 +1,5 @@
-import { User } from "lucide-react";
 import { Field, Input, Select, StepHeader, StepFooter } from "../components/OnboardingPrimitives";
-import UserSvg from "@/assets/svg/UserIcon";
+import { UserIcon } from "@/assets/svg/icons";
 
 export interface PersonalInfoData {
   email: string;
@@ -90,7 +89,7 @@ export function PersonalInfoStep({ data, onChange, onContinue }: Props) {
       </div>
 
       <StepHeader
-        icon={<UserSvg className='text-primary-04 h-5 w-5' />}
+        icon={<UserIcon className='text-primary-04 h-5 w-5' />}
         title='Personal Information'
       />
 

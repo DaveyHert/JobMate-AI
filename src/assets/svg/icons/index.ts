@@ -16,3 +16,5 @@ export { default as InstagramIcon } from "./InstagramIcon";
 export { default as LinkedInIcon } from "./LinkedInIcon";
 export { default as GithubIcon } from "./GithubIcon";
 export { default as BehanceIcon } from "./BehanceIcon";
+export { default as BriefCaseIcon } from "./BriefCaseIcon";
+export { default as UserIcon } from "./UserIcon";

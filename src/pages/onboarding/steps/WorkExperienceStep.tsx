@@ -9,7 +9,7 @@ import {
   StepTopNav,
   StepFooter,
 } from "../components/OnboardingPrimitives";
-import BriefCase from "@/assets/svg/BriefCaseIcon";
+import BriefCase from "@/assets/svg/icons/BriefCaseIcon";
 
 export interface WorkEntry {
   jobTitle: string;
