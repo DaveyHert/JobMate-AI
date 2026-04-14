@@ -12,7 +12,7 @@ function ApplicationStatusFilter({
 }: ApplicationStatusFilter) {
   return (
     <div
-      className='bg-button-col border-brand-border flex rounded-[10px] border px-1 py-1.5'
+      className='bg-brand-btn border-brand-border flex rounded-[10px] border px-1 py-1.5'
       style={{ boxShadow: "inset 0px 0px 15px rgba(0, 0, 0, 0.06)" }}
     >
       {Object.entries(filterCounts).map(([status, count]) => (

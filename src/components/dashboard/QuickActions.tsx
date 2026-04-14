@@ -9,7 +9,7 @@ interface QuickActions {
 
 function QuickActions({ applications, stats }: QuickActions) {
   return (
-    <div className='bg-foreground border-brand-border rounded-xl border p-6'>
+    <div className='bg-app-foreground border-brand-border rounded-xl border p-6'>
       <h3 className='mb-4 text-lg font-semibold text-gray-900 dark:text-[#F3F4F6]'>
         Quick Actions
       </h3>

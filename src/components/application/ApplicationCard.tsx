@@ -82,7 +82,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, onStatus
 
   return (
     <div
-      className='bg-foreground border-brand-border font-poppins rounded-lg border px-2 py-3.5 transition-all hover:shadow-xs'
+      className='bg-app-foreground border-brand-border font-poppins rounded-lg border px-2 py-3.5 transition-all hover:shadow-xs'
       style={{ boxShadow: "box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.15)" }}
     >
       <div className='flex items-center gap-4'>

@@ -5,11 +5,11 @@
   --font-poppins: Poppins, sans-serif;
 
   /* Brand palette */
-  --color-background: #f3f4f6;
-  --color-foreground: #ffff;
+  --color-app-background: #f3f4f6;
+  --color-app-foreground: #ffff;
   --color-brand-border: #e5e7eb;
-  --color-button-col: #f8faff;
-  --color-button-hov: #eef0ff;
+  --color-brand-btn: #f8faff;
+  --color-brand-btn-hover: #eef0ff;
   --color-brand-muted: #c5c8ff;
   --color-brand-accent: #5750f1;
   --color-brand-accent-soft: #f3f3fe;
@@ -26,16 +26,16 @@
   --color-neutral-09: #030108;
 
   /* Brand */
-  --color-primary-50: #eef0ff;
-  --color-primary-100: #dadcff;
-  --color-primary-200: #c5c8ff;
-  --color-primary-300: #a7a9ff;
-  --color-primary-400: #8c8cff;
-  --color-primary-500: #5a5fe1;
-  --color-primary-600: #474ac4;
-  --color-primary-700: #3836a0;
-  --color-primary-800: #28267b;
-  --color-primary-900: #1c1a55;
+  --color-brand-50: #eef0ff;
+  --color-brand-100: #dadcff;
+  --color-brand-200: #c5c8ff;
+  --color-brand-300: #a7a9ff;
+  --color-brand-400: #8c8cff;
+  --color-brand-500: #5a5fe1;
+  --color-brand-600: #474ac4;
+  --color-brand-700: #3836a0;
+  --color-brand-800: #28267b;
+  --color-brand-900: #1c1a55;
 
   --color-primary-01: #f3f2fc;
   --color-primary-02: #d4d2f8;
@@ -45,50 +45,54 @@
   --color-primary-06: #474ac4;
 
   /* Semantic */
-  --color-success-500: #22c55e;
-  --color-warning-500: #f5a524;
-  --color-danger-500: #ef4444;
-  --color-info-500: #3b82f6;
+  --color-success-400: #22c55e;
+  --color-warning-400: #f5a524;
+  --color-danger-400: #ef4444;
+  --color-info-400: #3b82f6;
 
   /* text */
   --color-primary-text: #111827;
   --color-secondary-text: #8b8b8b;
   --color-inverted-text: #ffffff;
-  --color-link-text: #5a5fe1; /* same as --color-primary-500 */
+  --color-link-text: #5a5fe1; /* same as --color-brand-500 */
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 .dark {
-  --color-background: #06101e;
-  --color-foreground: #122031;
-  --color-button-col: #1f2a37;
-  --color-button-hov: #2a3746;
+  /* Brand palette */
+  --color-app-background: #06101e;
+  --color-app-foreground: #122031;
+  --color-brand-btn: #1f2a37;
+  --color-brand-btn-hover: #2a3746;
   --color-brand-border: #222f3f;
   --color-brand-muted: #94a3b8;
-
   --color-brand-accent: #5750f1;
   --color-brand-accent-soft: #f3f3fe;
 
+  /* text */
   --color-primary-text: #f3f4f6;
   --color-secondary-text: #9ca3af;
   --color-inverted-text: #ffffff;
-  --color-link-text: #5a5fe1; /* same as --color-primary-500 */
+  --color-link-text: #5a5fe1; /* same as --color-brand-500 */
 
-  --color-primary-50: #2b2f77;
-  --color-primary-100: #3b3f9f;
-  --color-primary-200: #4b4fc5;
-  --color-primary-300: #5a5fe1;
-  --color-primary-400: #6c6fff;
-  --color-primary-500: #7c80ff;
-  --color-primary-600: #9093ff;
-  --color-primary-700: #a4a6ff;
-  --color-primary-800: #c1c2ff;
-  --color-primary-900: #d8d9ff;
-  --color-success-500: #20bf78;
-  --color-warning-500: #f5b94c;
-  --color-danger-500: #f87171;
-  --color-info-500: #60a5fa;
+  /* Primary palette */
+  --color-brand-50: #2b2f77;
+  --color-brand-100: #3b3f9f;
+  --color-brand-200: #4b4fc5;
+  --color-brand-300: #5a5fe1;
+  --color-brand-400: #6c6fff;
+  --color-brand-500: #7c80ff;
+  --color-brand-600: #9093ff;
+  --color-brand-700: #a4a6ff;
+  --color-brand-800: #c1c2ff;
+  --color-brand-900: #d8d9ff;
+
+  /* Semantic */
+  --color-success-400: #4ade80;
+  --color-warning-400: #fbbf24;
+  --color-danger-400: #fc9090;
+  --color-info-400: #82bcfc;
 }
 
 /* Scrollbar */
@@ -120,11 +124,11 @@
 /*utility tailwind style  */
 
 .btn-primary {
-  @apply bg-button-col border-brand-border hover:border-brand-muted hover:bg-button-hov flex cursor-pointer flex-col items-center gap-3 rounded-[10px] border-2 px-4 py-2 text-[#5E636E] shadow-xs transition-all duration-200 disabled:opacity-50 dark:text-[#B1B1B1];
+  @apply bg-brand-btn border-brand-border hover:border-brand-muted hover:bg-brand-btn-hover flex cursor-pointer flex-col items-center gap-3 rounded-[10px] border-2 px-4 py-2 text-[#5E636E] shadow-xs transition-all duration-200 disabled:opacity-50 dark:text-[#B1B1B1];
 }
 
 .btn-secondary {
-  @apply bg-button-col hover:bg-button-hov border-brand-border flex w-full cursor-pointer items-center gap-2 rounded-lg border p-2 text-sm text-gray-700 transition-all dark:text-[#F3F4F6];
+  @apply bg-brand-btn hover:bg-brand-btn-hover border-brand-border flex w-full cursor-pointer items-center gap-2 rounded-lg border p-2 text-sm text-gray-700 transition-all dark:text-[#F3F4F6];
 }
 
 /* Light mode */

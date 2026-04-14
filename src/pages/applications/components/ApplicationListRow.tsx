@@ -19,7 +19,7 @@ export function ApplicationListRow({
 
   return (
     <tr
-      className='border-brand-border hover:bg-button-col/40 cursor-pointer border-b transition-colors last:border-b-0'
+      className='border-brand-border hover:bg-brand-btn/40 cursor-pointer border-b transition-colors last:border-b-0'
       onClick={() => onClick(app)}
     >
       <td className='text-primary-text px-5 py-4 text-sm font-semibold whitespace-nowrap'>

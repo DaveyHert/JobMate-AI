@@ -198,7 +198,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className='bg-background'>
+    <div className='bg-app-background'>
       <div className='px-8 pb-8'>
         {/* Stats Cards */}
         <StatsGrid stats={stats} />
@@ -207,7 +207,7 @@ const Dashboard: React.FC = () => {
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-9'>
           {/* Applications List */}
           <div className='lg:col-span-6'>
-            <div className='bg-foreground border-brand-border rounded-xl border p-6'>
+            <div className='bg-app-foreground border-brand-border rounded-xl border p-6'>
               <div className='mb-6 flex items-center justify-between'>
                 <h2 className='text-primary-text text-xl font-semibold'>Recent Applications</h2>
                 <button
@@ -243,14 +243,14 @@ const Dashboard: React.FC = () => {
                   filteredApplications.map((app) => (
                     <div
                       key={app.id}
-                      className='bg-foreground border-brand-border transition-all. overflow-hidden rounded-xl border hover:shadow-md'
+                      className='bg-app-foreground border-brand-border transition-all. overflow-hidden rounded-xl border hover:shadow-md'
                     >
                       <div className='cursor-pointer p-4' onClick={() => toggleExpanded(app.id)}>
                         <div className='flex items-center gap-4'>
                           <div
                             className={`h-12 w-12 rounded-full ${getCompanyColor(
                               app.company,
-                            )} bg-background flex shrink-0 items-center justify-center text-lg font-semibold text-white`}
+                            )} bg-app-background flex shrink-0 items-center justify-center text-lg font-semibold text-white`}
                           >
                             {getCompanyInitial(app.company)}
                           </div>
@@ -310,8 +310,8 @@ const Dashboard: React.FC = () => {
 
                       {/* Expanded Content */}
                       {expandedApp === app.id && (
-                        <div className='border-brand-border bg-background border-t'>
-                          <div className='border-brand-border bg-foreground flex items-center justify-between border-b px-6 py-3'>
+                        <div className='border-brand-border bg-app-background border-t'>
+                          <div className='border-brand-border bg-app-foreground flex items-center justify-between border-b px-6 py-3'>
                             <div className='flex'>
                               <button
                                 onClick={() => setActiveTabForApp(app.id, "notes")}
@@ -515,14 +515,14 @@ const Dashboard: React.FC = () => {
           {/* Right Sidebar */}
           <div className='space-y-6 lg:col-span-3'>
             {/* Chart */}
-            <div className='bg-foreground border-brand-border rounded-xl border p-6'>
+            <div className='bg-app-foreground border-brand-border rounded-xl border p-6'>
               <div className='mb-6 flex items-center justify-between'>
-                <div className='bg-background flex rounded-lg p-1'>
+                <div className='bg-app-background flex rounded-lg p-1'>
                   <button
                     onClick={() => setChartView("timeline")}
                     className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all ${
                       chartView === "timeline"
-                        ? "bg-foreground text-secondary-text shadow-xs"
+                        ? "bg-app-foreground text-secondary-text shadow-xs"
                         : "text-secondary-text hover:text-primary-text"
                     } cursor-pointer`}
                   >
@@ -564,7 +564,7 @@ const Dashboard: React.FC = () => {
                           className={`rounded px-3 py-1 text-sm font-medium transition-all ${
                             timeRange === option.key
                               ? "border-brand-border border bg-gray-900 text-white"
-                              : "bg-button-col text-primary-text hover:bg-button-hov border-brand-border rounded border"
+                              : "bg-brand-btn text-primary-text hover:bg-brand-btn-hover border-brand-border rounded border"
                           } cursor-pointer`}
                         >
                           {option.label}
@@ -572,7 +572,7 @@ const Dashboard: React.FC = () => {
                       ))}
                     </div>
                   </div>
-                  <div className='bg-foreground rounded-xl p-4'>
+                  <div className='bg-app-foreground rounded-xl p-4'>
                     <canvas ref={canvasRef} width={320} height={200} className='h-auto w-full' />
                   </div>
                   <div className='mt-4 flex items-center gap-4 text-xs'>

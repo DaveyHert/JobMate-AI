@@ -89,7 +89,7 @@ const QuickActions: React.FC<QuickActionsProps> = ({
         Quick Actions
       </h3>
 
-      <div className='bg-foreground border-brand-border mb-4 grid grid-cols-3 gap-4 rounded-[10px] border px-3 py-4'>
+      <div className='bg-app-foreground border-brand-border mb-4 grid grid-cols-3 gap-4 rounded-[10px] border px-3 py-4'>
         {actions.map((action, index) => (
           <button
             key={index}

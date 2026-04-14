@@ -94,12 +94,12 @@ export function InlineEditRow({
               disabled={saving}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={onKeyDown}
-              className='text-primary-text bg-background border-brand-border focus:ring-brand-accent/30 focus:border-brand-accent min-w-[220px] rounded-md border px-3 py-1.5 text-right text-sm focus:ring-2 focus:outline-none'
+              className='text-primary-text bg-app-background border-brand-border focus:ring-brand-accent/30 focus:border-brand-accent min-w-[220px] rounded-md border px-3 py-1.5 text-right text-sm focus:ring-2 focus:outline-none'
             />
             <button
               onClick={commit}
               disabled={saving}
-              className='text-brand-accent hover:text-primary-600 p-1 disabled:opacity-50'
+              className='text-brand-accent hover:text-brand-600 p-1 disabled:opacity-50'
               aria-label='Save'
             >
               <Check className='h-4 w-4' />
@@ -124,7 +124,7 @@ export function InlineEditRow({
             </span>
             <button
               onClick={() => setEditing(true)}
-              className='text-brand-accent hover:text-primary-600 text-sm font-medium underline-offset-2 transition-colors hover:underline'
+              className='text-brand-accent hover:text-brand-600 text-sm font-medium underline-offset-2 transition-colors hover:underline'
             >
               Edit
             </button>

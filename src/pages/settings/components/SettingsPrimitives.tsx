@@ -19,7 +19,7 @@ interface CardProps {
 
 export function Card({ title, description, children, footer }: CardProps) {
   return (
-    <section className='bg-foreground border-brand-border mb-4 overflow-hidden rounded-xl border'>
+    <section className='bg-app-foreground border-brand-border mb-4 overflow-hidden rounded-xl border'>
       {(title || description) && (
         <header className='border-brand-border border-b px-5 pt-5 pb-3'>
           {title && <h2 className='text-primary-text text-base font-semibold'>{title}</h2>}
@@ -28,7 +28,7 @@ export function Card({ title, description, children, footer }: CardProps) {
       )}
       <div className='p-5'>{children}</div>
       {footer && (
-        <footer className='border-brand-border bg-background/40 border-t px-5 py-3'>
+        <footer className='border-brand-border bg-app-background/40 border-t px-5 py-3'>
           {footer}
         </footer>
       )}
@@ -76,7 +76,7 @@ export function Toggle({ checked, onChange, disabled, label }: ToggleProps) {
       disabled={disabled}
       onClick={() => onChange(!checked)}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        checked ? "bg-brand-accent" : "bg-button-col border-brand-border border"
+        checked ? "bg-brand-accent" : "bg-brand-btn border-brand-border border"
       } ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
     >
       <span
@@ -103,11 +103,11 @@ export function Field({ label, hint, error, children, required }: FieldProps) {
     <label className='mb-4 block last:mb-0'>
       <div className='text-primary-text mb-1.5 text-xs font-medium'>
         {label}
-        {required && <span className='text-danger-500 ml-0.5'>*</span>}
+        {required && <span className='text-danger-400 ml-0.5'>*</span>}
       </div>
       {children}
       {hint && !error && <div className='text-secondary-text mt-1 text-[11px]'>{hint}</div>}
-      {error && <div className='text-danger-500 mt-1 text-[11px]'>{error}</div>}
+      {error && <div className='text-danger-400 mt-1 text-[11px]'>{error}</div>}
     </label>
   );
 }
@@ -120,7 +120,7 @@ export function TextInput(props: TextInputProps) {
   return (
     <input
       {...props}
-      className={`bg-background border-brand-border text-primary-text placeholder:text-secondary-text focus:ring-brand-accent/30 focus:border-brand-accent w-full rounded-lg border px-3 py-2 text-sm transition-colors focus:ring-2 focus:outline-none ${
+      className={`bg-app-background border-brand-border text-primary-text placeholder:text-secondary-text focus:ring-brand-accent/30 focus:border-brand-accent w-full rounded-lg border px-3 py-2 text-sm transition-colors focus:ring-2 focus:outline-none ${
         props.className ?? ""
       }`}
     />
@@ -135,7 +135,7 @@ export function TextArea(props: TextAreaProps) {
   return (
     <textarea
       {...props}
-      className={`bg-background border-brand-border text-primary-text placeholder:text-secondary-text focus:ring-brand-accent/30 focus:border-brand-accent min-h-[96px] w-full resize-y rounded-lg border px-3 py-2 text-sm transition-colors focus:ring-2 focus:outline-none ${
+      className={`bg-app-background border-brand-border text-primary-text placeholder:text-secondary-text focus:ring-brand-accent/30 focus:border-brand-accent min-h-[96px] w-full resize-y rounded-lg border px-3 py-2 text-sm transition-colors focus:ring-2 focus:outline-none ${
         props.className ?? ""
       }`}
     />
@@ -157,7 +157,7 @@ export function Select<T extends string>({ value, onChange, options, disabled }:
       value={value}
       disabled={disabled}
       onChange={(e) => onChange(e.target.value as T)}
-      className='bg-background border-brand-border text-primary-text focus:ring-brand-accent/30 focus:border-brand-accent w-full rounded-lg border px-3 py-2 text-sm transition-colors focus:ring-2 focus:outline-none'
+      className='bg-app-background border-brand-border text-primary-text focus:ring-brand-accent/30 focus:border-brand-accent w-full rounded-lg border px-3 py-2 text-sm transition-colors focus:ring-2 focus:outline-none'
     >
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>
@@ -196,9 +196,9 @@ export function Button({
     md: "px-4 py-2 text-sm",
   };
   const variants = {
-    primary: "bg-brand-accent text-white hover:bg-primary-600",
-    secondary: "bg-button-col text-primary-text border border-brand-border hover:bg-button-hov",
-    danger: "bg-danger-500 text-white hover:opacity-90",
+    primary: "bg-brand-accent text-white hover:bg-brand-600",
+    secondary: "bg-brand-btn text-primary-text border border-brand-border hover:bg-brand-btn-hover",
+    danger: "bg-danger-400 text-white hover:opacity-90",
   };
   return (
     <button

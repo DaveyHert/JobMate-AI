@@ -201,10 +201,10 @@ export function ApplicationsPage() {
 
       {/* ── List view ── */}
       {filtered.length > 0 && view === "list" && (
-        <div className='bg-foreground border-brand-border overflow-hidden rounded-xl border'>
+        <div className='bg-app-foreground border-brand-border overflow-hidden rounded-xl border'>
           <table className='w-full'>
             <thead>
-              <tr className='border-brand-border bg-background border-b'>
+              <tr className='border-brand-border bg-app-background border-b'>
                 <th className='text-secondary-text px-5 py-3 text-left text-xs font-medium'>
                   Job Title
                 </th>

@@ -77,12 +77,12 @@ export function AddApplicationModal({ open, onClose, onCreated }: AddApplication
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs'>
-      <div className='bg-foreground border-brand-border max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border shadow-xl'>
+      <div className='bg-app-foreground border-brand-border max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border shadow-xl'>
         <div className='border-brand-border flex items-center justify-between border-b p-6'>
           <h3 className='text-primary-text text-xl font-semibold'>Add Job Application</h3>
           <button
             onClick={close}
-            className='hover:bg-button-col rounded-lg p-2 transition-colors'
+            className='hover:bg-brand-btn rounded-lg p-2 transition-colors'
             aria-label='Close'
           >
             <X className='text-secondary-text h-5 w-5' />
@@ -176,14 +176,14 @@ export function AddApplicationModal({ open, onClose, onCreated }: AddApplication
           <button
             onClick={close}
             disabled={saving}
-            className='border-brand-border text-primary-text hover:bg-button-col flex-1 rounded-lg border px-4 py-2 transition-colors disabled:opacity-50'
+            className='border-brand-border text-primary-text hover:bg-brand-btn flex-1 rounded-lg border px-4 py-2 transition-colors disabled:opacity-50'
           >
             Cancel
           </button>
           <button
             onClick={submit}
             disabled={!form.title || !form.company || saving}
-            className='bg-brand-accent hover:bg-primary-600 disabled:bg-button-col disabled:text-secondary-text flex-1 rounded-lg px-4 py-2 text-white transition-colors'
+            className='bg-brand-accent hover:bg-brand-600 disabled:bg-brand-btn disabled:text-secondary-text flex-1 rounded-lg px-4 py-2 text-white transition-colors'
           >
             {saving ? "Adding..." : "Add Application"}
           </button>
@@ -194,7 +194,7 @@ export function AddApplicationModal({ open, onClose, onCreated }: AddApplication
 }
 
 const inputCls =
-  "w-full px-3 py-2 bg-background border border-brand-border text-primary-text rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text";
+  "w-full px-3 py-2 bg-app-background border border-brand-border text-primary-text rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (

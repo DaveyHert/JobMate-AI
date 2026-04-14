@@ -161,7 +161,7 @@ export function CredentialsTab({ profile }: CredentialsTabProps) {
           {!addingEdu && (
             <button
               onClick={startAddEdu}
-              className='text-brand-accent hover:text-primary-600 flex items-center gap-2 text-sm font-medium transition-colors'
+              className='text-brand-accent hover:text-brand-600 flex items-center gap-2 text-sm font-medium transition-colors'
             >
               <Plus className='h-4 w-4' />
               Add another certificate
@@ -220,7 +220,7 @@ export function CredentialsTab({ profile }: CredentialsTabProps) {
           {!addingCred && (
             <button
               onClick={startAddCred}
-              className='text-brand-accent hover:text-primary-600 flex items-center gap-2 text-sm font-medium transition-colors'
+              className='text-brand-accent hover:text-brand-600 flex items-center gap-2 text-sm font-medium transition-colors'
             >
               <Plus className='h-4 w-4' />
               Add another credential
@@ -244,7 +244,7 @@ function EducationRow({
   onDelete: () => void;
 }) {
   return (
-    <div className='border-brand-border bg-foreground flex items-start gap-4 rounded-lg border p-4'>
+    <div className='border-brand-border bg-app-foreground flex items-start gap-4 rounded-lg border p-4'>
       <div className='bg-brand-accent-soft flex h-10 w-10 shrink-0 items-center justify-center rounded-lg'>
         <GraduationCap className='text-brand-accent h-5 w-5' />
       </div>
@@ -270,7 +270,7 @@ function EducationRow({
         </button>
         <button
           onClick={onDelete}
-          className='text-secondary-text hover:text-danger-500 p-2 transition-colors'
+          className='text-secondary-text hover:text-danger-400 p-2 transition-colors'
           aria-label='Delete'
         >
           <Trash2 className='h-4 w-4' />
@@ -292,7 +292,7 @@ function EducationEditor({
   onCancel: () => void;
 }) {
   return (
-    <div className='border-brand-accent bg-foreground space-y-3 rounded-lg border p-4'>
+    <div className='border-brand-accent bg-app-foreground space-y-3 rounded-lg border p-4'>
       <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
         <InputField
           label='Degree'
@@ -343,7 +343,7 @@ function CredentialRow({
   onDelete: () => void;
 }) {
   return (
-    <div className='border-brand-border bg-foreground flex items-start gap-4 rounded-lg border p-4'>
+    <div className='border-brand-border bg-app-foreground flex items-start gap-4 rounded-lg border p-4'>
       <div className='bg-brand-accent-soft flex h-10 w-10 shrink-0 items-center justify-center rounded-lg'>
         <Award className='text-brand-accent h-5 w-5' />
       </div>
@@ -367,7 +367,7 @@ function CredentialRow({
         </button>
         <button
           onClick={onDelete}
-          className='text-secondary-text hover:text-danger-500 p-2 transition-colors'
+          className='text-secondary-text hover:text-danger-400 p-2 transition-colors'
           aria-label='Delete'
         >
           <Trash2 className='h-4 w-4' />
@@ -389,7 +389,7 @@ function CredentialEditor({
   onCancel: () => void;
 }) {
   return (
-    <div className='border-brand-accent bg-foreground space-y-3 rounded-lg border p-4'>
+    <div className='border-brand-accent bg-app-foreground space-y-3 rounded-lg border p-4'>
       <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
         <div>
           <label className='text-secondary-text mb-1 block text-xs font-medium'>Type</label>
@@ -452,7 +452,7 @@ function CredentialEditor({
 // ---- Shared ----
 
 const inputCls =
-  "w-full text-sm bg-background border border-brand-border text-primary-text rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text";
+  "w-full text-sm bg-app-background border border-brand-border text-primary-text rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text";
 
 function InputField({
   label,
@@ -493,7 +493,7 @@ function EditorActions({ onSave, onCancel }: { onSave: () => void; onCancel: () 
       </button>
       <button
         onClick={onSave}
-        className='bg-brand-accent hover:bg-primary-600 flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-white transition-colors'
+        className='bg-brand-accent hover:bg-brand-600 flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-white transition-colors'
       >
         <Check className='h-4 w-4' />
         Save

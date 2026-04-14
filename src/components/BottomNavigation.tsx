@@ -25,7 +25,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   ];
 
   return (
-    <div className='bg-foreground border-brand-border absolute right-0 bottom-0 left-0 flex items-center justify-between border-t px-6 py-3'>
+    <div className='bg-app-foreground border-brand-border absolute right-0 bottom-0 left-0 flex items-center justify-between border-t px-6 py-3'>
       {navigationItems.map((item) => (
         <button
           key={item.key}

@@ -122,7 +122,7 @@ export function ApplicationDetailsModal({ app, onClose, onDeleted }: Props) {
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       {/* Panel */}
-      <div className='bg-foreground flex w-[420px] flex-col overflow-hidden rounded-l-2xl shadow-2xl'>
+      <div className='bg-app-foreground flex w-[420px] flex-col overflow-hidden rounded-l-2xl shadow-2xl'>
         {/* ── Header ── */}
         <div className='border-brand-border flex items-center justify-between border-b px-6 py-5'>
           <div className='flex items-center gap-2'>
@@ -133,7 +133,7 @@ export function ApplicationDetailsModal({ app, onClose, onDeleted }: Props) {
             {!editing && (
               <button
                 onClick={startEdit}
-                className='text-secondary-text hover:text-primary-text hover:bg-button-col rounded-md p-1.5 transition-colors'
+                className='text-secondary-text hover:text-primary-text hover:bg-brand-btn rounded-md p-1.5 transition-colors'
                 aria-label='Edit application'
               >
                 <Pencil className='h-4 w-4' />
@@ -141,7 +141,7 @@ export function ApplicationDetailsModal({ app, onClose, onDeleted }: Props) {
             )}
             <button
               onClick={onClose}
-              className='text-secondary-text hover:text-primary-text hover:bg-button-col rounded-md p-1.5 transition-colors'
+              className='text-secondary-text hover:text-primary-text hover:bg-brand-btn rounded-md p-1.5 transition-colors'
               aria-label='Close'
             >
               <X className='h-5 w-5' />
@@ -165,14 +165,14 @@ export function ApplicationDetailsModal({ app, onClose, onDeleted }: Props) {
               <button
                 onClick={cancelEdit}
                 disabled={saving}
-                className='border-brand-border text-primary-text hover:bg-button-col flex-1 rounded-lg border px-4 py-2.5 text-sm transition-colors disabled:opacity-50'
+                className='border-brand-border text-primary-text hover:bg-brand-btn flex-1 rounded-lg border px-4 py-2.5 text-sm transition-colors disabled:opacity-50'
               >
                 Cancel
               </button>
               <button
                 onClick={save}
                 disabled={!form.title || !form.company || saving}
-                className='bg-brand-accent hover:bg-primary-600 disabled:bg-button-col disabled:text-secondary-text flex-1 rounded-lg px-4 py-2.5 text-sm font-medium text-white transition-colors'
+                className='bg-brand-accent hover:bg-brand-600 disabled:bg-brand-btn disabled:text-secondary-text flex-1 rounded-lg px-4 py-2.5 text-sm font-medium text-white transition-colors'
               >
                 {saving ? "Saving…" : "Save changes"}
               </button>
@@ -180,7 +180,7 @@ export function ApplicationDetailsModal({ app, onClose, onDeleted }: Props) {
           ) : (
             <button
               onClick={handleDelete}
-              className='bg-background border-brand-border text-primary-text w-full rounded-lg border px-4 py-2.5 text-sm transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 dark:hover:border-rose-800 dark:hover:bg-rose-950 dark:hover:text-rose-400'
+              className='bg-app-background border-brand-border text-primary-text w-full rounded-lg border px-4 py-2.5 text-sm transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 dark:hover:border-rose-800 dark:hover:bg-rose-950 dark:hover:text-rose-400'
             >
               Delete application
             </button>
@@ -434,4 +434,4 @@ function appToForm(app: Application): EditState {
 }
 
 const inputCls =
-  "w-full px-3 py-2 bg-background border border-brand-border text-primary-text rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text";
+  "w-full px-3 py-2 bg-app-background border border-brand-border text-primary-text rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text";

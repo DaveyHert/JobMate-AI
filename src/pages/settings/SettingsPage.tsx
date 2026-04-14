@@ -69,7 +69,7 @@ export function SettingsPage() {
     <div className='px-8 pb-16'>
       {/* Tab bar + profile switcher */}
       <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
-        <div className='bg-background inline-flex items-center gap-1 rounded-lg p-1'>
+        <div className='bg-app-background inline-flex items-center gap-1 rounded-lg p-1'>
           {TABS.map((tab) => {
             const isActive = tab.id === activeTab;
             return (

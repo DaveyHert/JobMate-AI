@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import patternBg from "@/assets/svg/pattern-background.svg";
+import BrandBgPattern from "@/assets/svg/brand-bg-pattern.svg";
 import noisePng from "@/assets/img/noise.png";
 import { PersonalInfoIllustration } from "@/assets/svg/illustrations/PersonalInfoIllustration";
 import { ProfessionalInfoIllustration } from "@/assets/svg/illustrations/ProfessionalInfoIllustration";
@@ -32,12 +32,12 @@ export function OnboardingSidebar({ currentStep }: Props) {
   const StepIllustration = STEP_ILLUSTRATIONS[currentStep - 1];
 
   return (
-    <aside className='relative w-[500px] shrink-0 bg-[#4640DE] flex flex-col overflow-hidden rounded-[20px] my-5 ml-8'>
+    <aside className='relative my-5 ml-8 flex w-[500px] shrink-0 flex-col overflow-hidden rounded-[20px] bg-[#4640DE]'>
       {/* Layer 1 — line pattern */}
       <div
-        className='absolute inset-0 pointer-events-none select-none'
+        className='pointer-events-none absolute inset-0 select-none'
         style={{
-          backgroundImage: `url(${patternBg})`,
+          backgroundImage: `url(${BrandBgPattern})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -46,7 +46,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
       {/* Layer 2 — noise overlay */}
       <div
         aria-hidden='true'
-        className='absolute inset-0 pointer-events-none select-none'
+        className='pointer-events-none absolute inset-0 select-none'
         style={{
           backgroundImage: `url(${noisePng})`,
           backgroundRepeat: "repeat",
@@ -55,19 +55,19 @@ export function OnboardingSidebar({ currentStep }: Props) {
       />
 
       {/* Content */}
-      <div className='relative z-10 flex flex-col h-full px-10 py-8'>
+      <div className='relative z-10 flex h-full flex-col px-10 py-8'>
         {/* Brand */}
-        <div className='flex items-center gap-2 mb-14'>
-          <div className='w-5 h-5 rounded-[4px] bg-white/90 flex items-center justify-center shrink-0'>
-            <div className='w-2 h-2 bg-[#4640DE] rounded-[1px]' />
+        <div className='mb-14 flex items-center gap-2'>
+          <div className='flex h-5 w-5 shrink-0 items-center justify-center rounded-[4px] bg-white/90'>
+            <div className='h-2 w-2 rounded-[1px] bg-[#4640DE]' />
           </div>
-          <span className='text-white text-lg font-semibold tracking-tight'>JobMate AI</span>
+          <span className='text-lg font-semibold tracking-tight text-white'>JobMate AI</span>
         </div>
 
         {/* Headline */}
         <div className='mb-10'>
-          <h1 className='text-neutral-01 text-xl leading-tight mb-3'>Welcome to JobMate AI</h1>
-          <p className='text-neutral-01 font-normal text-base leading-relaxed'>
+          <h1 className='text-neutral-01 mb-3 text-xl leading-tight'>Welcome to JobMate AI</h1>
+          <p className='text-neutral-01 text-base leading-relaxed font-normal'>
             Follow the steps to create an account and get started.
           </p>
         </div>
@@ -116,7 +116,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
                           }
                     }
                     transition={{ duration: 0.3, delay: isActive && !isCompleted ? 0.4 : 0 }}
-                    className='w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-semibold shrink-0'
+                    className='flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-semibold'
                   >
                     <AnimatePresence mode='wait' initial={false}>
                       {isCompleted ? (
@@ -129,7 +129,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
                           transition={{
                             duration: 0.2,
                           }}
-                          className='w-4 h-4'
+                          className='h-4 w-4'
                           fill='none'
                           viewBox='0 0 24 24'
                           stroke='currentColor'
@@ -157,7 +157,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
 
                   {/* Connector line */}
                   {!isLast && (
-                    <div className='relative w-0.5  min-h-[70px] bg-white/25 overflow-hidden'>
+                    <div className='relative min-h-[70px] w-0.5 overflow-hidden bg-white/25'>
                       <motion.div
                         className='absolute inset-x-0 top-0 bg-white'
                         initial={{ height: 0 }}
@@ -174,7 +174,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
                     initial={{ opacity: isActive || isCompleted ? 1 : 0.5 }}
                     animate={{ opacity: isActive || isCompleted ? 1 : 0.5 }}
                     transition={{ duration: 0.1, delay: isActive && !isCompleted ? 0.5 : 0 }}
-                    className='text-base font-semibold leading-tight text-neutral-01'
+                    className='text-neutral-01 text-base leading-tight font-semibold'
                   >
                     {step.title}
                   </motion.p>
@@ -182,7 +182,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
                     initial={{ opacity: isActive || isCompleted ? 0.7 : 0.35 }}
                     animate={{ opacity: isActive || isCompleted ? 0.7 : 0.35 }}
                     transition={{ duration: 0.1, delay: isActive && !isCompleted ? 0.5 : 0 }}
-                    className='text-xs mt-0.5 leading-relaxed text-neutral-02'
+                    className='text-neutral-02 mt-0.5 text-xs leading-relaxed'
                   >
                     {step.desc}
                   </motion.p>
@@ -202,7 +202,7 @@ export function OnboardingSidebar({ currentStep }: Props) {
               exit={{ opacity: 0, scale: 0.8, x: -60, y: 30 }}
               transition={{ type: "spring", stiffness: 200, damping: 24 }}
             >
-              <StepIllustration className='w-full h-auto' />
+              <StepIllustration className='h-auto w-full' />
             </motion.div>
           </AnimatePresence>
         </div>

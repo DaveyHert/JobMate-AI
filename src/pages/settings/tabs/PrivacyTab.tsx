@@ -124,14 +124,14 @@ export function PrivacyTab({ settings }: PrivacyTabProps) {
         <div className='flex flex-wrap gap-3 px-5 py-5'>
           <button
             onClick={exportData}
-            className='text-primary-text bg-foreground border-brand-border hover:bg-button-col flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
+            className='text-primary-text bg-app-foreground border-brand-border hover:bg-brand-btn flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
           >
             <Download className='h-4 w-4' />
             Export my data
           </button>
           <button
             onClick={wipeData}
-            className='text-danger-500 bg-foreground border-danger-500/30 hover:bg-danger-500/10 flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
+            className='text-danger-400 bg-app-foreground border-danger-400/30 hover:bg-danger-400/10 flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
           >
             <Trash2 className='h-4 w-4' />
             Delete everything
@@ -157,7 +157,7 @@ function Section({
         <h2 className='text-primary-text text-xl font-semibold'>{title}</h2>
         {description && <p className='text-secondary-text mt-1 text-sm'>{description}</p>}
       </div>
-      <div className='border-brand-border bg-foreground rounded-lg border'>{children}</div>
+      <div className='border-brand-border bg-app-foreground rounded-lg border'>{children}</div>
     </section>
   );
 }
@@ -194,7 +194,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (next: bool
       aria-checked={checked}
       onClick={() => onChange(!checked)}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        checked ? "bg-brand-accent" : "bg-button-col border-brand-border border"
+        checked ? "bg-brand-accent" : "bg-brand-btn border-brand-border border"
       }`}
     >
       <span

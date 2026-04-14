@@ -52,7 +52,7 @@ export function ApplicationsToolbar({
       <div className='relative shrink-0' ref={datePickerRef}>
         <button
           onClick={() => setDatePickerOpen((o) => !o)}
-          className='bg-background border-brand-border text-primary-text hover:bg-button-hov flex items-center overflow-hidden rounded-lg border text-sm whitespace-nowrap transition-colors'
+          className='bg-app-background border-brand-border text-primary-text hover:bg-brand-btn-hover flex items-center overflow-hidden rounded-lg border text-sm whitespace-nowrap transition-colors'
         >
           <span className='px-4 py-2'>{dateRangeLabel}</span>
           <span className='border-brand-border flex items-center justify-center border-l px-3 py-2'>
@@ -61,14 +61,14 @@ export function ApplicationsToolbar({
         </button>
 
         {datePickerOpen && (
-          <div className='bg-foreground border-brand-border absolute top-11 left-0 z-30 flex min-w-[300px] gap-3 rounded-xl border p-4 shadow-xl'>
+          <div className='bg-app-foreground border-brand-border absolute top-11 left-0 z-30 flex min-w-[300px] gap-3 rounded-xl border p-4 shadow-xl'>
             <div className='flex-1'>
               <label className='text-secondary-text mb-1.5 block text-xs font-medium'>From</label>
               <input
                 type='date'
                 value={startDate}
                 onChange={(e) => onStartDateChange(e.target.value)}
-                className='border-brand-border bg-background text-primary-text focus:ring-brand-accent/30 w-full rounded-md border px-3 py-1.5 text-sm focus:ring-2 focus:outline-none'
+                className='border-brand-border bg-app-background text-primary-text focus:ring-brand-accent/30 w-full rounded-md border px-3 py-1.5 text-sm focus:ring-2 focus:outline-none'
               />
             </div>
             <div className='flex-1'>
@@ -77,7 +77,7 @@ export function ApplicationsToolbar({
                 type='date'
                 value={endDate}
                 onChange={(e) => onEndDateChange(e.target.value)}
-                className='border-brand-border bg-background text-primary-text focus:ring-brand-accent/30 w-full rounded-md border px-3 py-1.5 text-sm focus:ring-2 focus:outline-none'
+                className='border-brand-border bg-app-background text-primary-text focus:ring-brand-accent/30 w-full rounded-md border px-3 py-1.5 text-sm focus:ring-2 focus:outline-none'
               />
             </div>
             {(startDate || endDate) && (
@@ -103,7 +103,7 @@ export function ApplicationsToolbar({
           placeholder='Search for job name, status…'
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
-          className='bg-background border-brand-border text-primary-text placeholder:text-secondary-text focus:ring-brand-accent/30 focus:border-brand-accent w-full rounded-lg border py-2 pr-4 pl-9 text-sm transition-colors focus:ring-2 focus:outline-none'
+          className='bg-app-background border-brand-border text-primary-text placeholder:text-secondary-text focus:ring-brand-accent/30 focus:border-brand-accent w-full rounded-lg border py-2 pr-4 pl-9 text-sm transition-colors focus:ring-2 focus:outline-none'
         />
       </div>
 
@@ -117,7 +117,7 @@ export function ApplicationsToolbar({
           className={`p-2.5 transition-colors ${
             view === "list"
               ? "bg-brand-accent/10 text-brand-accent"
-              : "bg-background text-secondary-text hover:text-primary-text hover:bg-button-col"
+              : "bg-app-background text-secondary-text hover:text-primary-text hover:bg-brand-btn"
           }`}
           aria-label='List view'
           aria-pressed={view === "list"}
@@ -129,7 +129,7 @@ export function ApplicationsToolbar({
           className={`border-brand-border border-l p-2.5 transition-colors ${
             view === "grid"
               ? "bg-brand-accent/10 text-brand-accent"
-              : "bg-background text-secondary-text hover:text-primary-text hover:bg-button-col"
+              : "bg-app-background text-secondary-text hover:text-primary-text hover:bg-brand-btn"
           }`}
           aria-label='Grid view'
           aria-pressed={view === "grid"}
@@ -141,7 +141,7 @@ export function ApplicationsToolbar({
       {/* Export — gray bg to match design */}
       <button
         onClick={onExport}
-        className='bg-background border-brand-border text-primary-text hover:bg-button-hov flex shrink-0 items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors'
+        className='bg-app-background border-brand-border text-primary-text hover:bg-brand-btn-hover flex shrink-0 items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors'
       >
         Export data
         <Share2 className='text-secondary-text h-4 w-4' />

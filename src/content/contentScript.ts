@@ -65,6 +65,9 @@ class ContentScriptManager {
 
   private async highlightDetectedFields(): Promise<void> {
     if (!this.isInitialized) return;
+    // Never highlight on the dev server — the dev UI uses localStorage while
+    // the content script reads chrome.storage, so the toggle is out of sync.
+    if (window.location.hostname === 'localhost') return;
 
     try {
       const data = await jobMateStore.getData();

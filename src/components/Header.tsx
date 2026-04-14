@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ profiles, activeProfileId, onProfileCha
   const avatarUrl = activeProfile?.identity.profilePictureUrl;
 
   return (
-    <header className='bg-foreground border-brand-border flex shrink-0 items-center justify-between border-b px-5 py-2'>
+    <header className='bg-app-foreground border-brand-border flex shrink-0 items-center justify-between border-b px-5 py-2'>
       {/* Logo */}
       <div className='flex items-center gap-1'>
         <svg width='12' height='16' viewBox='0 0 12 14' fill='none'>
@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ profiles, activeProfileId, onProfileCha
           <select
             value={activeProfileId}
             onChange={(e) => onProfileChange(e.target.value)}
-            className='bg-button-col border-brand-border text-primary-text hover:bg-button-hov max-w-[180px] cursor-pointer appearance-none truncate rounded-sm border px-4 py-1 pr-10 text-sm font-normal'
+            className='bg-brand-btn border-brand-border text-primary-text hover:bg-brand-btn-hover max-w-[180px] cursor-pointer appearance-none truncate rounded-sm border px-4 py-1 pr-10 text-sm font-normal'
           >
             {profiles.length === 0 ? (
               <option value=''>No profiles</option>
@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ profiles, activeProfileId, onProfileCha
           <ChevronDown className='text-primary-text pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform' />
         </div>
 
-        <div className='bg-button-col flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 border-[#D1D5DB] dark:border-[#1D1E21]'>
+        <div className='bg-brand-btn flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 border-[#D1D5DB] dark:border-[#1D1E21]'>
           {avatarUrl ? (
             <img
               src={avatarUrl}

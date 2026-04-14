@@ -34,7 +34,7 @@ export function ApplicationCard({
   return (
     // No border — elevated shadow creates depth as per design
     <div
-      className='bg-foreground dark:border-brand-border flex cursor-pointer flex-col overflow-hidden rounded-xl shadow-[0px_2px_8px_rgba(0,0,0,0.08)] transition-shadow hover:shadow-[2px_0px_10px_rgba(0,0,0,0.08)] dark:border'
+      className='bg-app-foreground dark:border-brand-border flex cursor-pointer flex-col overflow-hidden rounded-xl shadow-[0px_2px_8px_rgba(0,0,0,0.08)] transition-shadow hover:shadow-[2px_0px_10px_rgba(0,0,0,0.08)] dark:border'
       onClick={() => onClick(app)}
     >
       {/* Card body */}
@@ -45,19 +45,19 @@ export function ApplicationCard({
           <div className='relative' ref={menuRef}>
             <button
               onClick={() => setMenuOpen((o) => !o)}
-              className='text-secondary-text hover:text-primary-text hover:bg-button-col rounded-md p-1 transition-colors'
+              className='text-secondary-text hover:text-primary-text hover:bg-brand-btn rounded-md p-1 transition-colors'
               aria-label='More options'
             >
               <MoreVertical className='h-4 w-4' />
             </button>
             {menuOpen && (
-              <div className='bg-foreground border-brand-border absolute top-8 right-0 z-20 min-w-[140px] rounded-lg border py-1 text-sm shadow-lg'>
+              <div className='bg-app-foreground border-brand-border absolute top-8 right-0 z-20 min-w-[140px] rounded-lg border py-1 text-sm shadow-lg'>
                 {app.url ? (
                   <a
                     href={app.url}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='hover:bg-button-col text-primary-text flex w-full items-center gap-2 px-3 py-2'
+                    className='hover:bg-brand-btn text-primary-text flex w-full items-center gap-2 px-3 py-2'
                     onClick={() => setMenuOpen(false)}
                   >
                     <ExternalLink className='h-3.5 w-3.5' />
@@ -74,7 +74,7 @@ export function ApplicationCard({
                     onDelete(app.id);
                     setMenuOpen(false);
                   }}
-                  className='hover:bg-button-col flex w-full items-center gap-2 px-3 py-2 text-left text-rose-500'
+                  className='hover:bg-brand-btn flex w-full items-center gap-2 px-3 py-2 text-left text-rose-500'
                 >
                   <Trash2 className='h-3.5 w-3.5' />
                   Delete
@@ -103,7 +103,7 @@ export function ApplicationCard({
       </div>
 
       {/* Card footer — light gray bg as per design */}
-      <div className='bg-background border-brand-border/60 text-secondary-text border-t px-4 py-3 text-xs'>
+      <div className='bg-app-background border-brand-border/60 text-secondary-text border-t px-4 py-3 text-xs'>
         Last Updated: <span className='text-primary-text'>{formatShortRelative(lastUpdated)}</span>
       </div>
     </div>

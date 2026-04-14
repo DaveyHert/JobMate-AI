@@ -188,7 +188,7 @@ export function StepFooter({
       <button
         onClick={onContinue}
         disabled={continueDisabled}
-        className='bg-brand-accent hover:bg-primary-600 disabled:bg-brand-accent/40 rounded-lg px-8 py-3 text-sm font-medium text-white transition-colors'
+        className='bg-brand-accent hover:bg-brand-600 disabled:bg-brand-accent/40 rounded-lg px-8 py-3 text-sm font-medium text-white transition-colors'
       >
         {continueLabel}
       </button>

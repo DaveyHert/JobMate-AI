@@ -73,7 +73,7 @@ export function PersonalInfoTab({ profile }: PersonalInfoTabProps) {
 
       {/* Profile picture row */}
       <div className='border-brand-border flex items-start gap-5 border-b pb-6'>
-        <div className='bg-button-col border-brand-border flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border'>
+        <div className='bg-brand-btn border-brand-border flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border'>
           {profile.identity.profilePictureUrl ? (
             <img
               src={profile.identity.profilePictureUrl}
@@ -95,14 +95,14 @@ export function PersonalInfoTab({ profile }: PersonalInfoTabProps) {
         <div className='flex shrink-0 items-center gap-2'>
           <button
             onClick={() => fileRef.current?.click()}
-            className='text-primary-text bg-foreground border-brand-border hover:bg-button-col rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
+            className='text-primary-text bg-app-foreground border-brand-border hover:bg-brand-btn rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
           >
             Upload new picture
           </button>
           {profile.identity.profilePictureUrl && (
             <button
               onClick={deletePhoto}
-              className='text-primary-text bg-foreground border-brand-border hover:bg-button-col rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
+              className='text-primary-text bg-app-foreground border-brand-border hover:bg-brand-btn rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
             >
               Delete
             </button>

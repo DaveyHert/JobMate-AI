@@ -85,13 +85,13 @@ export function DashboardLayout({ currentRoute, children }: DashboardLayoutProps
   const applicationsCount = data?.applications.length ?? 0;
 
   return (
-    <div className='bg-background text-primary-text min-h-screen'>
+    <div className='bg-app-background text-primary-text min-h-screen'>
       {/* Sidebar */}
-      <aside className='bg-background border-brand-border fixed top-0 bottom-0 left-0 hidden w-60 flex-col border-r md:flex'>
+      <aside className='bg-app-background border-brand-border fixed top-0 bottom-0 left-0 hidden w-60 flex-col border-r md:flex'>
         {/* Brand */}
         <div className='flex h-20 items-center gap-2 px-6'>
           <div className='bg-primary-text flex h-5 w-5 items-center justify-center rounded-[4px]'>
-            <div className='bg-background h-2 w-2 rounded-[1px]' />
+            <div className='bg-app-background h-2 w-2 rounded-[1px]' />
           </div>
           <span className='text-lg font-semibold tracking-tight'>JobMate AI</span>
         </div>
@@ -107,14 +107,14 @@ export function DashboardLayout({ currentRoute, children }: DashboardLayoutProps
                 href={item.hash}
                 className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-foreground border-brand-border text-primary-text border shadow-sm"
+                    ? "bg-app-foreground border-brand-border text-primary-text border shadow-sm"
                     : "text-secondary-text hover:text-primary-text"
                 }`}
               >
                 <Icon className='h-4 w-4 shrink-0' />
                 <span className='flex-1'>{item.label}</span>
                 {item.showCount && applicationsCount > 0 && (
-                  <span className='text-secondary-text bg-button-col border-brand-border rounded-md border px-1.5 py-0.5 text-[10px] font-medium'>
+                  <span className='text-secondary-text bg-brand-btn border-brand-border rounded-md border px-1.5 py-0.5 text-[10px] font-medium'>
                     {applicationsCount}
                   </span>
                 )}
@@ -127,7 +127,7 @@ export function DashboardLayout({ currentRoute, children }: DashboardLayoutProps
         <div className='mt-4 px-4'>
           <button
             onClick={() => setShowAddModal(true)}
-            className='bg-brand-accent hover:bg-primary-600 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white shadow-sm transition-colors'
+            className='bg-brand-accent hover:bg-brand-600 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white shadow-sm transition-colors'
           >
             <Plus className='h-4 w-4' />
             Add new application
@@ -139,13 +139,13 @@ export function DashboardLayout({ currentRoute, children }: DashboardLayoutProps
           {/* <ThemeToggle theme={preference} onChange={setPreference} /> */}
           <button
             onClick={cycleTheme}
-            className='text-secondary-text hover:text-primary-text hover:bg-button-col flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors'
+            className='text-secondary-text hover:text-primary-text hover:bg-brand-btn flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors'
             aria-label='Cycle theme'
           >
             <ThemeIcon className='h-4 w-4' />
             <span>{themeLabel}</span>
           </button>
-          <button className='text-secondary-text hover:text-primary-text hover:bg-button-col flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors'>
+          <button className='text-secondary-text hover:text-primary-text hover:bg-brand-btn flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors'>
             <LogOut className='h-4 w-4' />
             LogOut
           </button>
@@ -153,7 +153,7 @@ export function DashboardLayout({ currentRoute, children }: DashboardLayoutProps
       </aside>
 
       {/* Main column — white bg to match Figma */}
-      <div className='bg-foreground flex min-h-screen flex-col md:pl-60'>
+      <div className='bg-app-foreground flex min-h-screen flex-col md:pl-60'>
         {/* Top greeting header */}
         <header className='h-20 shrink-0'>
           <div className='mx-auto flex h-full max-w-7xl items-center justify-between px-8'>
@@ -165,7 +165,7 @@ export function DashboardLayout({ currentRoute, children }: DashboardLayoutProps
               >
                 <Bell className='h-5 w-5' />
               </button>
-              <div className='bg-button-col border-brand-border flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border'>
+              <div className='bg-brand-btn border-brand-border flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border'>
                 {avatarUrl ? (
                   <img src={avatarUrl} alt={firstName} className='h-full w-full object-cover' />
                 ) : (

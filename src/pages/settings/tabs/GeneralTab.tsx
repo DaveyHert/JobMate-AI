@@ -150,7 +150,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
           </div>
           <button
             onClick={() => setShowUpload(true)}
-            className='bg-brand-accent hover:bg-primary-600 flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors'
+            className='bg-brand-accent hover:bg-brand-600 flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors'
           >
             <Plus className='h-4 w-4' />
             Upload new resume
@@ -168,7 +168,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
               return (
                 <div
                   key={profile.id}
-                  className='group bg-foreground hover:bg-button-col/50 border-brand-border flex items-center gap-4 border-b px-4 py-4 transition-colors last:border-b-0'
+                  className='group bg-app-foreground hover:bg-brand-btn/50 border-brand-border flex items-center gap-4 border-b px-4 py-4 transition-colors last:border-b-0'
                 >
                   <div className='bg-brand-accent-soft flex h-10 w-10 shrink-0 items-center justify-center rounded-lg'>
                     <FileText className='text-brand-accent h-5 w-5' />
@@ -213,7 +213,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
                     {/* Delete profile */}
                     <button
                       onClick={() => handleDeleteProfile(profile)}
-                      className='text-secondary-text hover:text-danger-500 p-2 transition-colors'
+                      className='text-secondary-text hover:text-danger-400 p-2 transition-colors'
                       aria-label='Delete this resume profile'
                       title='Delete resume & profile'
                     >
@@ -234,7 +234,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
           Tune how JobMate generates cover letters and scores jobs.
         </p>
 
-        <div className='border-brand-border bg-foreground rounded-lg border'>
+        <div className='border-brand-border bg-app-foreground rounded-lg border'>
           <Row
             label='Cover letter tone'
             description='The voice used when the AI drafts a cover letter.'
@@ -246,7 +246,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
                   coverLetterTone: e.target.value as CoverLetterTone,
                 })
               }
-              className='bg-background border-brand-border text-primary-text focus:ring-brand-accent/30 focus:border-brand-accent min-w-[180px] rounded-md border px-3 py-1.5 text-sm focus:ring-2 focus:outline-none'
+              className='bg-app-background border-brand-border text-primary-text focus:ring-brand-accent/30 focus:border-brand-accent min-w-[180px] rounded-md border px-3 py-1.5 text-sm focus:ring-2 focus:outline-none'
             >
               {TONE_OPTIONS.map((o) => (
                 <option key={o.value} value={o.value}>
@@ -294,7 +294,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
           Connect external services to speed up data entry.
         </p>
 
-        <div className='border-brand-border bg-foreground rounded-lg border'>
+        <div className='border-brand-border bg-app-foreground rounded-lg border'>
           <Row label='LinkedIn' description='Sync your headline and work history.'>
             <button
               onClick={() =>
@@ -305,7 +305,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
               className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 settings.linkedInConnected
                   ? "border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-                  : "bg-brand-accent hover:bg-primary-600 text-white"
+                  : "bg-brand-accent hover:bg-brand-600 text-white"
               }`}
             >
               <Linkedin className='h-4 w-4' />
@@ -323,7 +323,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
             Choose between system, light, or dark mode. Syncs to the dashboard.
           </p>
 
-          <div className='border-brand-border bg-foreground rounded-lg border'>
+          <div className='border-brand-border bg-app-foreground rounded-lg border'>
             <Row label='Color theme' description='System follows your OS setting.'>
               <div className='border-brand-border inline-flex items-center overflow-hidden rounded-lg border text-xs font-medium'>
                 {(["system", "light", "dark"] as const).map((p) => (
@@ -333,7 +333,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
                     className={`border-brand-border border-r px-3 py-1.5 capitalize transition-colors last:border-r-0 ${
                       preference === p
                         ? "bg-brand-accent text-white"
-                        : "text-secondary-text hover:text-primary-text hover:bg-button-col"
+                        : "text-secondary-text hover:text-primary-text hover:bg-brand-btn"
                     }`}
                   >
                     {p}
@@ -352,7 +352,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
           Debugging tools — not intended for everyday use.
         </p>
 
-        <div className='border-brand-border bg-foreground rounded-lg border'>
+        <div className='border-brand-border bg-app-foreground rounded-lg border'>
           <Row
             label='Highlight detected form fields'
             description='Draw a blue outline on every input JobMate recognises when a page loads.'
@@ -412,7 +412,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (next: bool
       aria-checked={checked}
       onClick={() => onChange(!checked)}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        checked ? "bg-brand-accent" : "bg-button-col border-brand-border border"
+        checked ? "bg-brand-accent" : "bg-brand-btn border-brand-border border"
       }`}
     >
       <span

@@ -43,8 +43,8 @@ export function ApplicationsPagination({ currentPage, totalPages, onPageChange }
               onClick={() => onPageChange(p as number)}
               className={`h-8 w-8 rounded-md text-sm font-medium transition-colors ${
                 currentPage === p
-                  ? "bg-foreground border-brand-border text-primary-text border shadow-sm"
-                  : "text-secondary-text hover:text-primary-text hover:bg-button-col"
+                  ? "bg-app-foreground border-brand-border text-primary-text border shadow-sm"
+                  : "text-secondary-text hover:text-primary-text hover:bg-brand-btn"
               }`}
             >
               {p}
@@ -58,7 +58,7 @@ export function ApplicationsPagination({ currentPage, totalPages, onPageChange }
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className='text-secondary-text hover:text-primary-text hover:bg-button-col rounded-md p-1.5 transition-colors disabled:cursor-not-allowed disabled:opacity-30'
+          className='text-secondary-text hover:text-primary-text hover:bg-brand-btn rounded-md p-1.5 transition-colors disabled:cursor-not-allowed disabled:opacity-30'
           aria-label='Previous page'
         >
           <ChevronLeft className='h-4 w-4' />
@@ -66,7 +66,7 @@ export function ApplicationsPagination({ currentPage, totalPages, onPageChange }
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className='text-secondary-text hover:text-primary-text hover:bg-button-col rounded-md p-1.5 transition-colors disabled:cursor-not-allowed disabled:opacity-30'
+          className='text-secondary-text hover:text-primary-text hover:bg-brand-btn rounded-md p-1.5 transition-colors disabled:cursor-not-allowed disabled:opacity-30'
           aria-label='Next page'
         >
           <ChevronRight className='h-4 w-4' />

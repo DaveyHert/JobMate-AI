@@ -11,9 +11,10 @@
 // ============================================================================
 
 import { useState } from "react";
-import { Plus, X as XIcon, SquarePen, Trash2, Check } from "lucide-react";
+import { Plus, SquarePen, Trash2, Check } from "lucide-react";
 import type { UserProfile, WorkExperience } from "../../../models/models";
 import { jobMateStore } from "../../../store/jobMateStore";
+import { BehanceIcon, GithubIcon, XIcon, InstagramIcon } from "@/assets/svg/icons/";
 
 interface ProfessionalInfoTabProps {
   profile: UserProfile;
@@ -69,7 +70,7 @@ function OverviewBox({
             setDraft(value);
             setEditing(true);
           }}
-          className='text-accent hover:text-primary-600 transition-colors'
+          className='text-accent hover:text-brand-600 transition-colors'
           aria-label={`Edit ${label}`}
         >
           <SquarePen className='h-4 w-4' />
@@ -85,7 +86,7 @@ function OverviewBox({
               if (e.key === "Enter") void commit();
               if (e.key === "Escape") cancel();
             }}
-            className='bg-background border-accent focus:ring-accent/30 flex-1 rounded-lg border px-4 py-3 text-sm focus:ring-2 focus:outline-none'
+            className='bg-app-background border-accent focus:ring-accent/30 flex-1 rounded-lg border px-4 py-3 text-sm focus:ring-2 focus:outline-none'
           />
           <button onClick={commit} className='text-accent'>
             <Check className='h-4 w-4' />
@@ -95,7 +96,7 @@ function OverviewBox({
           </button>
         </div>
       ) : (
-        <div className='border-brand-border bg-background text-primary-text flex min-h-[46px] items-center rounded-lg border px-4 py-3 text-sm'>
+        <div className='border-brand-border bg-app-background text-primary-text flex min-h-[46px] items-center rounded-lg border px-4 py-3 text-sm'>
           {value || <span className='text-secondary-text italic'>{placeholder}</span>}
         </div>
       )}
@@ -122,7 +123,7 @@ function SocialInput({
   };
 
   return (
-    <div className='border-brand-border bg-background flex items-center overflow-hidden rounded-lg border'>
+    <div className='border-brand-border bg-app-background flex items-center overflow-hidden rounded-lg border'>
       <div className='text-primary-text shrink-0 px-3'>{icon}</div>
       <input
         type='url'
@@ -261,16 +262,16 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
           Keywords recruiters and AI use to match you with roles.
         </p>
 
-        <div className='border-brand-border bg-background flex flex-wrap items-center gap-3 rounded-lg border px-4 py-3'>
+        <div className='border-brand-border bg-app-background flex flex-wrap items-center gap-3 rounded-lg border px-4 py-3'>
           {profile.skills.map((s) => (
             <span
               key={s}
-              className='border-brand-border text-primary-text bg-foreground inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm'
+              className='border-brand-border text-primary-text bg-app-foreground inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm'
             >
               {s}
               <button
                 onClick={() => removeSkill(s)}
-                className='text-secondary-text hover:text-danger-500 transition-colors'
+                className='text-secondary-text hover:text-danger-400 transition-colors'
                 aria-label={`Remove ${s}`}
               >
                 <XIcon className='h-3 w-3' />
@@ -291,7 +292,7 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
           />
           <button
             onClick={addSkill}
-            className='border-brand-border bg-foreground text-primary-text hover:bg-button-col flex shrink-0 items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
+            className='border-brand-border bg-app-foreground text-primary-text hover:bg-brand-btn flex shrink-0 items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
           >
             Add a new skill
             <Plus className='h-4 w-4' />
@@ -308,7 +309,7 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
               Recruiters click through these straight from your profile.
             </p>
           </div>
-          <button className='border-brand-border text-primary-text hover:bg-button-col flex items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'>
+          <button className='border-brand-border text-primary-text hover:bg-brand-btn flex items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'>
             Add another link
             <Plus className='h-4 w-4' />
           </button>
@@ -316,19 +317,19 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
 
         <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
           <SocialInput
-            icon={<XLogo />}
+            icon={<XIcon className='text-neutral-06 size-5' />}
             value={profile.links.twitter ?? ""}
             placeholder='x.com/yourhandle'
             onSave={(v) => saveLinks({ twitter: v })}
           />
           <SocialInput
-            icon={<GithubLogo />}
+            icon={<GithubIcon className='text-neutral-06 size-5' />}
             value={profile.links.github ?? ""}
             placeholder='GitHub link'
             onSave={(v) => saveLinks({ github: v })}
           />
           <SocialInput
-            icon={<BehanceLogo />}
+            icon={<BehanceIcon className='size-5 text-indigo-600' />}
             value={profile.links.portfolio ?? ""}
             placeholder='Behance link'
             onSave={(v) => saveLinks({ portfolio: v })}
@@ -352,7 +353,7 @@ export function ProfessionalInfoTab({ profile }: ProfessionalInfoTabProps) {
           {!addingWork && (
             <button
               onClick={startAddWork}
-              className='border-brand-border text-primary-text hover:bg-button-col flex items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
+              className='border-brand-border text-primary-text hover:bg-brand-btn flex items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors'
             >
               Add new experience
               <Plus className='h-4 w-4' />
@@ -424,7 +425,7 @@ function WorkCard({
     .join(" - ");
 
   return (
-    <div className='border-brand-border bg-background rounded-xl border p-5'>
+    <div className='border-brand-border bg-app-background rounded-xl border p-5'>
       <div className='flex items-start gap-4'>
         {/* Avatar */}
         <div
@@ -453,7 +454,7 @@ function WorkCard({
             <div className='flex shrink-0 items-center gap-1'>
               <button
                 onClick={onEdit}
-                className='text-accent hover:text-primary-600 p-1.5 transition-colors'
+                className='text-accent hover:text-brand-600 p-1.5 transition-colors'
                 aria-label='Edit'
               >
                 <SquarePen className='h-4 w-4' />
@@ -484,7 +485,7 @@ function WorkCard({
 // ---- Work editor ----
 
 const inputCls =
-  "w-full text-sm bg-background border border-brand-border text-primary-text rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent placeholder:text-secondary-text";
+  "w-full text-sm bg-app-background border border-brand-border text-primary-text rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent placeholder:text-secondary-text";
 
 function WorkEditor({
   draft,
@@ -498,7 +499,7 @@ function WorkEditor({
   onCancel: () => void;
 }) {
   return (
-    <div className='border-accent bg-background space-y-4 rounded-xl border p-5'>
+    <div className='border-accent bg-app-background space-y-4 rounded-xl border p-5'>
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
         <div>
           <label className='text-secondary-text mb-1.5 block text-xs font-medium'>Job title</label>
@@ -588,7 +589,7 @@ function WorkEditor({
         </button>
         <button
           onClick={onSave}
-          className='bg-accent hover:bg-primary-600 flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors'
+          className='bg-accent hover:bg-brand-600 flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors'
         >
           <Check className='h-4 w-4' />
           Save
@@ -637,39 +638,6 @@ function formatMonth(dateStr?: string): string {
 }
 
 // ---- Inline SVG logos (avoids needing custom icon packages) ----
-
-function XLogo() {
-  return (
-    <svg viewBox='0 0 24 24' className='text-primary-text h-4 w-4 fill-current'>
-      <path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.264 5.634L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z' />
-    </svg>
-  );
-}
-
-function GithubLogo() {
-  return (
-    <svg viewBox='0 0 24 24' className='text-primary-text h-4 w-4 fill-current'>
-      <path d='M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z' />
-    </svg>
-  );
-}
-
-function BehanceLogo() {
-  return (
-    <svg viewBox='0 0 24 24' className='h-4 w-4 fill-current text-indigo-600'>
-      <path d='M7.799 5.698C8.667 5.698 9.471 5.807 10.234 6.025 10.997 6.243 11.657 6.571 12.213 7.009 12.771 7.447 13.207 8.005 13.525 8.683 13.843 9.361 14.002 10.169 14.002 11.107 14.002 12.148 13.791 13.044 13.369 13.795 12.947 14.547 12.298 15.165 11.421 15.65 12.662 16.006 13.591 16.658 14.207 17.607 14.825 18.555 15.133 19.706 15.133 21.059L15.133 21.205 8.819 21.205C8.819 21.205 8.819 21.205 8.819 21.205 8.22 21.205 5.762 21.205 4 21.205L4 3.795C4 3.795 7.23 3.795 7.799 3.795L7.799 5.698Z' />
-      <path
-        fill='white'
-        d='M7.651 8.891L7.651 11.658 9.122 11.658C9.637 11.658 10.066 11.519 10.408 11.242 10.751 10.964 10.922 10.549 10.922 9.996 10.922 9.38 10.747 8.941 10.397 8.679 10.047 8.418 9.561 8.287 8.939 8.287L7.651 8.287 7.651 8.891Z'
-      />
-      <path
-        fill='white'
-        d='M7.651 14.112L7.651 17.419 9.489 17.419C10.041 17.419 10.494 17.261 10.848 16.944 11.202 16.628 11.379 16.16 11.379 15.54 11.379 14.27 10.636 13.76 9.15 13.82L7.651 13.82 7.651 14.112Z'
-      />
-      <path d='M20 8.109L20 9.491 16.149 9.491 16.149 8.109 20 8.109ZM17.929 10.612C19.001 10.612 19.843 10.93 20.456 11.565 21.069 12.2 21.375 13.088 21.375 14.229L21.375 15.309 16.215 15.309C16.246 15.935 16.46 16.422 16.857 16.771 17.254 17.12 17.768 17.295 18.4 17.295 18.956 17.295 19.418 17.168 19.787 16.913 20.156 16.659 20.403 16.317 20.527 15.887L21.309 15.887C21.185 16.517 20.832 17.045 20.249 17.472 19.666 17.9 18.956 18.113 18.121 18.113 17.529 18.113 17.001 17.996 16.536 17.76 16.07 17.525 15.71 17.18 15.455 16.724 15.2 16.268 15.072 15.727 15.072 15.1 15.072 14.452 15.198 13.893 15.449 13.423 15.7 12.953 16.052 12.594 16.504 12.344 16.957 12.095 17.476 11.971 18.062 11.971L17.929 10.612ZM18.109 11.756C17.557 11.756 17.1 11.919 16.738 12.246 16.375 12.573 16.163 13.024 16.102 13.599L20.093 13.599C20.065 13.024 19.876 12.573 19.527 12.246 19.177 11.919 18.724 11.756 18.168 11.756L18.109 11.756Z' />
-    </svg>
-  );
-}
 
 function InstagramLogo() {
   return (

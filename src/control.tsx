@@ -9,7 +9,7 @@ export default function Test() {
   return (
     // We use a generic container here to showcase the components.
     // In your actual app, this will naturally blend into your layout.
-    <div className='bg-background border-border flex min-h-[400px] flex-col items-center justify-center gap-12 rounded-xl border p-8 font-sans'>
+    <div className='bg-app-background border-border flex min-h-[400px] flex-col items-center justify-center gap-12 rounded-xl border p-8 font-sans'>
       {/* 1. Theme Toggle Component */}
       <div className='flex flex-col items-center gap-4'>
         <ThemeToggle theme={theme} onChange={setTheme} />
@@ -17,7 +17,7 @@ export default function Test() {
 
       {/* 2. Segmented Control Component */}
       <div className='flex flex-col items-center gap-3'>
-        <span className='text-brand-muted-foreground text-[11px] font-semibold tracking-widest uppercase'>
+        <span className='text-brand-muted-app-foreground text-[11px] font-semibold tracking-widest uppercase'>
           Segmented Control
         </span>
         <SegmentedControl
@@ -49,14 +49,16 @@ function ThemeToggle({ theme, onChange }) {
             onClick={() => onChange(opt.id)}
             // Ensure touch targets are appropriately sized and outline is clean
             className={`relative flex h-8 w-10 items-center justify-center rounded-full transition-colors outline-none ${
-              isActive ? "text-foreground" : "text-brand-muted-foreground hover:text-foreground"
+              isActive
+                ? "text-app-foreground"
+                : "text-brand-muted-app-foreground hover:text-app-foreground"
             }`}
             aria-label={`Switch to ${opt.id} theme`}
           >
             {isActive && (
               <motion.div
                 layoutId='theme-active-bg'
-                className='bg-background absolute inset-0 rounded-full border border-black/5 shadow-sm dark:border-white/5'
+                className='bg-app-background absolute inset-0 rounded-full border border-black/5 shadow-sm dark:border-white/5'
                 // This spring physics matches the native Apple/macOS segmented control feel
                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
               />
@@ -81,13 +83,15 @@ function SegmentedControl({ options, value, onChange }) {
             key={option}
             onClick={() => onChange(option)}
             className={`relative rounded-full px-5 py-1.5 text-[14px] font-medium transition-colors outline-none ${
-              isActive ? "text-foreground" : "text-brand-muted-foreground hover:text-foreground"
+              isActive
+                ? "text-app-foreground"
+                : "text-brand-muted-app-foreground hover:text-app-foreground"
             }`}
           >
             {isActive && (
               <motion.div
                 layoutId='segment-active-bg'
-                className='bg-background absolute inset-0 rounded-full border border-black/5 shadow-sm dark:border-white/5'
+                className='bg-app-background absolute inset-0 rounded-full border border-black/5 shadow-sm dark:border-white/5'
                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
               />
             )}

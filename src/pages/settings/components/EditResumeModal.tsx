@@ -111,7 +111,7 @@ export function EditResumeModal({ resume, onSubmit, onClose }: EditResumeModalPr
       onClick={onClose}
     >
       <div
-        className='bg-foreground border-brand-border w-full max-w-md rounded-2xl border shadow-xl'
+        className='bg-app-foreground border-brand-border w-full max-w-md rounded-2xl border shadow-xl'
         onClick={(e) => e.stopPropagation()}
       >
         <header className='border-brand-border flex items-center justify-between border-b px-6 py-5'>
@@ -134,7 +134,7 @@ export function EditResumeModal({ resume, onSubmit, onClose }: EditResumeModalPr
               onChange={(e) => setLabel(e.target.value.slice(0, MAX_LABEL_LENGTH))}
               placeholder='e.g. Frontend Engineer'
               maxLength={MAX_LABEL_LENGTH}
-              className='bg-background border-brand-border text-primary-text focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text w-full rounded-lg border px-3 py-2.5 text-sm focus:ring-2 focus:outline-none'
+              className='bg-app-background border-brand-border text-primary-text focus:ring-brand-accent/30 focus:border-brand-accent placeholder:text-secondary-text w-full rounded-lg border px-3 py-2.5 text-sm focus:ring-2 focus:outline-none'
             />
             <p className='text-secondary-text mt-1.5 text-xs'>Max {MAX_LABEL_LENGTH} characters</p>
           </div>
@@ -154,7 +154,7 @@ export function EditResumeModal({ resume, onSubmit, onClose }: EditResumeModalPr
               className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed px-6 py-8 transition-colors ${
                 dragging
                   ? "border-brand-accent bg-brand-accent-soft"
-                  : "border-brand-border hover:border-brand-accent hover:bg-button-col/50"
+                  : "border-brand-border hover:border-brand-accent hover:bg-brand-btn/50"
               }`}
             >
               <div className='bg-brand-accent-soft flex h-12 w-12 items-center justify-center rounded-lg'>
@@ -186,21 +186,21 @@ export function EditResumeModal({ resume, onSubmit, onClose }: EditResumeModalPr
             </p>
           </div>
 
-          {error && <p className='text-danger-500 text-xs'>{error}</p>}
+          {error && <p className='text-danger-400 text-xs'>{error}</p>}
         </div>
 
         <footer className='flex gap-3 px-6 pb-6'>
           <button
             onClick={onClose}
             disabled={saving}
-            className='text-primary-text bg-background border-brand-border hover:bg-button-col flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors disabled:opacity-50'
+            className='text-primary-text bg-app-background border-brand-border hover:bg-brand-btn flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors disabled:opacity-50'
           >
             Cancel
           </button>
           <button
             onClick={submit}
             disabled={saving || !label.trim()}
-            className='bg-brand-accent hover:bg-primary-600 disabled:bg-button-col disabled:text-secondary-text flex-1 rounded-lg px-4 py-3 text-sm font-medium text-white transition-colors disabled:cursor-not-allowed'
+            className='bg-brand-accent hover:bg-brand-600 disabled:bg-brand-btn disabled:text-secondary-text flex-1 rounded-lg px-4 py-3 text-sm font-medium text-white transition-colors disabled:cursor-not-allowed'
           >
             {saving ? "Saving…" : "Save changes"}
           </button>

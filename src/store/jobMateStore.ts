@@ -16,7 +16,7 @@ import type {
   ApplicationStatus,
 } from "../models/models";
 import { CURRENT_SCHEMA_VERSION } from "../models/models";
-import { createDefaultJobMateData } from "../data/mockProfiles";
+import { createDefaultJobMateData, defaultSettings } from "../data/mockProfiles";
 
 const STORAGE_KEY = "jobMateData";
 
@@ -115,7 +115,11 @@ function migrate(data: JobMateData): JobMateData {
     );
     return createDefaultJobMateData();
   }
-  return splitMultiResumeProfiles(data);
+  // Backfill any settings fields that didn't exist in older stored data.
+  // New fields added to JobMateSettings must also be added to defaultSettings
+  // so they get the right value here rather than landing as `undefined`.
+  const settings: JobMateSettings = { ...defaultSettings, ...data.settings };
+  return splitMultiResumeProfiles({ ...data, settings });
 }
 
 /**

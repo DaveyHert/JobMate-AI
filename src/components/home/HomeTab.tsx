@@ -170,7 +170,7 @@ function HomeTab({
   };
 
   return (
-    <div className='custom-scrollbar bg-background min-h-0 flex-1 overflow-y-auto scroll-smooth'>
+    <div className='custom-scrollbar bg-app-background min-h-0 flex-1 overflow-y-auto scroll-smooth'>
       <div className='px-2.5 pt-2'>
         <QuickActions
           onAutoFill={handleAutoFill}
