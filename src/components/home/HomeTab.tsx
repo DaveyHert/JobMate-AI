@@ -1,11 +1,7 @@
 import { useState } from "react";
 import QuickActions from "../QuickActions";
 import ApplicationCard from "../application/ApplicationCard";
-import {
-  Application,
-  ApplicationStatus,
-  WeeklyGoal,
-} from "../../models/models";
+import { Application, ApplicationStatus, WeeklyGoal } from "../../models/models";
 import TargetGoal from "../TargetGoal";
 
 interface HomeTabProps {
@@ -15,7 +11,7 @@ interface HomeTabProps {
   setActiveTab: (tab: string) => void;
   setActiveAIFeature: (feature: string) => void;
   onAddApplication: (
-    app: Omit<Application, "id" | "status" | "dateApplied" | "history">
+    app: Omit<Application, "id" | "status" | "dateApplied" | "history">,
   ) => Promise<void>;
   setIsBusy: (busy: boolean) => void;
 }
@@ -39,14 +35,10 @@ function HomeTab({
   const handleTrackApplication = async () => {
     setBusy(true);
     try {
-      if (
-        typeof chrome === "undefined" ||
-        !chrome.tabs ||
-        !chrome.tabs.query
-      ) {
+      if (typeof chrome === "undefined" || !chrome.tabs || !chrome.tabs.query) {
         showNotification(
           "Application tracking is only available in the Chrome extension",
-          "warning"
+          "warning",
         );
         return;
       }
@@ -66,18 +58,12 @@ function HomeTab({
           action: "extractJobInfo",
         });
       } catch (err) {
-        showNotification(
-          "Couldn't read this page. Open a job posting and try again.",
-          "warning"
-        );
+        showNotification("Couldn't read this page. Open a job posting and try again.", "warning");
         return;
       }
 
       if (!response || !response.title) {
-        showNotification(
-          "No job posting detected on this page",
-          "warning"
-        );
+        showNotification("No job posting detected on this page", "warning");
         return;
       }
 
@@ -102,10 +88,7 @@ function HomeTab({
       showNotification("Application tracked successfully!", "success");
     } catch (error) {
       console.error("[track application] failed", error);
-      showNotification(
-        "Failed to track application. Please try again.",
-        "error"
-      );
+      showNotification("Failed to track application. Please try again.", "error");
     } finally {
       setBusy(false);
     }
@@ -114,15 +97,8 @@ function HomeTab({
   const handleAutoFill = async () => {
     setBusy(true);
     try {
-      if (
-        typeof chrome === "undefined" ||
-        !chrome.tabs ||
-        !chrome.tabs.query
-      ) {
-        showNotification(
-          "Auto-fill is only available in the Chrome extension",
-          "warning"
-        );
+      if (typeof chrome === "undefined" || !chrome.tabs || !chrome.tabs.query) {
+        showNotification("Auto-fill is only available in the Chrome extension", "warning");
         return;
       }
 
@@ -141,7 +117,7 @@ function HomeTab({
       } catch (err) {
         showNotification(
           "This page isn't reachable. Open a job application form and try again.",
-          "warning"
+          "warning",
         );
         return;
       }
@@ -169,10 +145,7 @@ function HomeTab({
     setActiveAIFeature("job-fit");
   };
 
-  const showNotification = (
-    message: string,
-    type: "success" | "error" | "warning" | "info"
-  ) => {
+  const showNotification = (message: string, type: "success" | "error" | "warning" | "info") => {
     const notification = document.createElement("div");
     notification.className = `fixed top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-white text-sm font-medium z-50 ${
       type === "success"
@@ -197,7 +170,7 @@ function HomeTab({
   };
 
   return (
-    <div className='flex-1  custom-scrollbar overflow-y-auto scroll-smooth min-h-0 bg-background'>
+    <div className='custom-scrollbar bg-background min-h-0 flex-1 overflow-y-auto scroll-smooth'>
       <div className='px-2.5 pt-2'>
         <QuickActions
           onAutoFill={handleAutoFill}
@@ -213,13 +186,13 @@ function HomeTab({
         <TargetGoal weeklyGoal={weeklyGoal} />
 
         {/* Recent Applications */}
-        <div className='flex justify-between items-center mb-2'>
+        <div className='mb-2 flex items-center justify-between'>
           <h3 className='text-base font-medium text-gray-900 dark:text-[#F3F4F6]'>
             Recent applications
           </h3>
           <button
             onClick={() => setActiveTab("applications")}
-            className='text-xs text-accent hover:text-muted font-medium cursor-pointer'
+            className='text-accent hover:text-brand-muted cursor-pointer text-xs font-medium'
           >
             View All
           </button>
@@ -228,11 +201,7 @@ function HomeTab({
         {/* Recent Applications List */}
         <div className='space-y-2 pb-4'>
           {applications.slice(0, 4).map((app: Application) => (
-            <ApplicationCard
-              key={app.id}
-              application={app}
-              onStatusChange={handleStatusChange}
-            />
+            <ApplicationCard key={app.id} application={app} onStatusChange={handleStatusChange} />
           ))}
         </div>
       </div>

@@ -132,7 +132,7 @@ export function StepTopNav({ onBack, profileLabel }: StepTopNavProps) {
           <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 19l-7-7 7-7' />
         </svg>
 
-        <span className='text-sm'>back</span>
+        <span className='text-sm'>Back</span>
       </button>
       {profileLabel && (
         <div className='flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700'>

@@ -16,12 +16,7 @@ import { ProfessionalInfoTab } from "./tabs/ProfessionalInfoTab";
 import { CredentialsTab } from "./tabs/CredentialsTab";
 import { PrivacyTab } from "./tabs/PrivacyTab";
 
-type SettingsTab =
-  | "general"
-  | "personal"
-  | "professional"
-  | "credentials"
-  | "privacy";
+type SettingsTab = "general" | "personal" | "professional" | "credentials" | "privacy";
 
 interface TabDef {
   id: SettingsTab;
@@ -73,18 +68,18 @@ export function SettingsPage() {
   return (
     <div className='px-8 pb-16'>
       {/* Tab bar + profile switcher */}
-      <div className='flex flex-wrap items-center justify-between gap-4 mb-8'>
-        <div className='inline-flex items-center gap-1 p-1 bg-background rounded-lg'>
+      <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
+        <div className='bg-background inline-flex items-center gap-1 rounded-lg p-1'>
           {TABS.map((tab) => {
             const isActive = tab.id === activeTab;
             return (
               <button
                 key={tab.id}
                 onClick={() => selectTab(tab.id)}
-                className={`px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
+                className={`rounded-md px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
                   isActive
-                    ? "bg-foreground border border-border-col text-primary-text shadow-sm"
-                    : "text-secondary-text hover:text-primary-text"
+                    ? "bg-neutral-01 border-border-col text-neutral-06 border shadow-sm"
+                    : "text-neutral-04 hover:text-primary-text"
                 }`}
               >
                 {tab.label}
@@ -95,14 +90,14 @@ export function SettingsPage() {
 
         {profiles.length > 0 && (
           <div className='flex items-center gap-3'>
-            <span className='text-sm text-secondary-text'>Now active:</span>
+            <span className='text-secondary-text text-sm'>Now active:</span>
             <div className='relative'>
               <select
                 value={data.activeProfileId}
                 onChange={(e) => {
                   void jobMateStore.setActiveProfile(e.target.value);
                 }}
-                className='appearance-none pl-4 pr-10 py-2 text-sm font-medium bg-foreground border border-accent-soft text-primary-text rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/30 cursor-pointer'
+                className='bg-primary-01 border-primary-02 focus:ring-accent/30 text-neutral-06 cursor-pointer appearance-none rounded-lg border py-2 pr-10 pl-4 text-sm font-medium focus:ring-2 focus:outline-none'
               >
                 {profiles.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -110,7 +105,7 @@ export function SettingsPage() {
                   </option>
                 ))}
               </select>
-              <ChevronDown className='w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-secondary-text pointer-events-none' />
+              <ChevronDown className='text-neutral-06 pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2' />
             </div>
           </div>
         )}
@@ -120,9 +115,7 @@ export function SettingsPage() {
       <div>
         {activeTab === "general" && <GeneralTab data={data} />}
         {activeTab === "personal" && <PersonalInfoTab profile={profile} />}
-        {activeTab === "professional" && (
-          <ProfessionalInfoTab profile={profile} />
-        )}
+        {activeTab === "professional" && <ProfessionalInfoTab profile={profile} />}
         {activeTab === "credentials" && <CredentialsTab profile={profile} />}
         {activeTab === "privacy" && <PrivacyTab settings={data.settings} />}
       </div>
