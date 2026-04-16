@@ -118,6 +118,7 @@ export function PersonalInfoTab({ profile }: PersonalInfoTabProps) {
       </div>
 
       {/* Field rows */}
+
       <InlineEditRow
         label='Full name'
         description='This wil be displayed on your profile.'

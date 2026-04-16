@@ -69,7 +69,7 @@ export function SettingsPage() {
     <div className='px-8 pb-16'>
       {/* Tab bar + profile switcher */}
       <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
-        <div className='bg-app-background inline-flex items-center gap-1 rounded-lg p-1'>
+        <div className='bg-neutral-01 inline-flex items-center gap-1 rounded-lg p-1'>
           {TABS.map((tab) => {
             const isActive = tab.id === activeTab;
             return (
@@ -78,7 +78,7 @@ export function SettingsPage() {
                 onClick={() => selectTab(tab.id)}
                 className={`rounded-md px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
                   isActive
-                    ? "bg-neutral-01 border-brand-border text-neutral-06 border shadow-sm"
+                    ? "border-brand-border text-neutral-06 bg-app-background border shadow-sm dark:text-white"
                     : "text-neutral-04 hover:text-primary-text"
                 }`}
               >
@@ -97,7 +97,7 @@ export function SettingsPage() {
                 onChange={(e) => {
                   void jobMateStore.setActiveProfile(e.target.value);
                 }}
-                className='bg-primary-01 border-primary-02 focus:ring-brand-accent/30 text-neutral-06 cursor-pointer appearance-none rounded-lg border py-2 pr-10 pl-4 text-sm font-medium focus:ring-2 focus:outline-none'
+                className='bg-app-foreground border-neutral-02 focus:ring-brand-accent/30 text-neutral-06 cursor-pointer appearance-none rounded-lg border py-2 pr-10 pl-4 text-sm font-medium focus:ring-2 focus:outline-none'
               >
                 {profiles.map((p) => (
                   <option key={p.id} value={p.id}>

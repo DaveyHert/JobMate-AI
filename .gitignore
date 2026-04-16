@@ -28,3 +28,5 @@ lerna-debug.log*
 .env
 .env.local
 .env.*.local
+
+.agents

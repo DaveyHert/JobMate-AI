@@ -6,7 +6,7 @@
     },
 
     // support for chrome extension APIs
-    "types": ["chrome"]
+    "types": ["chrome", "node"]
   },
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }

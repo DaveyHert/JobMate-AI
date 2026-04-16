@@ -18,3 +18,6 @@ export { default as GithubIcon } from "./GithubIcon";
 export { default as BehanceIcon } from "./BehanceIcon";
 export { default as BriefCaseIcon } from "./BriefCaseIcon";
 export { default as UserIcon } from "./UserIcon";
+export { default as FileText } from "./FileText";
+export { default as TrashIcon } from "./TrashIcon";
+export { default as EditIcon } from "./EditIcon";

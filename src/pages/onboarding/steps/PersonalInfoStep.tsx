@@ -1,5 +1,17 @@
-import { Field, Input, Select, StepHeader, StepFooter } from "../components/OnboardingPrimitives";
+import { useForm } from "@tanstack/react-form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { StepHeader } from "../components/StepHeader";
+import { StepFooter } from "../components/StepFooter";
 import { UserIcon } from "@/assets/svg/icons";
+import { COUNTRIES, PHONE_CODES } from "@/data/geo";
+import { cn } from "@/lib/utils"; // Shadcn's standard clsx + twMerge utility
 
 export interface PersonalInfoData {
   email: string;
@@ -17,75 +29,72 @@ export interface PersonalInfoData {
 }
 
 interface Props {
-  data: PersonalInfoData;
-  onChange: (data: PersonalInfoData) => void;
-  onContinue: () => void;
+  defaultValues: PersonalInfoData;
+  onContinue: (data: PersonalInfoData) => void;
 }
 
-const PHONE_CODES = [
-  { code: "+1", label: "+1  (US/CA)" },
-  { code: "+44", label: "+44 (UK)" },
-  { code: "+234", label: "+234 (NG)" },
-  { code: "+27", label: "+27 (ZA)" },
-  { code: "+49", label: "+49 (DE)" },
-  { code: "+33", label: "+33 (FR)" },
-  { code: "+91", label: "+91 (IN)" },
-  { code: "+61", label: "+61 (AU)" },
-  { code: "+55", label: "+55 (BR)" },
-  { code: "+971", label: "+971 (AE)" },
-];
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const COUNTRIES = [
-  "Nigeria",
-  "United States",
-  "United Kingdom",
-  "Canada",
-  "Australia",
-  "Germany",
-  "France",
-  "India",
-  "South Africa",
-  "Brazil",
-  "Kenya",
-  "Ghana",
-  "Egypt",
-  "UAE",
-  "Netherlands",
-  "Sweden",
-  "Singapore",
-  "New Zealand",
-  "Ireland",
-  "Portugal",
-  "Spain",
-  "Italy",
-  "Poland",
-  "Ukraine",
-  "Pakistan",
-  "Bangladesh",
-  "Philippines",
-  "Indonesia",
-  "Malaysia",
-  "Mexico",
-  "Argentina",
-  "Chile",
-  "Colombia",
-];
+// 1. Centralize base styles
+// const baseInputStyles =
+//   "border-neutral-02  focus-visible:border-brand-accent focus-visible:ring-brand-accent/30 h-auto rounded-lg bg-white px-4 py-3 shadow-none focus-visible:ring-2 transition-colors h-auto";
 
-const set =
-  (data: PersonalInfoData, onChange: Props["onChange"]) =>
-  (k: keyof PersonalInfoData) =>
-  (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    onChange({ ...data, [k]: e.target.value });
+// 2. Reusable Component with clsx/cn for dynamic states
+function FormTextField({
+  form,
+  name,
+  label,
+  placeholder,
+  type = "text",
+  validators,
+  optional = false,
+  className,
+}: any) {
+  return (
+    <form.Field name={name} validators={validators}>
+      {(field: any) => {
+        const hasError = field.state.meta.errors.length > 0;
 
-export function PersonalInfoStep({ data, onChange, onContinue }: Props) {
-  const s = set(data, onChange);
-  const isValid = !!data.email && !!data.firstName && !!data.lastName && !!data.profileLabel;
+        return (
+          <div className={cn("flex flex-col gap-1.5", className)}>
+            <label htmlFor={field.name} className='text-neutral-06 text-base font-medium'>
+              {label}{" "}
+              {optional && <span className='text-neutral-04 ml-1 font-normal'>(optional)</span>}
+            </label>
+            <Input
+              id={field.name}
+              type={type}
+              value={field.state.value}
+              onChange={(e) => field.handleChange(e.target.value)}
+              onBlur={field.handleBlur}
+              placeholder={placeholder}
+              className={
+                hasError
+                  ? "border-danger-400 focus-visible:border-danger-400 focus-visible:ring-danger-400/30"
+                  : ""
+              }
+            />
+            {hasError && (
+              <p className='text-danger-400 text-sm'>{field.state.meta.errors[0]?.toString()}</p>
+            )}
+          </div>
+        );
+      }}
+    </form.Field>
+  );
+}
+
+export function PersonalInfoStep({ defaultValues, onContinue }: Props) {
+  const form = useForm({
+    defaultValues,
+    onSubmit: ({ value }) => onContinue(value),
+  });
 
   return (
     <div>
       <div className='mb-8'>
-        <h1 className='mb-2 text-3xl font-bold text-gray-900'>Create an Account</h1>
-        <p className='text-sm text-gray-500'>Fill in the fields below to create an account.</p>
+        <h1 className='text-neutral-07 mb-2 text-3xl font-medium'>Create an Account</h1>
+        <p className='text-neutral-06 text-base'>Fill in the fields below to create an account.</p>
       </div>
 
       <StepHeader
@@ -93,130 +102,156 @@ export function PersonalInfoStep({ data, onChange, onContinue }: Props) {
         title='Personal Information'
       />
 
-      <div className='space-y-5'>
-        {/* Profile label — collected here so sidebar steps 2-4 can show it */}
-        <Field label='What role are you applying for?'>
-          <Input
-            value={data.profileLabel}
-            onChange={s("profileLabel")}
+      <form noValidate onSubmit={(e) => e.preventDefault()}>
+        <div className='space-y-5'>
+          <FormTextField
+            form={form}
+            name='profileLabel'
+            label='What role are you applying for?'
             placeholder='e.g. Product Designer, Software Engineer'
           />
-        </Field>
 
-        <div className='grid grid-cols-2 gap-4'>
-          <Field label='Email address'>
-            <Input
+          <div className='grid grid-cols-2 gap-4'>
+            <FormTextField
+              form={form}
+              name='email'
+              label='Email address'
               type='email'
-              value={data.email}
-              onChange={s("email")}
               placeholder='Enter your email address'
+              validators={{
+                onSubmit: ({ value }: { value: string }) => {
+                  if (!value) return "Email is required";
+                  if (!emailRegex.test(value)) return "Enter a valid email address";
+                },
+              }}
             />
-          </Field>
 
-          <Field label='Phone number'>
-            <div className='focus-within:ring-brand-accent/30 focus-within:border-brand-accent flex items-stretch overflow-hidden rounded-lg border border-gray-200 bg-white transition-colors focus-within:ring-2'>
-              <select
-                value={data.phoneCode}
-                onChange={s("phoneCode")}
-                className='bg-neutral-01 shrink-0 cursor-pointer appearance-none border-r border-gray-200 py-3 pl-3 text-sm text-gray-900 focus:outline-none'
-                style={{
-                  paddingRight: "28px",
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "right 6px center",
-                  backgroundSize: "14px",
-                }}
-              >
-                {PHONE_CODES.map((p) => (
-                  <option key={p.code} value={p.code}>
-                    {p.code}
-                  </option>
-                ))}
-              </select>
-              <input
-                type='tel'
-                value={data.phone}
-                onChange={s("phone")}
-                placeholder='Enter your phone number'
-                className='min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none'
-              />
+            {/* Phone — composite: code select + Shadcn Input */}
+            <div className='flex flex-col gap-1.5'>
+              <label className='text-neutral-06 text-base font-medium'>Phone number</label>
+              <div className='border-neutral-02 focus-within:border-brand-accent focus-within:ring-brand-accent/30 flex items-stretch overflow-hidden rounded-lg border bg-white transition-colors focus-within:ring-2'>
+                <form.Field name='phoneCode'>
+                  {(field: any) => (
+                    <Select value={field.state.value} onValueChange={field.handleChange}>
+                      <SelectTrigger className='border-neutral-02 bg-neutral-01 text-neutral-06 !h-auto w-auto shrink-0 cursor-pointer rounded-none border-0 border-r text-base shadow-none focus-visible:ring-0'>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {PHONE_CODES.map((p) => (
+                          <SelectItem key={p.code} value={p.code}>
+                            {p.code}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                </form.Field>
+                <form.Field name='phone'>
+                  {(field) => (
+                    <Input
+                      type='tel'
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      onBlur={field.handleBlur}
+                      placeholder='Enter your phone number'
+                      className='h-auto flex-1 rounded-none border-0 bg-transparent px-4 py-3 text-base shadow-none focus-visible:ring-0'
+                    />
+                  )}
+                </form.Field>
+              </div>
             </div>
-          </Field>
-        </div>
+          </div>
 
-        <div className='grid grid-cols-2 gap-4'>
-          <Field label='First name'>
-            <Input
-              value={data.firstName}
-              onChange={s("firstName")}
+          <div className='grid grid-cols-2 gap-4'>
+            <FormTextField
+              form={form}
+              name='firstName'
+              label='First name'
               placeholder='Enter your first name'
             />
-          </Field>
-          <Field label='Last name'>
-            <Input
-              value={data.lastName}
-              onChange={s("lastName")}
+            <FormTextField
+              form={form}
+              name='lastName'
+              label='Last name'
               placeholder='Enter your last name'
             />
-          </Field>
-        </div>
+          </div>
 
-        <div className='grid grid-cols-2 gap-4'>
-          <Field label='Country'>
-            <Select value={data.country} onChange={s("country")}>
-              <option value=''>Select a country</option>
-              {COUNTRIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </Select>
-          </Field>
-          <Field label='State'>
-            <Input
-              value={data.state}
-              onChange={s("state")}
+          <div className='grid grid-cols-2 gap-4'>
+            <form.Field name='country'>
+              {(field) => (
+                <div className='flex flex-col gap-1.5'>
+                  <label className='text-neutral-06 text-base font-medium'>Country</label>
+                  <Select value={field.state.value} onValueChange={field.handleChange}>
+                    <SelectTrigger
+                      className='data-placeholder:text-neutral-04 w-full data-placeholder:text-sm'
+                      size='lg'
+                    >
+                      <SelectValue placeholder='Select a country' />
+                    </SelectTrigger>
+                    <SelectContent className='h-full'>
+                      {COUNTRIES.map((code) => (
+                        <SelectItem key={code} value={code}>
+                          {code}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+            </form.Field>
+
+            <FormTextField
+              form={form}
+              name='state'
+              label='State'
               placeholder='What state do you stay in?'
             />
-          </Field>
-        </div>
+          </div>
 
-        <div className='grid grid-cols-2 gap-4'>
-          <Field label='City'>
-            <Input
-              value={data.city}
-              onChange={s("city")}
+          <div className='grid grid-cols-2 gap-4'>
+            <FormTextField
+              form={form}
+              name='city'
+              label='City'
               placeholder="What's the name of your city?"
             />
-          </Field>
-          <Field label='Postal code'>
-            <Input
-              value={data.postalCode}
-              onChange={s("postalCode")}
+            <FormTextField
+              form={form}
+              name='postalCode'
+              label='Postal code'
               placeholder='Enter your postal code'
             />
-          </Field>
-        </div>
+          </div>
 
-        <Field label='House address'>
-          <Input
-            value={data.address}
-            onChange={s("address")}
+          <FormTextField
+            form={form}
+            name='address'
+            label='House address'
             placeholder="What's your street name & house number?"
           />
-        </Field>
 
-        <Field label='Website URL' optional>
-          <Input
+          <FormTextField
+            form={form}
+            name='website'
+            label='Website URL'
             type='url'
-            value={data.website}
-            onChange={s("website")}
             placeholder='Please enter the URL of your general website'
+            optional
           />
-        </Field>
-      </div>
+        </div>
 
-      <StepFooter onContinue={onContinue} continueDisabled={!isValid} />
+        <form.Subscribe
+          selector={(s) =>
+            !!s.values.email &&
+            !!s.values.firstName &&
+            !!s.values.lastName &&
+            !!s.values.profileLabel
+          }
+        >
+          {(isValid) => <StepFooter onContinue={form.handleSubmit} continueDisabled={!isValid} />}
+        </form.Subscribe>
+      </form>
     </div>
   );
 }

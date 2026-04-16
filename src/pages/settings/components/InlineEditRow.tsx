@@ -77,7 +77,7 @@ export function InlineEditRow({
   const isEmpty = !value;
 
   return (
-    <div className='border-brand-border flex items-start gap-4 border-b py-6 last:border-b-0'>
+    <div className='border-neutral-01 flex items-start gap-4 border-b py-6 last:border-b-0'>
       <div className='min-w-0 flex-1'>
         <div className='text-primary-text text-sm font-medium'>{label}</div>
         {description && <div className='text-secondary-text mt-1 text-xs'>{description}</div>}
@@ -124,7 +124,7 @@ export function InlineEditRow({
             </span>
             <button
               onClick={() => setEditing(true)}
-              className='text-brand-accent hover:text-brand-600 text-sm font-medium underline-offset-2 transition-colors hover:underline'
+              className='text-primary-04 dark:text-brand-50 hover:text-brand-600 text-sm font-medium underline-offset-2 transition-colors hover:underline'
             >
               Edit
             </button>

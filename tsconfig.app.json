@@ -29,7 +29,7 @@
     "noFallthroughCasesInSwitch": true,
 
     // support for chrome extension APIs
-    "types": ["chrome"]
+    "types": ["chrome", "node"]
   },
   "include": ["src", "autofillEngine.js"]
 }

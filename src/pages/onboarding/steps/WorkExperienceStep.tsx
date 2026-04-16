@@ -1,15 +1,23 @@
-import { Plus, FileText } from "lucide-react";
+import React from "react";
+import { useForm } from "@tanstack/react-form";
+import { Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import {
-  Field,
-  Input,
-  DateInput,
   Select,
-  Textarea,
-  StepHeader,
-  StepTopNav,
-  StepFooter,
-} from "../components/OnboardingPrimitives";
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { StepHeader } from "../components/StepHeader";
+import { StepTopNav } from "../components/StepTopNav";
+import { StepFooter } from "../components/StepFooter";
+import { DatePicker } from "../components/DatePicker";
 import BriefCase from "@/assets/svg/icons/BriefCaseIcon";
+import { COUNTRIES } from "@/data/geo";
 
 export interface WorkEntry {
   jobTitle: string;
@@ -37,48 +45,63 @@ const emptyEntry = (): WorkEntry => ({
   description: "",
 });
 
-const COUNTRIES = [
-  "Nigeria",
-  "United States",
-  "United Kingdom",
-  "Canada",
-  "Australia",
-  "Germany",
-  "France",
-  "India",
-  "South Africa",
-  "Brazil",
-  "Kenya",
-  "Ghana",
-  "Egypt",
-  "UAE",
-  "Netherlands",
-  "Sweden",
-  "Singapore",
-  "Remote",
-];
-
 interface Props {
-  data: WorkExperienceData;
-  onChange: (data: WorkExperienceData) => void;
-  onBack: () => void;
-  onContinue: () => void;
-  onSkip: () => void;
+  defaultValues: WorkExperienceData;
   profileLabel: string;
+  onBack: () => void;
+  onContinue: (data: WorkExperienceData) => void;
+  onSkip: () => void;
+}
+
+const baseInputStyles =
+  "border-neutral-02 text-neutral-06 placeholder:text-neutral-04 focus-visible:border-brand-accent focus-visible:ring-brand-accent/30 h-auto rounded-lg bg-white px-4 py-3 text-base shadow-none placeholder:font-normal focus-visible:ring-2 transition-colors";
+
+// For simple text inputs within each entry row
+function EntryTextField({ form, name, label, placeholder, className }: any) {
+  return (
+    <form.Field name={name}>
+      {(field: any) => {
+        const hasError = field.state.meta.errors.length > 0;
+        return (
+          <div className={cn("flex flex-col gap-1.5", className)}>
+            <label htmlFor={field.name} className='text-neutral-06 text-base font-medium'>
+              {label}
+            </label>
+            <Input
+              id={field.name}
+              value={field.state.value}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                field.handleChange(e.target.value)
+              }
+              onBlur={field.handleBlur}
+              placeholder={placeholder}
+              className={cn(
+                baseInputStyles,
+                hasError &&
+                  "border-danger-400 focus-visible:border-danger-400 focus-visible:ring-danger-400/30",
+              )}
+            />
+            {hasError && (
+              <p className='text-danger-400 text-sm'>{field.state.meta.errors[0]?.toString()}</p>
+            )}
+          </div>
+        );
+      }}
+    </form.Field>
+  );
 }
 
 export function WorkExperienceStep({
-  data,
-  onChange,
+  defaultValues,
+  profileLabel,
   onBack,
   onContinue,
   onSkip,
-  profileLabel,
 }: Props) {
-  const setEntry = (i: number, patch: Partial<WorkEntry>) => {
-    const entries = data.entries.map((e, idx) => (idx === i ? { ...e, ...patch } : e));
-    onChange({ entries });
-  };
+  const form = useForm({
+    defaultValues,
+    onSubmit: ({ value }) => onContinue(value),
+  });
 
   return (
     <div>
@@ -88,119 +111,190 @@ export function WorkExperienceStep({
         icon={<BriefCase className='text-primary-04 h-5 w-5' />}
         title='Work Experience'
         action={
-          <button
-            onClick={() => onChange({ entries: [...data.entries, emptyEntry()] })}
-            className='flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50'
-          >
-            Add new <Plus className='h-4 w-4' />
-          </button>
+          <form.Field name='entries' mode='array'>
+            {(field: any) => (
+              <Button
+                type='button'
+                variant='outline'
+                size='lg'
+                onClick={() => field.pushValue(emptyEntry())}
+              >
+                Add new <Plus className='h-4 w-4' />
+              </Button>
+            )}
+          </form.Field>
         }
       />
 
-      <div className='space-y-10'>
-        {data.entries.map((entry, i) => (
-          <div key={i} className='space-y-5'>
-            {i > 0 && <div className='border-t border-gray-100 pt-6' />}
+      <form noValidate onSubmit={(e) => e.preventDefault()}>
+        <form.Field name='entries' mode='array'>
+          {(entriesField: any) => (
+            <div className='space-y-10'>
+              {entriesField.state.value.map((_: any, i: number) => (
+                <div key={i} className='space-y-5'>
+                  {i > 0 && <div className='border-t border-gray-100 pt-6' />}
 
-            <div className='grid grid-cols-2 gap-4'>
-              <Field label='Job title'>
-                <Input
-                  value={entry.jobTitle}
-                  onChange={(e) => setEntry(i, { jobTitle: e.target.value })}
-                  placeholder='Enter job title'
-                />
-              </Field>
-              <Field label='Company name'>
-                <Input
-                  value={entry.company}
-                  onChange={(e) => setEntry(i, { company: e.target.value })}
-                  placeholder='Enter the company name'
-                />
-              </Field>
-            </div>
-
-            <div className='grid grid-cols-2 gap-4'>
-              <Field label='Start date'>
-                <DateInput
-                  value={entry.startDate}
-                  onChange={(e) => setEntry(i, { startDate: e.target.value })}
-                  placeholder='Select a start date'
-                />
-              </Field>
-              <Field label='End date'>
-                <DateInput
-                  value={entry.endDate}
-                  onChange={(e) => setEntry(i, { endDate: e.target.value })}
-                  placeholder='Select an end date'
-                  disabled={entry.isCurrent}
-                />
-              </Field>
-            </div>
-
-            {/* Current role checkbox */}
-            <label className='flex cursor-pointer items-center gap-3 select-none'>
-              <div
-                onClick={() => setEntry(i, { isCurrent: !entry.isCurrent, endDate: "" })}
-                className={`flex h-5 w-5 items-center justify-center rounded border-2 transition-colors ${
-                  entry.isCurrent
-                    ? "bg-brand-accent border-brand-accent"
-                    : "border-gray-300 bg-white"
-                }`}
-              >
-                {entry.isCurrent && (
-                  <svg
-                    className='h-3 w-3 text-white'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={3}
-                      d='M5 13l4 4L19 7'
+                  <div className='grid grid-cols-2 gap-4'>
+                    <EntryTextField
+                      form={form}
+                      name={`entries[${i}].jobTitle`}
+                      label='Job title'
+                      placeholder='Enter job title'
                     />
-                  </svg>
-                )}
-              </div>
-              <span className='text-sm text-gray-700'>I am currently working in this role</span>
-            </label>
+                    <EntryTextField
+                      form={form}
+                      name={`entries[${i}].company`}
+                      label='Company name'
+                      placeholder='Enter the company name'
+                    />
+                  </div>
 
-            <Field label='Skills'>
-              <Input
-                value={entry.skills}
-                onChange={(e) => setEntry(i, { skills: e.target.value })}
-                placeholder='List your primary skills for this role'
-              />
-            </Field>
+                  <div className='grid grid-cols-2 gap-4'>
+                    <form.Field name={`entries[${i}].startDate`}>
+                      {(field: any) => (
+                        <div className='flex flex-col gap-1.5'>
+                          <label className='text-neutral-06 text-base font-medium'>
+                            Start date
+                          </label>
+                          <DatePicker
+                            value={field.state.value}
+                            onChange={field.handleChange}
+                            onBlur={field.handleBlur}
+                            placeholder='Select a start date'
+                          />
+                        </div>
+                      )}
+                    </form.Field>
+                    <form.Field name={`entries[${i}].endDate`}>
+                      {(field: any) => (
+                        <form.Subscribe selector={(s: any) => s.values.entries[i]?.isCurrent}>
+                          {(isCurrent: boolean) => (
+                            <div className='flex flex-col gap-1.5'>
+                              <label className='text-neutral-06 text-base font-medium'>
+                                End date
+                              </label>
+                              <DatePicker
+                                value={field.state.value}
+                                onChange={field.handleChange}
+                                onBlur={field.handleBlur}
+                                placeholder='Select an end date'
+                                disabled={isCurrent}
+                              />
+                            </div>
+                          )}
+                        </form.Subscribe>
+                      )}
+                    </form.Field>
+                  </div>
 
-            <Field label='Location'>
-              <Select
-                value={entry.location}
-                onChange={(e) => setEntry(i, { location: e.target.value })}
-              >
-                <option value=''>Select a country</option>
-                {COUNTRIES.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </Select>
-            </Field>
+                  <form.Field name={`entries[${i}].isCurrent`}>
+                    {(field: any) => (
+                      <label className='flex cursor-pointer items-center gap-3 select-none'>
+                        <div
+                          role='checkbox'
+                          aria-checked={field.state.value}
+                          tabIndex={0}
+                          onClick={() => {
+                            field.handleChange(!field.state.value);
+                            if (!field.state.value) form.setFieldValue(`entries[${i}].endDate`, "");
+                          }}
+                          onKeyDown={(e: React.KeyboardEvent) => {
+                            if (e.key === " " || e.key === "Enter") {
+                              e.preventDefault();
+                              field.handleChange(!field.state.value);
+                            }
+                          }}
+                          className={cn(
+                            "flex h-5 w-5 items-center justify-center rounded border-2 transition-colors",
+                            field.state.value
+                              ? "border-brand-accent bg-brand-accent"
+                              : "border-neutral-02 bg-white",
+                          )}
+                        >
+                          {field.state.value && (
+                            <svg
+                              className='h-3 w-3 text-white'
+                              fill='none'
+                              viewBox='0 0 24 24'
+                              stroke='currentColor'
+                            >
+                              <path
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                                strokeWidth={3}
+                                d='M5 13l4 4L19 7'
+                              />
+                            </svg>
+                          )}
+                        </div>
+                        <span className='text-neutral-06 text-base'>
+                          I am currently working in this role
+                        </span>
+                      </label>
+                    )}
+                  </form.Field>
 
-            <Field label='Description'>
-              <Textarea
-                value={entry.description}
-                onChange={(e) => setEntry(i, { description: e.target.value })}
-                placeholder='Describe this project, listing your tasks and responsibilities'
-                rows={5}
-              />
-            </Field>
-          </div>
-        ))}
-      </div>
+                  <EntryTextField
+                    form={form}
+                    name={`entries[${i}].skills`}
+                    label='Skills'
+                    placeholder='List your primary skills for this role'
+                  />
 
-      <StepFooter onContinue={onContinue} onSkip={onSkip} />
+                  <form.Field name={`entries[${i}].location`}>
+                    {(field: any) => (
+                      <div className='flex flex-col gap-1.5'>
+                        <label className='text-neutral-06 text-base font-medium'>Location</label>
+                        <Select value={field.state.value} onValueChange={field.handleChange}>
+                          <SelectTrigger
+                            className={cn(
+                              baseInputStyles,
+                              "data-placeholder:text-neutral-04 w-full",
+                            )}
+                          >
+                            <SelectValue placeholder='Select a country' />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {COUNTRIES.map((c) => (
+                              <SelectItem key={c} value={c}>
+                                {c}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+                  </form.Field>
+
+                  <form.Field name={`entries[${i}].description`}>
+                    {(field: any) => (
+                      <div className='flex flex-col gap-1.5'>
+                        <label
+                          htmlFor={field.name}
+                          className='text-neutral-06 text-base font-medium'
+                        >
+                          Description
+                        </label>
+                        <Textarea
+                          id={field.name}
+                          value={field.state.value}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          onBlur={field.handleBlur}
+                          placeholder='Describe this project, listing your tasks and responsibilities'
+                          rows={5}
+                          className={cn(baseInputStyles, "min-h-0 resize-none")}
+                        />
+                      </div>
+                    )}
+                  </form.Field>
+                </div>
+              ))}
+            </div>
+          )}
+        </form.Field>
+
+        <StepFooter onContinue={form.handleSubmit} onSkip={onSkip} />
+      </form>
     </div>
   );
 }

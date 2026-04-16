@@ -1,13 +1,14 @@
+import React from "react";
+import { useForm } from "@tanstack/react-form";
 import { Plus, GraduationCap } from "lucide-react";
-import {
-  Field,
-  Input,
-  DateInput,
-  Divider,
-  StepHeader,
-  StepTopNav,
-  StepFooter,
-} from "../components/OnboardingPrimitives";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { StepHeader } from "../components/StepHeader";
+import { StepTopNav } from "../components/StepTopNav";
+import { StepFooter } from "../components/StepFooter";
+import { StepDivider } from "../components/StepDivider";
+import { DatePicker } from "../components/DatePicker";
 
 export interface EducationEntry {
   school: string;
@@ -32,33 +33,46 @@ const emptyEdu = (): EducationEntry => ({ school: "", degree: "", startDate: "",
 const emptyCred = (): CredentialEntry => ({ issuer: "", name: "", startDate: "", endDate: "" });
 
 interface Props {
-  data: CredentialsData;
-  onChange: (data: CredentialsData) => void;
-  onBack: () => void;
-  onFinish: () => void;
-  onSkip: () => void;
+  defaultValues: CredentialsData;
   profileLabel: string;
+  onBack: () => void;
+  onFinish: (data: CredentialsData) => void;
+  onSkip: () => void;
   saving: boolean;
 }
 
-export function CredentialsStep({
-  data,
-  onChange,
-  onBack,
-  onFinish,
-  onSkip,
-  profileLabel,
-  saving,
-}: Props) {
-  const setEdu = (i: number, k: keyof EducationEntry, v: string) => {
-    const updated = data.education.map((e, idx) => (idx === i ? { ...e, [k]: v } : e));
-    onChange({ ...data, education: updated });
-  };
+const baseInputStyles =
+  "border-neutral-02 text-neutral-06 placeholder:text-neutral-04 focus-visible:border-brand-accent focus-visible:ring-brand-accent/30 h-auto rounded-lg bg-white px-4 py-3 text-base shadow-none placeholder:font-normal focus-visible:ring-2 transition-colors";
 
-  const setCred = (i: number, k: keyof CredentialEntry, v: string) => {
-    const updated = data.credentials.map((c, idx) => (idx === i ? { ...c, [k]: v } : c));
-    onChange({ ...data, credentials: updated });
-  };
+function EntryTextField({ form, name, label, placeholder, className }: any) {
+  return (
+    <form.Field name={name}>
+      {(field: any) => {
+        const hasError = field.state.meta.errors.length > 0;
+        return (
+          <div className={cn("flex flex-col gap-1.5", className)}>
+            <label htmlFor={field.name} className='text-base font-medium text-neutral-06'>{label}</label>
+            <Input
+              id={field.name}
+              value={field.state.value}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.handleChange(e.target.value)}
+              onBlur={field.handleBlur}
+              placeholder={placeholder}
+              className={cn(baseInputStyles, hasError && "border-danger-400 focus-visible:border-danger-400 focus-visible:ring-danger-400/30")}
+            />
+            {hasError && <p className='text-sm text-danger-400'>{field.state.meta.errors[0]?.toString()}</p>}
+          </div>
+        );
+      }}
+    </form.Field>
+  );
+}
+
+export function CredentialsStep({ defaultValues, profileLabel, onBack, onFinish, onSkip, saving }: Props) {
+  const form = useForm({
+    defaultValues,
+    onSubmit: ({ value }) => onFinish(value),
+  });
 
   return (
     <div>
@@ -69,110 +83,98 @@ export function CredentialsStep({
         title='Certificates & Credentials'
       />
 
-      {/* Academic */}
-      <h3 className='mb-5 text-base font-semibold text-gray-900'>Academic Qualifications</h3>
-      <div className='space-y-6'>
-        {data.education.map((edu, i) => (
-          <div key={i} className='space-y-4'>
-            {i > 0 && <div className='border-t border-gray-100 pt-4' />}
-            <div className='grid grid-cols-2 gap-4'>
-              <Field label='Institution name'>
-                <Input
-                  value={edu.school}
-                  onChange={(e) => setEdu(i, "school", e.target.value)}
-                  placeholder='e.g UNILAG'
-                />
-              </Field>
-              <Field label='Degree gotten'>
-                <Input
-                  value={edu.degree}
-                  onChange={(e) => setEdu(i, "degree", e.target.value)}
-                  placeholder='e.g B.Sc Economics'
-                />
-              </Field>
-            </div>
-            <div className='grid grid-cols-2 gap-4'>
-              <Field label='Start date'>
-                <DateInput
-                  value={edu.startDate}
-                  onChange={(e) => setEdu(i, "startDate", e.target.value)}
-                  placeholder='Select a start date'
-                />
-              </Field>
-              <Field label='End date'>
-                <DateInput
-                  value={edu.endDate}
-                  onChange={(e) => setEdu(i, "endDate", e.target.value)}
-                  placeholder='Select an end date'
-                />
-              </Field>
-            </div>
-          </div>
-        ))}
-      </div>
-      <button
-        onClick={() => onChange({ ...data, education: [...data.education, emptyEdu()] })}
-        className='mt-4 flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50'
-      >
-        Add another certificate <Plus className='h-4 w-4' />
-      </button>
+      <form noValidate onSubmit={(e) => e.preventDefault()}>
+        <h3 className='mb-5 text-base font-semibold text-neutral-07'>Academic Qualifications</h3>
 
-      <Divider />
+        <form.Field name='education' mode='array'>
+          {(eduField: any) => (
+            <>
+              <div className='space-y-6'>
+                {eduField.state.value.map((_: any, i: number) => (
+                  <div key={i} className='space-y-4'>
+                    {i > 0 && <div className='border-t border-gray-100 pt-4' />}
+                    <div className='grid grid-cols-2 gap-4'>
+                      <EntryTextField form={form} name={`education[${i}].school`} label='Institution name' placeholder='e.g UNILAG' />
+                      <EntryTextField form={form} name={`education[${i}].degree`} label='Degree gotten' placeholder='e.g B.Sc Economics' />
+                    </div>
+                    <div className='grid grid-cols-2 gap-4'>
+                      <form.Field name={`education[${i}].startDate`}>
+                        {(field: any) => (
+                          <div className='flex flex-col gap-1.5'>
+                            <label className='text-base font-medium text-neutral-06'>Start date</label>
+                            <DatePicker value={field.state.value} onChange={field.handleChange} onBlur={field.handleBlur} placeholder='Select a start date' />
+                          </div>
+                        )}
+                      </form.Field>
+                      <form.Field name={`education[${i}].endDate`}>
+                        {(field: any) => (
+                          <div className='flex flex-col gap-1.5'>
+                            <label className='text-base font-medium text-neutral-06'>End date</label>
+                            <DatePicker value={field.state.value} onChange={field.handleChange} onBlur={field.handleBlur} placeholder='Select an end date' />
+                          </div>
+                        )}
+                      </form.Field>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Button type='button' variant='outline' className='mt-4 cursor-pointer' onClick={() => eduField.pushValue(emptyEdu())}>
+                Add another certificate <Plus className='h-4 w-4' />
+              </Button>
+            </>
+          )}
+        </form.Field>
 
-      {/* Non-academic */}
-      <h3 className='mb-5 text-base font-semibold text-gray-900'>Non-Academic Credentials</h3>
-      <div className='space-y-6'>
-        {data.credentials.map((cred, i) => (
-          <div key={i} className='space-y-4'>
-            {i > 0 && <div className='border-t border-gray-100 pt-4' />}
-            <div className='grid grid-cols-2 gap-4'>
-              <Field label='Institution name'>
-                <Input
-                  value={cred.issuer}
-                  onChange={(e) => setCred(i, "issuer", e.target.value)}
-                  placeholder='e.g Coursera'
-                />
-              </Field>
-              <Field label='Certification gotten'>
-                <Input
-                  value={cred.name}
-                  onChange={(e) => setCred(i, "name", e.target.value)}
-                  placeholder='e.g Google UX Design course'
-                />
-              </Field>
-            </div>
-            <div className='grid grid-cols-2 gap-4'>
-              <Field label='Start date'>
-                <DateInput
-                  value={cred.startDate}
-                  onChange={(e) => setCred(i, "startDate", e.target.value)}
-                  placeholder='Select a start date'
-                />
-              </Field>
-              <Field label='End date'>
-                <DateInput
-                  value={cred.endDate}
-                  onChange={(e) => setCred(i, "endDate", e.target.value)}
-                  placeholder='Select an end date'
-                />
-              </Field>
-            </div>
-          </div>
-        ))}
-      </div>
-      <button
-        onClick={() => onChange({ ...data, credentials: [...data.credentials, emptyCred()] })}
-        className='mt-4 flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50'
-      >
-        Add another credential <Plus className='h-4 w-4' />
-      </button>
+        <StepDivider />
 
-      <StepFooter
-        onContinue={onFinish}
-        onSkip={onSkip}
-        continueLabel={saving ? "Saving…" : "Finish"}
-        continueDisabled={saving}
-      />
+        <h3 className='mb-5 text-base font-semibold text-neutral-07'>Non-Academic Credentials</h3>
+
+        <form.Field name='credentials' mode='array'>
+          {(credField: any) => (
+            <>
+              <div className='space-y-6'>
+                {credField.state.value.map((_: any, i: number) => (
+                  <div key={i} className='space-y-4'>
+                    {i > 0 && <div className='border-t border-gray-100 pt-4' />}
+                    <div className='grid grid-cols-2 gap-4'>
+                      <EntryTextField form={form} name={`credentials[${i}].issuer`} label='Institution name' placeholder='e.g Coursera' />
+                      <EntryTextField form={form} name={`credentials[${i}].name`} label='Certification gotten' placeholder='e.g Google UX Design course' />
+                    </div>
+                    <div className='grid grid-cols-2 gap-4'>
+                      <form.Field name={`credentials[${i}].startDate`}>
+                        {(field: any) => (
+                          <div className='flex flex-col gap-1.5'>
+                            <label className='text-base font-medium text-neutral-06'>Start date</label>
+                            <DatePicker value={field.state.value} onChange={field.handleChange} onBlur={field.handleBlur} placeholder='Select a start date' />
+                          </div>
+                        )}
+                      </form.Field>
+                      <form.Field name={`credentials[${i}].endDate`}>
+                        {(field: any) => (
+                          <div className='flex flex-col gap-1.5'>
+                            <label className='text-base font-medium text-neutral-06'>End date</label>
+                            <DatePicker value={field.state.value} onChange={field.handleChange} onBlur={field.handleBlur} placeholder='Select an end date' />
+                          </div>
+                        )}
+                      </form.Field>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Button type='button' variant='outline' className='mt-4 cursor-pointer' onClick={() => credField.pushValue(emptyCred())}>
+                Add another credential <Plus className='h-4 w-4' />
+              </Button>
+            </>
+          )}
+        </form.Field>
+
+        <StepFooter
+          onContinue={form.handleSubmit}
+          onSkip={onSkip}
+          continueLabel={saving ? "Saving…" : "Finish"}
+          continueDisabled={saving}
+        />
+      </form>
     </div>
   );
 }

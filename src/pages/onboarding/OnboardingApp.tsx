@@ -21,7 +21,7 @@ import type { UserProfile, Education, Credential, WorkExperience } from "../../m
 
 const defaultPersonal: PersonalInfoData = {
   email: "",
-  phoneCode: "+1",
+  phoneCode: "+234",
   phone: "",
   firstName: "",
   lastName: "",
@@ -76,7 +76,6 @@ async function markOnboardingComplete() {
 }
 
 function redirectToDashboard() {
-  // In extension context, open dashboard and close this tab
   if (typeof chrome !== "undefined" && chrome.tabs) {
     chrome.tabs.create({ url: chrome.runtime.getURL("dashboard.html") });
     window.close();
@@ -102,24 +101,25 @@ export function OnboardingApp() {
   const [saving, setSaving] = useState(false);
   const directionRef = useRef(1);
 
+  // Each step stores its last-submitted values so navigating back restores them
+  const [personal, setPersonal] = useState<PersonalInfoData>(defaultPersonal);
+  const [professional, setProfessional] = useState<ProfessionalInfoData>(defaultProfessional);
+  const [work, setWork] = useState<WorkExperienceData>(defaultWork);
+  const [credentials, setCredentials] = useState<CredentialsData>(defaultCredentials);
+
   const goTo = (next: number) => {
     directionRef.current = next > step ? 1 : -1;
     setStep(next);
   };
 
-  const [personal, setPersonal] = useState<PersonalInfoData>(defaultPersonal);
-  const [credentials, setCredentials] = useState<CredentialsData>(defaultCredentials);
-  const [professional, setProfessional] = useState<ProfessionalInfoData>(defaultProfessional);
-  const [work, setWork] = useState<WorkExperienceData>(defaultWork);
-
-  const finish = async () => {
+  const finish = async (credData: CredentialsData) => {
+    setCredentials(credData);
     setSaving(true);
     try {
       const data = await jobMateStore.getData();
       const existingProfile = data.profiles[data.activeProfileId];
 
-      // Build updated profile from collected onboarding data
-      const education: Education[] = credentials.education
+      const education: Education[] = credData.education
         .filter((e) => e.school)
         .map((e, i) => ({
           id: `edu_onb_${i}`,
@@ -129,7 +129,7 @@ export function OnboardingApp() {
           endDate: e.endDate || undefined,
         }));
 
-      const creds: Credential[] = credentials.credentials
+      const creds: Credential[] = credData.credentials
         .filter((c) => c.name)
         .map((c, i) => ({
           id: `cred_onb_${i}`,
@@ -152,10 +152,7 @@ export function OnboardingApp() {
           isCurrent: w.isCurrent,
           responsibilities: w.description ? [w.description] : [],
           technologies: w.skills
-            ? w.skills
-                .split(",")
-                .map((s) => s.trim())
-                .filter(Boolean)
+            ? w.skills.split(",").map((s) => s.trim()).filter(Boolean)
             : [],
         }));
 
@@ -191,18 +188,13 @@ export function OnboardingApp() {
           github: professional.github || undefined,
         },
         skills: professional.skills
-          ? professional.skills
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean)
+          ? professional.skills.split(",").map((s) => s.trim()).filter(Boolean)
           : existingProfile.skills,
         education,
         credentials: creds,
         work: workExp,
         compensation: {
           ...existingProfile.compensation,
-          // Store salary expectation as a string note — not directly on model,
-          // so we embed it in customAnswers instead.
         },
       };
 
@@ -225,83 +217,87 @@ export function OnboardingApp() {
   };
 
   return (
-    <div className='h-screen flex bg-white  gap-4 font-inter  '>
+    <div className="h-screen flex bg-white gap-4 font-inter">
       <OnboardingSidebar currentStep={step} />
 
-      {/* Right panel — scrollable form content */}
-      <main className='flex-1 overflow-y-auto'>
-        <div className='max-w-[900px] mx-auto px-8 py-12'>
-          <AnimatePresence mode='wait' initial={false} custom={directionRef.current}>
+      <main className="flex-1 overflow-y-auto">
+        <div className="max-w-[900px] mx-auto px-8 py-12">
+          <AnimatePresence mode="wait" initial={false} custom={directionRef.current}>
             {step === 1 && (
               <motion.div
-                key='step-1'
+                key="step-1"
                 custom={directionRef.current}
                 variants={stepVariants}
-                initial='enter'
-                animate='center'
-                exit='exit'
+                initial="enter"
+                animate="center"
+                exit="exit"
                 transition={stepTransition}
               >
                 <PersonalInfoStep
-                  data={personal}
-                  onChange={setPersonal}
-                  onContinue={() => goTo(2)}
+                  defaultValues={personal}
+                  onContinue={(data) => {
+                    setPersonal(data);
+                    goTo(2);
+                  }}
                 />
               </motion.div>
             )}
             {step === 2 && (
               <motion.div
-                key='step-2'
+                key="step-2"
                 custom={directionRef.current}
                 variants={stepVariants}
-                initial='enter'
-                animate='center'
-                exit='exit'
+                initial="enter"
+                animate="center"
+                exit="exit"
                 transition={stepTransition}
               >
                 <ProfessionalInfoStep
-                  data={professional}
-                  onChange={setProfessional}
+                  defaultValues={professional}
                   profileLabel={personal.profileLabel}
                   onBack={() => goTo(1)}
-                  onContinue={() => goTo(3)}
+                  onContinue={(data) => {
+                    setProfessional(data);
+                    goTo(3);
+                  }}
                   onSkip={() => goTo(3)}
                 />
               </motion.div>
             )}
             {step === 3 && (
               <motion.div
-                key='step-3'
+                key="step-3"
                 custom={directionRef.current}
                 variants={stepVariants}
-                initial='enter'
-                animate='center'
-                exit='exit'
+                initial="enter"
+                animate="center"
+                exit="exit"
                 transition={stepTransition}
               >
                 <WorkExperienceStep
-                  data={work}
-                  onChange={setWork}
+                  defaultValues={work}
                   profileLabel={personal.profileLabel}
                   onBack={() => goTo(2)}
-                  onContinue={() => goTo(4)}
+                  onContinue={(data) => {
+                    setWork(data);
+                    goTo(4);
+                  }}
                   onSkip={() => goTo(4)}
                 />
               </motion.div>
             )}
             {step === 4 && (
               <motion.div
-                key='step-4'
+                key="step-4"
                 custom={directionRef.current}
                 variants={stepVariants}
-                initial='enter'
-                animate='center'
-                exit='exit'
+                initial="enter"
+                animate="center"
+                exit="exit"
                 transition={stepTransition}
               >
                 <CredentialsStep
-                  data={credentials}
-                  onChange={setCredentials}
+                  defaultValues={credentials}
                   profileLabel={personal.profileLabel}
                   onBack={() => goTo(3)}
                   onFinish={finish}

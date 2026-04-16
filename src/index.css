@@ -8,8 +8,9 @@
   --font-poppins: Poppins, sans-serif;
 
   /* Brand palette */
-  --color-app-background: #f3f4f6;
-  --color-app-foreground: #ffff;
+  --color-app-background: #fff;
+  --color-app-foreground: var(--color-neutral-01);
+  --color-app-sidebar: #f3f4f6;
   --color-brand-border: #e5e7eb;
   --color-brand-btn: #f8faff;
   --color-brand-btn-hover: #eef0ff;
@@ -47,6 +48,20 @@
   --color-primary-05: #3f38c7;
   --color-primary-06: #474ac4;
 
+  /* Blue palette */
+  --color-blue-01: #005a99;
+  --color-blue-02: #0077e6;
+  --color-blue-03: #229efe;
+  --color-blue-04: #6cb8ff;
+  --color-blue-05: #d6ebff;
+
+  /* Red palette */
+  --color-red-01: #8c1c13;
+  --color-red-02: #d83037;
+  --color-red-03: #e63946;
+  --color-red-04: #f4a3a6;
+  --color-red-05: #f8d7da;
+
   /* Semantic */
   --color-success-400: #22c55e;
   --color-warning-400: #f5a524;
@@ -64,11 +79,12 @@
 
 .dark {
   /* Brand palette */
-  --color-app-background: #06101e;
-  --color-app-foreground: #122031;
+  --color-app-background: #0a0a0a;
+  --color-app-foreground: #161819;
+  --color-app-sidebar: #161616;
   --color-brand-btn: #1f2a37;
   --color-brand-btn-hover: #2a3746;
-  --color-brand-border: #222f3f;
+  --color-brand-border: #222222;
   --color-brand-muted: #94a3b8;
   --color-brand-accent: #5750f1;
   --color-brand-accent-soft: #f3f3fe;
@@ -91,7 +107,19 @@
   --color-brand-800: #c1c2ff;
   --color-brand-900: #d8d9ff;
 
+  /* Neutral Palette — Dark Mode */
+  --color-neutral-01: #0d1114;
+  --color-neutral-02: #161d22;
+  --color-neutral-03: #273038;
+  --color-neutral-04: #4e5d69;
+  --color-neutral-05: #8f9192;
+  --color-neutral-06: #a8b5be;
+  --color-neutral-07: #cdd5db;
+  --color-neutral-08: #e2e8ed;
+  --color-neutral-09: #f2f5f7;
+
   /* Semantic */
+
   --color-success-400: #4ade80;
   --color-warning-400: #fbbf24;
   --color-danger-400: #fc9090;
@@ -239,7 +267,7 @@
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: 'Inter Variable', sans-serif;
+  --font-sans: "Inter Variable", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -264,7 +292,8 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
+  /* --color-primary: var(--primary); */
+  --color-primary: var(--color-brand-accent);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);

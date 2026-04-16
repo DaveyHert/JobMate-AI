@@ -198,7 +198,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className='bg-app-background'>
+    <div className='bg-white-white-400'>
       <div className='px-8 pb-8'>
         {/* Stats Cards */}
         <StatsGrid stats={stats} />
@@ -207,7 +207,7 @@ const Dashboard: React.FC = () => {
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-9'>
           {/* Applications List */}
           <div className='lg:col-span-6'>
-            <div className='bg-app-foreground border-brand-border rounded-xl border p-6'>
+            <div className='bg-app-background border-brand-border rounded-xl border p-6'>
               <div className='mb-6 flex items-center justify-between'>
                 <h2 className='text-primary-text text-xl font-semibold'>Recent Applications</h2>
                 <button
