@@ -4,6 +4,64 @@ import { domProbe } from "../engine/DOMProbe";
 import { jobMateStore } from "../store/jobMateStore";
 import { extractJobInfo } from "../utils/jobExtraction";
 import { showNotification } from "../utils/notifications";
+import type { FillResult } from "../engine/types";
+
+type ContentScriptRequest =
+  | { action: "ping" }
+  | { action: "autoFill" }
+  | { action: "extractJobInfo" }
+  | { action: "extractJobDescription" }
+  | { action: "getSelectedText" };
+
+interface PingResponse {
+  success: boolean;
+  message: string;
+  initialized: boolean;
+  url: string;
+  title: string;
+}
+
+interface AutoFillMessageResponse {
+  success: boolean;
+  result?: FillResult;
+  error?: string;
+  message?: string;
+}
+
+interface JobInfoResponse {
+  title: string;
+  company: string;
+  url: string;
+  source: string;
+  confidence: number;
+  method: string;
+  timestamp: string;
+  success: boolean;
+  error?: string;
+}
+
+interface JobDescriptionResponse {
+  text: string;
+  html: string;
+  source: string;
+  success: boolean;
+  error?: string;
+}
+
+type ContentScriptResponse =
+  | PingResponse
+  | AutoFillMessageResponse
+  | JobInfoResponse
+  | JobDescriptionResponse
+  | { selectedText: string }
+  | { error: string };
+
+declare global {
+  interface Window {
+    jobMateContentScript?: ContentScriptManager;
+    jobMateContentScriptLoaded?: boolean;
+  }
+}
 
 class ContentScriptManager {
   private isInitialized = false;
@@ -43,7 +101,7 @@ class ContentScriptManager {
       // Signal that content script is ready
       try {
         chrome.runtime.sendMessage({ action: "contentScriptReady" });
-      } catch (error) {
+      } catch {
         // Ignore errors if background script isn't ready
         console.log("📡 Background script not ready, continuing...");
       }
@@ -87,7 +145,11 @@ class ContentScriptManager {
     }
   }
 
-  private async handleMessage(request: any, sender: any, sendResponse: (response: any) => void) {
+  private async handleMessage(
+    request: ContentScriptRequest,
+    _sender: chrome.runtime.MessageSender,
+    sendResponse: (response: ContentScriptResponse) => void,
+  ) {
     try {
       // Wait for initialization to complete
       if (this.initializationPromise) {
@@ -97,7 +159,7 @@ class ContentScriptManager {
       console.log(`🔄 Processing action: ${request.action}`);
 
       switch (request.action) {
-        case "ping":
+        case "ping": {
           console.log("🏓 Ping received, responding...");
           sendResponse({
             success: true,
@@ -107,46 +169,45 @@ class ContentScriptManager {
             title: document.title,
           });
           break;
+        }
 
-        case "autoFill":
+        case "autoFill": {
           const result = await this.handleAutoFill();
           sendResponse(result);
           break;
+        }
 
-        case "extractJobInfo":
+        case "extractJobInfo": {
           const jobInfo = this.extractJobInfo();
           sendResponse(jobInfo);
           break;
+        }
 
-        case "extractJobDescription":
+        case "extractJobDescription": {
           const jobDescription = this.extractJobDescription();
           sendResponse(jobDescription);
           break;
+        }
 
-        case "getSelectedText":
+        case "getSelectedText": {
           const selectedText = window.getSelection()?.toString() || "";
           sendResponse({ selectedText });
           break;
+        }
 
         default:
-          console.warn(`❓ Unknown action: ${request.action}`);
+          console.warn(`❓ Unknown action:`, request);
           sendResponse({ error: "Unknown action" });
       }
     } catch (error) {
       console.error("❌ Content script message handling error:", error);
       sendResponse({
         error: error instanceof Error ? error.message : "Unknown error",
-        success: false,
       });
     }
   }
 
-  private async handleAutoFill(): Promise<{
-    success: boolean;
-    result?: any;
-    error?: string;
-    message?: string;
-  }> {
+  private async handleAutoFill(): Promise<AutoFillMessageResponse> {
     try {
       console.log("🔄 Starting auto-fill process...");
       const [profile, data] = await Promise.all([
@@ -182,7 +243,7 @@ class ContentScriptManager {
     }
   }
 
-  private extractJobInfo(): any {
+  private extractJobInfo(): JobInfoResponse {
     try {
       console.log("🔍 Starting job info extraction...");
       console.log("📄 Current page title:", document.title);
@@ -215,7 +276,7 @@ class ContentScriptManager {
     }
   }
 
-  private extractJobDescription(): any {
+  private extractJobDescription(): JobDescriptionResponse {
     try {
       console.log("🔍 Extracting job description...");
 
@@ -300,7 +361,7 @@ try {
   const contentScriptManager = new ContentScriptManager();
 
   // Make it globally available for debugging
-  (window as any).jobMateContentScript = contentScriptManager;
+  window.jobMateContentScript = contentScriptManager;
 
   console.log("✅ JobMate AI+ content script setup complete");
 } catch (error) {
@@ -308,8 +369,8 @@ try {
 }
 
 // Also handle the case where the script is injected multiple times
-if (!(window as any).jobMateContentScriptLoaded) {
-  (window as any).jobMateContentScriptLoaded = true;
+if (!window.jobMateContentScriptLoaded) {
+  window.jobMateContentScriptLoaded = true;
   console.log("🔒 JobMate AI+ content script marked as loaded");
 } else {
   console.log("⚠️ JobMate AI+ content script already loaded, skipping initialization");

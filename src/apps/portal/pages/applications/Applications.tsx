@@ -11,9 +11,9 @@
 
 import { useState, useMemo } from "react";
 import { ChevronDown, Search } from "lucide-react";
-import { useJobMateData } from "../../hooks/useJobMateData";
-import { jobMateStore } from "../../store/jobMateStore";
-import type { ApplicationStatus } from "../../models/models";
+import { useJobMateData } from "@hooks/useJobMateData";
+import { jobMateStore } from "@/store/jobMateStore";
+import type { ApplicationStatus } from "@/models/models";
 import { toast } from "sonner";
 import { ApplicationCard } from "./components/ApplicationCard";
 import { ApplicationListRow } from "./components/ApplicationListRow";
@@ -21,7 +21,6 @@ import { ApplicationsToolbar } from "./components/ApplicationsToolbar";
 import { ApplicationsPagination } from "./components/ApplicationsPagination";
 import { ApplicationDetailsModal } from "./components/ApplicationDetailsModal";
 import { STATUS_CONFIG, getLastUpdatedDate } from "./components/applicationConstants";
-import type { Application } from "../../models/models";
 
 const GRID_PAGE_SIZE = 9; // 3 × 3
 const LIST_PAGE_SIZE = 10;

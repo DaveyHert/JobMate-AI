@@ -1,11 +1,11 @@
 // ============================================================================
-// DashboardLayout — shared shell for every page on the web portal
+// PortalLayout — shared shell for every page on the web portal
 // ============================================================================
 // Matches the Figma spec: light sidebar with "JobMate AI" wordmark, a count
 // badge on My Applications, pill-style active nav item, prominent "Add new
 // application" button, and a top greeting header with notification + avatar.
 //
-// Sub-routes are driven by window.location.hash so dashboard.html stays a
+// Sub-routes are driven by window.location.hash so portal.html stays a
 // single SPA entry.
 // ============================================================================
 
@@ -22,15 +22,15 @@ import {
   Moon,
   Monitor,
 } from "lucide-react";
-import type { ThemePreference } from "../../context/ThemeContext";
-import { useJobMateData } from "../../hooks/useJobMateData";
-import { useThemeContext } from "../../hooks/useThemeContext";
-import { AddApplicationModal } from "../application/AddApplicationModal";
+import type { ThemePreference } from "@/context/ThemeContext";
+import { useJobMateData } from "@hooks/useJobMateData";
+import { useThemeContext } from "@hooks/useThemeContext";
+import { AddApplicationModal } from "./AddApplicationModal";
 
-export type DashboardRoute = "dashboard" | "applications" | "analytics" | "settings";
+export type PortalRoute = "dashboard" | "applications" | "analytics" | "settings";
 
 interface NavItem {
-  route: DashboardRoute;
+  route: PortalRoute;
   label: string;
   icon: typeof LayoutDashboard;
   hash: string;
@@ -60,12 +60,12 @@ const NAV_ITEMS: NavItem[] = [
   },
 ];
 
-interface DashboardLayoutProps {
-  currentRoute: DashboardRoute;
+interface PortalLayoutProps {
+  currentRoute: PortalRoute;
   children: ReactNode;
 }
 
-export function DashboardLayout({ currentRoute, children }: DashboardLayoutProps) {
+export function PortalLayout({ currentRoute, children }: PortalLayoutProps) {
   const data = useJobMateData();
   const { preference, setPreference } = useThemeContext();
 

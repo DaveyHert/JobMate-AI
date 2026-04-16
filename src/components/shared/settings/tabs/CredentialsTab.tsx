@@ -9,8 +9,8 @@
 
 import { useState } from "react";
 import { GraduationCap, Award, Plus, Pencil, Trash2, Check, X } from "lucide-react";
-import type { Credential, Education, UserProfile } from "../../../models/models";
-import { jobMateStore } from "../../../store/jobMateStore";
+import type { Credential, Education, UserProfile } from "@/models/models";
+import { jobMateStore } from "@/store/jobMateStore";
 
 interface CredentialsTabProps {
   profile: UserProfile;

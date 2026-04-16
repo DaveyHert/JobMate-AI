@@ -8,13 +8,13 @@
 
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { useJobMateData } from "../../hooks/useJobMateData";
-import { jobMateStore } from "../../store/jobMateStore";
-import { GeneralTab } from "./tabs/GeneralTab";
-import { PersonalInfoTab } from "./tabs/PersonalInfoTab";
-import { ProfessionalInfoTab } from "./tabs/ProfessionalInfoTab";
-import { CredentialsTab } from "./tabs/CredentialsTab";
-import { PrivacyTab } from "./tabs/PrivacyTab";
+import { useJobMateData } from "@hooks/useJobMateData";
+import { jobMateStore } from "@/store/jobMateStore";
+import { GeneralTab } from "@shared/settings/tabs/GeneralTab";
+import { PersonalInfoTab } from "@shared/settings/tabs/PersonalInfoTab";
+import { ProfessionalInfoTab } from "@shared/settings/tabs/ProfessionalInfoTab";
+import { CredentialsTab } from "@shared/settings/tabs/CredentialsTab";
+import { PrivacyTab } from "@shared/settings/tabs/PrivacyTab";
 
 type SettingsTab = "general" | "personal" | "professional" | "credentials" | "privacy";
 

@@ -10,7 +10,7 @@
 
 import { useState, useRef, DragEvent, ChangeEvent } from "react";
 import { X, UploadCloud, FileText } from "lucide-react";
-import type { ResumeDoc } from "../../../models/models";
+import type { ResumeDoc } from "@/models/models";
 
 const MAX_SIZE_BYTES = 5 * 1024 * 1024;
 const MAX_LABEL_LENGTH = 60;

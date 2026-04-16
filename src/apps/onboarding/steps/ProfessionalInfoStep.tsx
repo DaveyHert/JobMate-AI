@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "@tanstack/react-form";
+import { useForm, type AnyFieldApi, type AnyFormApi } from "@tanstack/react-form";
 import { Briefcase } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -57,6 +57,16 @@ interface Props {
 const baseInputStyles =
   "border-neutral-02 text-neutral-06 placeholder:text-neutral-04 focus-visible:border-brand-accent focus-visible:ring-brand-accent/30 h-auto rounded-lg bg-white px-4 py-3 text-base shadow-none placeholder:font-normal focus-visible:ring-2 transition-colors";
 
+interface FormTextFieldProps {
+  form: AnyFormApi;
+  name: string;
+  label: string;
+  placeholder: string;
+  type?: string;
+  validators?: { onSubmit?: (args: { value: string }) => string | undefined };
+  className?: string;
+}
+
 function FormTextField({
   form,
   name,
@@ -65,10 +75,10 @@ function FormTextField({
   type = "text",
   validators,
   className,
-}: any) {
+}: FormTextFieldProps) {
   return (
     <form.Field name={name} validators={validators}>
-      {(field: any) => {
+      {(field: AnyFieldApi) => {
         const hasError = field.state.meta.errors.length > 0;
         return (
           <div className={cn("flex flex-col gap-1.5", className)}>
@@ -148,7 +158,7 @@ export function ProfessionalInfoStep({
           />
 
           <form.Field name='authorizedUS'>
-            {(field: any) => (
+            {(field: AnyFieldApi) => (
               <div className='flex items-center justify-between'>
                 <p className='text-neutral-06 text-base font-medium'>
                   Are you authorized to work in the US?
@@ -184,7 +194,7 @@ export function ProfessionalInfoStep({
         <div className='grid grid-cols-2 gap-4'>
           {SOCIAL_LINKS.map(({ platform, icon, placeholder }) => (
             <form.Field key={platform} name={platform}>
-              {(field: any) => (
+              {(field: AnyFieldApi) => (
                 <SocialInput
                   icon={icon}
                   placeholder={placeholder}

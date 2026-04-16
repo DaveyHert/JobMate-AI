@@ -1,4 +1,4 @@
-import { capitalizeFirstChar } from "../../utils/capitalizeFirstChar";
+import { capitalizeFirstChar } from "@/utils/capitalizeFirstChar";
 
 interface ApplicationStatusFilter {
   filterCounts: Record<string, number>;

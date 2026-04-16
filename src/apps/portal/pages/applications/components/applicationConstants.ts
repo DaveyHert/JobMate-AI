@@ -3,8 +3,8 @@
 // Applications page and its sub-components. No JSX here.
 // ============================================================================
 
-import type { Application, ApplicationStatus } from "../../../models/models";
-export { formatShortRelative, formatDetailDate } from "../../../utils/dateHelpers";
+import type { Application, ApplicationStatus } from "@/models/models";
+export { formatShortRelative, formatDetailDate } from "@utils/dateHelpers";
 
 export const STATUS_CONFIG: Record<
   ApplicationStatus,

@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import type { ApplicationStatus } from "../../../models/models";
+import type { ApplicationStatus } from "@/models/models";
 import { STATUS_CONFIG, ALL_STATUSES } from "./applicationConstants";
 
 export function StatusSelect({

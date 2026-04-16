@@ -1,4 +1,4 @@
-import { BarchartIcon, BriefIcon, GearIcon, HomeIcon, ProfileIcon } from "../assets/svg/icons";
+import { BarchartIcon, BriefIcon, GearIcon, HomeIcon, ProfileIcon } from "@/assets/svg/icons";
 
 interface BottomNavigationProps {
   activeTab: string;

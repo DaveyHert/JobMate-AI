@@ -1,15 +1,29 @@
 import { useState } from "react";
-import QuickActions from "../QuickActions";
-import ApplicationCard from "../application/ApplicationCard";
-import { Application, ApplicationStatus, WeeklyGoal } from "../../models/models";
-import TargetGoal from "../TargetGoal";
+import QuickActions from "../components/QuickActions";
+import ApplicationCard from "../components/ApplicationCard";
+import { Application, ApplicationStatus, WeeklyGoal } from "@/models/models";
+
+interface JobInfoResponse {
+  title?: string;
+  company?: string;
+  url?: string;
+  source?: string;
+}
+
+interface AutoFillResponse {
+  success?: boolean;
+  error?: string;
+}
+import TargetGoal from "../components/TargetGoal";
 
 interface HomeTabProps {
   applications: Application[];
   weeklyGoal: WeeklyGoal;
   handleStatusChange: (id: number, status: ApplicationStatus) => Promise<void>;
   setActiveTab: (tab: string) => void;
-  setActiveAIFeature: (feature: string) => void;
+  setActiveAIFeature: (
+    feature: "cover-letter" | "job-fit" | "resume-tailor" | "answer-generator",
+  ) => void;
   onAddApplication: (
     app: Omit<Application, "id" | "status" | "dateApplied" | "history">,
   ) => Promise<void>;
@@ -52,12 +66,12 @@ function HomeTab({
         return;
       }
 
-      let response: any;
+      let response: JobInfoResponse | undefined;
       try {
         response = await chrome.tabs.sendMessage(tab.id, {
           action: "extractJobInfo",
         });
-      } catch (err) {
+      } catch {
         showNotification("Couldn't read this page. Open a job posting and try again.", "warning");
         return;
       }
@@ -111,10 +125,10 @@ function HomeTab({
         return;
       }
 
-      let response: any;
+      let response: AutoFillResponse | undefined;
       try {
         response = await chrome.tabs.sendMessage(tab.id, { action: "autoFill" });
-      } catch (err) {
+      } catch {
         showNotification(
           "This page isn't reachable. Open a job application form and try again.",
           "warning",

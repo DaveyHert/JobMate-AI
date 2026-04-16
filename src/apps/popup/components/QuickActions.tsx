@@ -6,7 +6,7 @@ import {
   TargetIcon,
   FileIcon,
   BrainIcon,
-} from "../assets/svg/icons";
+} from "@/assets/svg/icons";
 
 interface QuickAction {
   icon: React.ElementType;

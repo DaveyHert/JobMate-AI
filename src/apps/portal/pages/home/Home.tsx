@@ -15,21 +15,21 @@ import {
   Save,
   Edit3,
 } from "lucide-react";
-import { mockApplications } from "../../data/mockApplications";
-import { Application, DashboardStats } from "../../models/models";
-import { AddIcon } from "../../assets/svg/icons";
+import { mockApplications } from "@/data/mockApplications";
+import { Application, DashboardStats } from "@/models/models";
+import { AddIcon } from "@/assets/svg/icons";
 
-import QuickActions from "./QuickActions";
-import { formatDate } from "../../utils/dateHelpers";
-import { calculateStats } from "../../helpers/calculateStats";
+import QuickActions from "../../components/QuickActions";
+import { formatDate } from "@utils/dateHelpers";
+import { calculateStats } from "@/helpers/calculateStats";
 import { StatsGrid } from "./StatsGrid";
-import drawChart from "../../utils/drawChart";
-import { getStatusColor } from "../../utils/getStatusColor";
-import ApplicationStatusFilter from "../application/ApplicationStatusFilter";
-import { getDynamicFilterCounts } from "../../utils/getDynamicFilterCounts";
-import { useJobMateData } from "../../hooks/useJobMateData";
-import { jobMateStore } from "../../store/jobMateStore";
-import { AddApplicationModal } from "../application/AddApplicationModal";
+import drawChart from "@utils/drawChart";
+import { getStatusColor } from "@utils/getStatusColor";
+import ApplicationStatusFilter from "@shared/ApplicationStatusFilter";
+import { getDynamicFilterCounts } from "@utils/getDynamicFilterCounts";
+import { useJobMateData } from "@hooks/useJobMateData";
+import { jobMateStore } from "@/store/jobMateStore";
+import { AddApplicationModal } from "../../components/AddApplicationModal";
 
 const STATUSES = ["applied", "interviewing", "rejected", "offer", "ghosted", "withdrawn"];
 

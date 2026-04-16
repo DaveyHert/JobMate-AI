@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { MoreVertical, ExternalLink, Trash2 } from "lucide-react";
-import type { Application, ApplicationStatus } from "../../../models/models";
+import type { Application, ApplicationStatus } from "@/models/models";
 import { StatusSelect } from "./StatusSelect";
 import { getLastUpdatedDate, formatShortRelative, getAvatar } from "./applicationConstants";
 

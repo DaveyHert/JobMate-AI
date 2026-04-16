@@ -10,12 +10,12 @@
 
 import { useState, useEffect } from "react";
 import { X, FileText, ExternalLink, Pencil } from "lucide-react";
-import { jobMateStore } from "../../../store/jobMateStore";
+import { jobMateStore } from "@/store/jobMateStore";
 import { toast } from "sonner";
-import type { Application, ApplicationStatus, JobType } from "../../../models/models";
+import type { Application, ApplicationStatus, JobType } from "@/models/models";
 import { StatusSelect } from "./StatusSelect";
 import { getLastUpdatedDate, getAvatar } from "./applicationConstants";
-import { formatDetailDate } from "../../../utils/dateHelpers";
+import { formatDetailDate } from "@utils/dateHelpers";
 
 interface Props {
   app: Application | null;
@@ -56,11 +56,13 @@ export function ApplicationDetailsModal({ app, onClose, onDeleted }: Props) {
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<EditState | null>(null);
 
-  // Reset edit state whenever a new app is opened
+  // Reset edit state only when a different app is opened (by id), not on every
+  // reference change — the parent re-creates the app object on each render.
   useEffect(() => {
     if (!app) return;
     setEditing(false);
     setForm(appToForm(app));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app?.id]);
 
   if (!app || !form) return null;

@@ -12,9 +12,9 @@
 
 import { useState } from "react";
 import { Plus, SquarePen, Trash2, Check } from "lucide-react";
-import type { UserProfile, WorkExperience } from "../../../models/models";
-import { jobMateStore } from "../../../store/jobMateStore";
-import { BehanceIcon, GithubIcon, XIcon, InstagramIcon } from "@/assets/svg/icons/";
+import type { UserProfile, WorkExperience } from "@/models/models";
+import { jobMateStore } from "@/store/jobMateStore";
+import { BehanceIcon, GithubIcon, XIcon } from "@/assets/svg/icons/";
 
 interface ProfessionalInfoTabProps {
   profile: UserProfile;

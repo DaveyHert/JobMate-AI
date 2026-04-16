@@ -17,9 +17,11 @@
     /* Path aliases */
     "paths": {
       "@/*": ["./src/*"],
+      "@apps/*": ["./src/apps/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@utils/*": ["./src/utils/*"],
-      "@components/*": ["./src/components/*"]
+      "@components/*": ["./src/components/*"],
+      "@shared/*": ["./src/components/shared/*"]
     },
 
     /* Linting */

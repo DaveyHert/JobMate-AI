@@ -1,4 +1,4 @@
-import { useForm } from "@tanstack/react-form";
+import { useForm, type AnyFieldApi, type AnyFormApi } from "@tanstack/react-form";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -40,6 +40,17 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 //   "border-neutral-02  focus-visible:border-brand-accent focus-visible:ring-brand-accent/30 h-auto rounded-lg bg-white px-4 py-3 shadow-none focus-visible:ring-2 transition-colors h-auto";
 
 // 2. Reusable Component with clsx/cn for dynamic states
+interface FormTextFieldProps {
+  form: AnyFormApi;
+  name: string;
+  label: string;
+  placeholder: string;
+  type?: string;
+  validators?: { onSubmit?: (args: { value: string }) => string | undefined };
+  optional?: boolean;
+  className?: string;
+}
+
 function FormTextField({
   form,
   name,
@@ -49,10 +60,10 @@ function FormTextField({
   validators,
   optional = false,
   className,
-}: any) {
+}: FormTextFieldProps) {
   return (
     <form.Field name={name} validators={validators}>
-      {(field: any) => {
+      {(field: AnyFieldApi) => {
         const hasError = field.state.meta.errors.length > 0;
 
         return (
@@ -131,7 +142,7 @@ export function PersonalInfoStep({ defaultValues, onContinue }: Props) {
               <label className='text-neutral-06 text-base font-medium'>Phone number</label>
               <div className='border-neutral-02 focus-within:border-brand-accent focus-within:ring-brand-accent/30 flex items-stretch overflow-hidden rounded-lg border bg-white transition-colors focus-within:ring-2'>
                 <form.Field name='phoneCode'>
-                  {(field: any) => (
+                  {(field: AnyFieldApi) => (
                     <Select value={field.state.value} onValueChange={field.handleChange}>
                       <SelectTrigger className='border-neutral-02 bg-neutral-01 text-neutral-06 !h-auto w-auto shrink-0 cursor-pointer rounded-none border-0 border-r text-base shadow-none focus-visible:ring-0'>
                         <SelectValue />

@@ -8,8 +8,8 @@
 
 import { Download, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import type { JobMateSettings } from "../../../models/models";
-import { jobMateStore } from "../../../store/jobMateStore";
+import type { JobMateSettings } from "@/models/models";
+import { jobMateStore } from "@/store/jobMateStore";
 
 interface PrivacyTabProps {
   settings: JobMateSettings;

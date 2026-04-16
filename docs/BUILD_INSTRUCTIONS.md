@@ -39,9 +39,11 @@ npm run build:clean
 dist/
 ├── manifest.json
 ├── popup.html
-├── dashboard.html
+├── portal.html
+├── onboarding.html
 ├── popup.js
-├── dashboard.js
+├── portal.js
+├── onboarding.js
 ├── background/
 │   └── background.js
 ├── content/

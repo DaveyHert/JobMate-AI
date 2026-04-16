@@ -15,6 +15,21 @@ interface UseJobExtractionReturn {
   error: string | null;
 }
 
+interface PingResponse {
+  success?: boolean;
+}
+
+interface ExtractionResponse {
+  success?: boolean;
+  title?: string;
+  company?: string;
+  url?: string;
+  source?: string;
+  confidence?: number;
+  method?: string;
+  error?: string;
+}
+
 export const useJobExtraction = (): UseJobExtractionReturn => {
   const [isExtracting, setIsExtracting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,7 +77,7 @@ export const useJobExtraction = (): UseJobExtractionReturn => {
               });
             });
 
-            if ((pingResponse as any)?.success) {
+            if ((pingResponse as PingResponse)?.success) {
               console.log('🏓 Content script is alive:', pingResponse);
               contentScriptReady = true;
               break;
@@ -99,7 +114,7 @@ export const useJobExtraction = (): UseJobExtractionReturn => {
                 });
               });
 
-              if ((pingResponse as any)?.success) {
+              if ((pingResponse as PingResponse)?.success) {
                 console.log('✅ Content script injected and responding');
                 contentScriptReady = true;
               }
@@ -139,8 +154,8 @@ export const useJobExtraction = (): UseJobExtractionReturn => {
         
         console.log('📄 Extraction response:', response);
 
-        if (response && (response as any).success !== false) {
-          const result = response as any;
+        if (response && (response as ExtractionResponse).success !== false) {
+          const result = response as ExtractionResponse;
           // Validate the response has meaningful data
           if (result.title && result.company && 
               result.title !== 'Unknown Position' && 
@@ -168,7 +183,7 @@ export const useJobExtraction = (): UseJobExtractionReturn => {
             }
           }
         } else {
-          throw new Error((response as any)?.error || 'Content script returned no data');
+          throw new Error((response as ExtractionResponse)?.error || 'Content script returned no data');
         }
       } else {
         throw new Error('Chrome extension APIs not available');
@@ -270,13 +285,13 @@ function extractFromTabInfo(title: string, url: string): JobInfo {
     const hostname = new URL(url).hostname;
     
     if (hostname.includes('greenhouse.io')) {
-      const pathMatch = url.match(/greenhouse\.io\/([^\/]+)/);
+      const pathMatch = url.match(/greenhouse\.io\/([^/]+)/);
       if (pathMatch) {
         company = pathMatch[1].replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         confidence = Math.max(confidence, 60);
       }
     } else if (hostname.includes('lever.co')) {
-      const pathMatch = url.match(/lever\.co\/([^\/]+)/);
+      const pathMatch = url.match(/lever\.co\/([^/]+)/);
       if (pathMatch) {
         company = pathMatch[1].replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         confidence = Math.max(confidence, 60);

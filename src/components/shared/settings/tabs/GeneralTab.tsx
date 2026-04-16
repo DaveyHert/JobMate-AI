@@ -27,10 +27,10 @@ import type {
   ResumeDoc,
   UserProfile,
 } from "@/models/models";
-import { jobMateStore } from "../../../store/jobMateStore";
+import { jobMateStore } from "@/store/jobMateStore";
 import { UploadResumeModal } from "../components/UploadResumeModal";
 import { EditResumeModal } from "../components/EditResumeModal";
-import { useThemeContext } from "../../../hooks/useThemeContext";
+import { useThemeContext } from "@hooks/useThemeContext";
 import SettingsSection from "../components/SettingsSection";
 import ToggleSwitch from "../components/ToggleSwitch";
 import SettingsCard from "../components/SettingsCard";

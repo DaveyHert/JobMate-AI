@@ -33,6 +33,6 @@ export function normalizeForHash(input: string): string {
   return input
     .toLowerCase()
     .replace(/[\s\u00a0]+/g, " ")
-    .replace(/[^\w\s@.\-]/g, "")
+    .replace(/[^\w\s@.-]/g, "")
     .trim();
 }

@@ -1,14 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "sonner";
-import DashboardApp from "./components/dashboard/DashboardApp";
-import "./index.css";
-import { ThemeProvider } from "./context/ThemeContext";
+import PortalApp from "./App";
+import "@/index.css";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider>
-      <DashboardApp />
+      <PortalApp />
       <Toaster position='top-right' richColors closeButton />
     </ThemeProvider>
   </StrictMode>,

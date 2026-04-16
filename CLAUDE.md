@@ -12,7 +12,7 @@ JobMate AI+ is a Chrome Extension (Manifest V3) built with React + TypeScript + 
 npm run build              # Full extension build (tsc + main Vite build + content script build)
 npm run build:clean        # rm -rf dist, then full build
 npm run build:extension    # build + copy manifest, icons, autofillEngine.js to dist/
-npm run dev                # Vite dev server (popup + dashboard only; chrome.* APIs won't work)
+npm run dev                # Vite dev server (popup + portal only; chrome.* APIs won't work)
 npm run lint               # ESLint
 ```
 
@@ -22,7 +22,7 @@ To load in Chrome: `chrome://extensions/` → Enable Developer mode → Load unp
 
 The `build` script runs two separate Vite configs in sequence:
 
-1. **`vite.config.ts`** — builds popup, dashboard, and background service worker as ES modules. Entry points: `popup.html`, `dashboard.html`, `index.html` (dev only), `src/background/background.ts`.
+1. **`vite.config.ts`** — builds popup, portal, onboarding, and background service worker as ES modules. Entry points: `popup.html`, `portal.html`, `onboarding.html`, `index.html` (dev only), `src/background/background.ts`.
 2. **`vite.content.config.ts`** — builds `src/content/contentScript.ts` as a single IIFE (no imports). `emptyOutDir: false` is required so this pass doesn't wipe the first pass output.
 
 Content scripts must be IIFE because Chrome MV3 injects them as classic scripts, not ES modules.
@@ -34,12 +34,51 @@ Defined in both Vite configs and `tsconfig`:
 - `@hooks` → `src/hooks/`
 - `@utils` → `src/utils/`
 - `@components` → `src/components/`
+- `@apps` → `src/apps/`
+- `@shared` → `src/components/shared/`
+
+## Folder structure
+
+The `src/` layout is app-oriented — each of the three React roots lives under its own folder in `src/apps/`:
+
+```
+src/
+├── apps/
+│   ├── popup/         # popup.html root (580×700 extension popup)
+│   │   ├── main.tsx   # React entry
+│   │   ├── App.tsx    # tab shell
+│   │   ├── pages/     # Home, Applications, Settings
+│   │   └── components/
+│   ├── portal/        # portal.html root (full-page web portal)
+│   │   ├── main.tsx
+│   │   ├── App.tsx    # hash router
+│   │   ├── pages/home, pages/applications, pages/settings
+│   │   └── components/  # PortalLayout, Header, QuickActions, AddApplicationModal
+│   └── onboarding/    # onboarding.html root (first-install wizard)
+│       ├── main.tsx
+│       ├── App.tsx
+│       ├── steps/
+│       └── components/
+├── components/
+│   ├── ui/            # shadcn primitives
+│   └── shared/        # components used by more than one app (e.g. settings tabs)
+├── main.tsx           # dev-only SPA entry (index.html) — Vite convention at src root
+├── App.tsx            # dev-only SPA router — hosts both popup and portal
+├── background/        # MV3 service worker
+├── content/           # contentScript (IIFE bundle)
+├── engine/            # autofill engine used by content script
+├── hooks/, utils/, store/, context/, models/, helpers/, lib/, data/, assets/
+```
+
+Import conventions:
+- Same-app imports: relative (`./components/Foo`, `../pages/Bar`).
+- Cross-cutting imports: use aliases (`@/models/models`, `@hooks/useJobMateData`, `@shared/settings/tabs/GeneralTab`).
 
 ## State management — `jobMateStore`
 
 **All persistent state flows through `src/store/jobMateStore.ts`.** Never call `chrome.storage.local` directly.
 
-- In extension contexts (popup, dashboard, background, content): uses `ChromeStorageBackend`
+- In extension contexts (popup, portal, background, content): uses `ChromeStorageBackend`
 - In dev (Vite preview, no chrome.*): falls back to `LocalStorageBackend`
 - Singleton — every import in a given context gets the same instance
 - Cross-context sync happens via `chrome.storage.onChanged`
@@ -59,15 +98,16 @@ Schema migrations run inside `jobMateStore` on every load. Unknown schema versio
 
 ## Extension UI contexts
 
-There are two independent React roots:
-- **Popup** (`popup.html` → `src/popup.tsx` → `src/components/Popup.tsx`) — 580×700px fixed, tab-based nav (Home / Applications / Settings)
-- **Dashboard** (`dashboard.html` → `src/dashboard.tsx` → `src/components/dashboard/DashboardApp.tsx`) — full page, opened via `chrome.tabs.create`
+There are three independent React roots:
+- **Popup** (`popup.html` → `src/apps/popup/main.tsx` → `src/apps/popup/App.tsx`) — 580×700px fixed, tab-based nav (Home / Applications / Settings)
+- **Portal** (`portal.html` → `src/apps/portal/main.tsx` → `src/apps/portal/App.tsx`) — full-page web portal, opened via `chrome.tabs.create`. "Dashboard" is a route *inside* the portal, not the portal itself.
+- **Onboarding** (`onboarding.html` → `src/apps/onboarding/main.tsx` → `src/apps/onboarding/App.tsx`) — first-install wizard, opened once by the background service worker.
 
-In dev mode (`npm run dev`), both are accessible from `index.html` / `src/App.tsx` via React Router (`/` = popup, `/dashboard` = dashboard). A `DevNav` bar appears in dev mode only.
+In dev mode (`npm run dev`), popup and portal are accessible from `index.html` / `src/App.tsx` via React Router (`/` = popup, `/portal.html` = portal). A `DevNav` bar appears in dev mode only.
 
 ## Theme
 
-`ThemeContext` (`src/context/ThemeContext.tsx`) syncs light/dark across popup and dashboard via `chrome.storage.local` (key: `"theme"`). Falls back to `localStorage` + system preference when chrome.storage is unavailable. Always use `useThemeContext` from `src/hooks/useThemeContext.ts`, not the context directly.
+`ThemeContext` (`src/context/ThemeContext.tsx`) syncs light/dark across popup and portal via `chrome.storage.local` (key: `"theme"`). Falls back to `localStorage` + system preference when chrome.storage is unavailable. Always use `useThemeContext` from `src/hooks/useThemeContext.ts`, not the context directly.
 
 ## Content script
 

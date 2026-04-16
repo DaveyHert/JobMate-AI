@@ -1,4 +1,4 @@
-import { DashboardStats } from "../../models/models";
+import { DashboardStats } from "@/models/models";
 import { StatCard } from "./StatCard";
 
 // ---------------------------------------------------------------------

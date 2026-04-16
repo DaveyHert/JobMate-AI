@@ -1,5 +1,5 @@
 // ============================================================================
-// DashboardApp — the full web-portal shell (layout + hash router)
+// PortalApp — the full web-portal shell (layout + hash router)
 // ============================================================================
 // Shared between the extension build entry (src/dashboard.tsx) and the dev
 // SPA (src/App.tsx) so both see the same sidebar and routing. Sub-pages
@@ -7,12 +7,12 @@
 // ============================================================================
 
 import { useEffect, useState } from "react";
-import Dashboard from "./Dashboard";
-import { DashboardLayout, DashboardRoute } from "./DashboardLayout";
-import SettingsPage from "../../pages/settings/SettingsPage";
-import { ApplicationsPage } from "../../pages/applications/ApplicationsPage";
+import Dashboard from "./pages/home/Home";
+import { PortalLayout, PortalRoute } from "./components/PortalLayout";
+import SettingsPage from "./pages/settings/Settings";
+import { ApplicationsPage } from "./pages/applications/Applications";
 
-function parseRoute(): DashboardRoute {
+function parseRoute(): PortalRoute {
   const hash = window.location.hash.toLowerCase();
   if (hash.startsWith("#/settings")) return "settings";
   if (hash.startsWith("#/applications")) return "applications";
@@ -20,8 +20,8 @@ function parseRoute(): DashboardRoute {
   return "dashboard";
 }
 
-export default function DashboardApp() {
-  const [route, setRoute] = useState<DashboardRoute>(parseRoute);
+export default function PortalApp() {
+  const [route, setRoute] = useState<PortalRoute>(parseRoute);
 
   useEffect(() => {
     const onHashChange = () => setRoute(parseRoute());
@@ -30,7 +30,7 @@ export default function DashboardApp() {
   }, []);
 
   return (
-    <DashboardLayout currentRoute={route}>
+    <PortalLayout currentRoute={route}>
       {route === "settings" ? (
         <SettingsPage />
       ) : route === "applications" ? (
@@ -38,6 +38,6 @@ export default function DashboardApp() {
       ) : (
         <Dashboard />
       )}
-    </DashboardLayout>
+    </PortalLayout>
   );
 }

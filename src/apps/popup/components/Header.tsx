@@ -1,6 +1,6 @@
 import React from "react";
 import { ChevronDown, User } from "lucide-react";
-import type { UserProfile } from "../models/models";
+import type { UserProfile } from "@/models/models";
 
 interface HeaderProps {
   profiles: UserProfile[];

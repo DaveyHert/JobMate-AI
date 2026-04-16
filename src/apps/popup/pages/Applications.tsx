@@ -1,7 +1,7 @@
-import { Application, ApplicationStatus } from "../../models/models";
-import ApplicationCard from "./ApplicationCard";
+import { Application, ApplicationStatus } from "@/models/models";
+import ApplicationCard from "../components/ApplicationCard";
 import { Search } from "lucide-react";
-import ApplicationStatusFilter from "./ApplicationStatusFilter";
+import ApplicationStatusFilter from "@shared/ApplicationStatusFilter";
 
 interface ApplicationTab {
   filterCounts: Record<string, number>;

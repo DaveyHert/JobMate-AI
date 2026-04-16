@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "@tanstack/react-form";
+import { useForm, type AnyFieldApi, type AnyFormApi } from "@tanstack/react-form";
 import { Plus, GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -44,10 +44,18 @@ interface Props {
 const baseInputStyles =
   "border-neutral-02 text-neutral-06 placeholder:text-neutral-04 focus-visible:border-brand-accent focus-visible:ring-brand-accent/30 h-auto rounded-lg bg-white px-4 py-3 text-base shadow-none placeholder:font-normal focus-visible:ring-2 transition-colors";
 
-function EntryTextField({ form, name, label, placeholder, className }: any) {
+interface EntryTextFieldProps {
+  form: AnyFormApi;
+  name: string;
+  label: string;
+  placeholder: string;
+  className?: string;
+}
+
+function EntryTextField({ form, name, label, placeholder, className }: EntryTextFieldProps) {
   return (
     <form.Field name={name}>
-      {(field: any) => {
+      {(field: AnyFieldApi) => {
         const hasError = field.state.meta.errors.length > 0;
         return (
           <div className={cn("flex flex-col gap-1.5", className)}>
@@ -87,10 +95,10 @@ export function CredentialsStep({ defaultValues, profileLabel, onBack, onFinish,
         <h3 className='mb-5 text-base font-semibold text-neutral-07'>Academic Qualifications</h3>
 
         <form.Field name='education' mode='array'>
-          {(eduField: any) => (
+          {(eduField: AnyFieldApi) => (
             <>
               <div className='space-y-6'>
-                {eduField.state.value.map((_: any, i: number) => (
+                {(eduField.state.value as EducationEntry[]).map((_, i) => (
                   <div key={i} className='space-y-4'>
                     {i > 0 && <div className='border-t border-gray-100 pt-4' />}
                     <div className='grid grid-cols-2 gap-4'>
@@ -99,7 +107,7 @@ export function CredentialsStep({ defaultValues, profileLabel, onBack, onFinish,
                     </div>
                     <div className='grid grid-cols-2 gap-4'>
                       <form.Field name={`education[${i}].startDate`}>
-                        {(field: any) => (
+                        {(field: AnyFieldApi) => (
                           <div className='flex flex-col gap-1.5'>
                             <label className='text-base font-medium text-neutral-06'>Start date</label>
                             <DatePicker value={field.state.value} onChange={field.handleChange} onBlur={field.handleBlur} placeholder='Select a start date' />
@@ -107,7 +115,7 @@ export function CredentialsStep({ defaultValues, profileLabel, onBack, onFinish,
                         )}
                       </form.Field>
                       <form.Field name={`education[${i}].endDate`}>
-                        {(field: any) => (
+                        {(field: AnyFieldApi) => (
                           <div className='flex flex-col gap-1.5'>
                             <label className='text-base font-medium text-neutral-06'>End date</label>
                             <DatePicker value={field.state.value} onChange={field.handleChange} onBlur={field.handleBlur} placeholder='Select an end date' />
@@ -130,10 +138,10 @@ export function CredentialsStep({ defaultValues, profileLabel, onBack, onFinish,
         <h3 className='mb-5 text-base font-semibold text-neutral-07'>Non-Academic Credentials</h3>
 
         <form.Field name='credentials' mode='array'>
-          {(credField: any) => (
+          {(credField: AnyFieldApi) => (
             <>
               <div className='space-y-6'>
-                {credField.state.value.map((_: any, i: number) => (
+                {(credField.state.value as CredentialEntry[]).map((_, i) => (
                   <div key={i} className='space-y-4'>
                     {i > 0 && <div className='border-t border-gray-100 pt-4' />}
                     <div className='grid grid-cols-2 gap-4'>
@@ -142,7 +150,7 @@ export function CredentialsStep({ defaultValues, profileLabel, onBack, onFinish,
                     </div>
                     <div className='grid grid-cols-2 gap-4'>
                       <form.Field name={`credentials[${i}].startDate`}>
-                        {(field: any) => (
+                        {(field: AnyFieldApi) => (
                           <div className='flex flex-col gap-1.5'>
                             <label className='text-base font-medium text-neutral-06'>Start date</label>
                             <DatePicker value={field.state.value} onChange={field.handleChange} onBlur={field.handleBlur} placeholder='Select a start date' />
@@ -150,7 +158,7 @@ export function CredentialsStep({ defaultValues, profileLabel, onBack, onFinish,
                         )}
                       </form.Field>
                       <form.Field name={`credentials[${i}].endDate`}>
-                        {(field: any) => (
+                        {(field: AnyFieldApi) => (
                           <div className='flex flex-col gap-1.5'>
                             <label className='text-base font-medium text-neutral-06'>End date</label>
                             <DatePicker value={field.state.value} onChange={field.handleChange} onBlur={field.handleBlur} placeholder='Select an end date' />

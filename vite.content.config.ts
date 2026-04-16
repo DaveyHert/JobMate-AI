@@ -4,7 +4,7 @@
 // Chrome MV3 content scripts are injected as classic scripts, not ES modules,
 // so they must be bundled into a single self-contained file with no `import`
 // statements. The main vite.config.ts builds everything else as ES modules
-// (popup, dashboard, background service worker), and this second pass bundles
+// (popup, portal, background service worker), and this second pass bundles
 // the content script as one IIFE with every dependency inlined.
 //
 // `emptyOutDir: false` is critical — without it this build would wipe the
@@ -48,9 +48,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
+      "@apps": resolve(__dirname, "src/apps"),
       "@hooks": resolve(__dirname, "src/hooks"),
       "@utils": resolve(__dirname, "src/utils"),
       "@components": resolve(__dirname, "src/components"),
+      "@shared": resolve(__dirname, "src/components/shared"),
     },
   },
 });

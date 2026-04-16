@@ -1,4 +1,4 @@
-import { WeeklyGoal } from "../models/models";
+import { WeeklyGoal } from "@/models/models";
 
 function TargetGoal({ weeklyGoal }: { weeklyGoal: WeeklyGoal }) {
   // calculate target goal percentage

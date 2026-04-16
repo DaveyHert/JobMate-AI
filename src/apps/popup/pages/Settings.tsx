@@ -13,12 +13,12 @@
 
 import { useState } from "react";
 import { Settings as SettingsIcon, User, Briefcase, Award, Shield } from "lucide-react";
-import { useJobMateData } from "../../hooks/useJobMateData";
-import { GeneralTab } from "../../pages/settings/tabs/GeneralTab";
-import { PersonalInfoTab } from "../../pages/settings/tabs/PersonalInfoTab";
-import { ProfessionalInfoTab } from "../../pages/settings/tabs/ProfessionalInfoTab";
-import { CredentialsTab } from "../../pages/settings/tabs/CredentialsTab";
-import { PrivacyTab } from "../../pages/settings/tabs/PrivacyTab";
+import { useJobMateData } from "@hooks/useJobMateData";
+import { GeneralTab } from "@shared/settings/tabs/GeneralTab";
+import { PersonalInfoTab } from "@shared/settings/tabs/PersonalInfoTab";
+import { ProfessionalInfoTab } from "@shared/settings/tabs/ProfessionalInfoTab";
+import { CredentialsTab } from "@shared/settings/tabs/CredentialsTab";
+import { PrivacyTab } from "@shared/settings/tabs/PrivacyTab";
 
 type Tab = "general" | "personal" | "professional" | "credentials" | "privacy";
 

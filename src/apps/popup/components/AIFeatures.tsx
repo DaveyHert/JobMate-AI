@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'sonner';
+import type { UserProfile } from '@/models/models';
 import { 
   Brain, 
   FileText, 
@@ -32,17 +33,33 @@ interface CoverLetterData {
   generatedAt: string;
 }
 
+interface ResumeSuggestions {
+  skillsToAdd: string[];
+  skillsToEmphasize: string[];
+  experienceAdjustments: string[];
+  keywordOptimization: string[];
+}
+
+interface AnswerResult {
+  answer: string;
+  question: string;
+}
+
+type AIResult = Partial<
+  JobAnalysis & CoverLetterData & ResumeSuggestions & AnswerResult
+>;
+
 interface AIFeaturesProps {
-  activeProfile: any;
+  activeProfile: UserProfile | null;
   onClose: () => void;
-  feature: 'cover-letter' | 'job-fit' | 'resume-tailor' | 'answer-generator';
+  feature: 'cover-letter' | 'job-fit' | 'resume-tailor' | 'answer-generator' | null;
 }
 
 const AIFeatures: React.FC<AIFeaturesProps> = ({ activeProfile, onClose, feature }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [jobDescription, setJobDescription] = useState('');
   const [selectedTone, setSelectedTone] = useState<CoverLetterData['tone']>('professional');
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<AIResult | null>(null);
   const [copied, setCopied] = useState(false);
   const [question, setQuestion] = useState('');
 
@@ -96,16 +113,16 @@ const AIFeatures: React.FC<AIFeaturesProps> = ({ activeProfile, onClose, feature
       const mockCoverLetter: CoverLetterData = {
         content: `Dear Hiring Manager,
 
-I am writing to express my strong interest in the ${extractJobTitle(jobDescription) || 'position'} role at your company. With ${activeProfile?.professional?.experience || '5+ years'} of experience in ${activeProfile?.professional?.title || 'product management'}, I am confident that my skills and background make me an ideal candidate for this position.
+I am writing to express my strong interest in the ${extractJobTitle(jobDescription) || 'position'} role at your company. With ${activeProfile?.work?.length ? `${activeProfile.work.length}+ years` : '5+ years'} of experience in ${activeProfile?.label || 'product management'}, I am confident that my skills and background make me an ideal candidate for this position.
 
-In my current role as ${activeProfile?.professional?.title || 'Senior Product Manager'}, I have successfully led cross-functional teams to deliver innovative products that drive user engagement and business growth. My expertise in ${activeProfile?.professional?.skills?.slice(0, 3).join(', ') || 'product strategy, data analysis, and user research'} aligns perfectly with the requirements outlined in your job description.
+In my current role as ${activeProfile?.label || 'Senior Product Manager'}, I have successfully led cross-functional teams to deliver innovative products that drive user engagement and business growth. My expertise in ${activeProfile?.skills?.slice(0, 3).join(', ') || 'product strategy, data analysis, and user research'} aligns perfectly with the requirements outlined in your job description.
 
 I am particularly excited about this opportunity because it combines my passion for ${getRandomPassion()} with the chance to work on cutting-edge products that make a real impact. I believe my experience in ${getRandomExperience()} would allow me to contribute immediately to your team's success.
 
 Thank you for considering my application. I look forward to discussing how my background and enthusiasm can contribute to your organization's continued growth and innovation.
 
 Best regards,
-${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInfo?.lastName || 'Doe'}`,
+${activeProfile?.identity?.firstName || 'John'} ${activeProfile?.identity?.lastName || 'Doe'}`,
         tone: selectedTone,
         generatedAt: new Date().toISOString()
       };
@@ -177,19 +194,19 @@ ${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInf
     return experiences[Math.floor(Math.random() * experiences.length)];
   };
 
-  const generateMockAnswer = (question: string, profile: any): string => {
+  const generateMockAnswer = (question: string, profile: UserProfile | null): string => {
     const questionLower = question.toLowerCase();
     
     if (questionLower.includes('strength') || questionLower.includes('strong')) {
-      return `One of my key strengths is my ability to bridge the gap between technical and business teams. In my role as ${profile?.professional?.title || 'Product Manager'}, I've consistently demonstrated strong analytical thinking and communication skills. For example, I led a cross-functional initiative that resulted in a 30% increase in user engagement by implementing data-driven product decisions and fostering collaboration between engineering, design, and marketing teams.`;
+      return `One of my key strengths is my ability to bridge the gap between technical and business teams. In my role as ${profile?.label || 'Product Manager'}, I've consistently demonstrated strong analytical thinking and communication skills. For example, I led a cross-functional initiative that resulted in a 30% increase in user engagement by implementing data-driven product decisions and fostering collaboration between engineering, design, and marketing teams.`;
     }
     
     if (questionLower.includes('weakness') || questionLower.includes('improve')) {
-      return `I'm always looking to improve my technical skills, particularly in emerging technologies. While I have a strong foundation in ${profile?.professional?.skills?.[0] || 'product strategy'}, I've been actively learning about machine learning and AI to better understand how these technologies can enhance our products. I've enrolled in online courses and have been working on side projects to deepen my understanding in this area.`;
+      return `I'm always looking to improve my technical skills, particularly in emerging technologies. While I have a strong foundation in ${profile?.skills?.[0] || 'product strategy'}, I've been actively learning about machine learning and AI to better understand how these technologies can enhance our products. I've enrolled in online courses and have been working on side projects to deepen my understanding in this area.`;
     }
     
     if (questionLower.includes('why') && (questionLower.includes('company') || questionLower.includes('role'))) {
-      return `I'm excited about this opportunity because it aligns perfectly with my passion for building products that make a real impact. Your company's mission to [company mission] resonates strongly with my values, and I'm particularly impressed by [specific company achievement]. The role offers the perfect combination of strategic thinking and hands-on execution that I thrive in, and I believe my experience in ${profile?.professional?.skills?.slice(0, 2).join(' and ') || 'product management and data analysis'} would allow me to contribute meaningfully from day one.`;
+      return `I'm excited about this opportunity because it aligns perfectly with my passion for building products that make a real impact. Your company's mission to [company mission] resonates strongly with my values, and I'm particularly impressed by [specific company achievement]. The role offers the perfect combination of strategic thinking and hands-on execution that I thrive in, and I believe my experience in ${profile?.skills?.slice(0, 2).join(' and ') || 'product management and data analysis'} would allow me to contribute meaningfully from day one.`;
     }
     
     if (questionLower.includes('challenge') || questionLower.includes('difficult')) {
@@ -197,7 +214,7 @@ ${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInf
     }
     
     // Default response
-    return `Based on my experience as ${profile?.professional?.title || 'a product professional'}, I would approach this by leveraging my skills in ${profile?.professional?.skills?.slice(0, 3).join(', ') || 'strategic thinking, data analysis, and team collaboration'}. I believe in taking a methodical approach that combines data-driven insights with user-centered design principles to deliver optimal results.`;
+    return `Based on my experience as ${profile?.label || 'a product professional'}, I would approach this by leveraging my skills in ${profile?.skills?.slice(0, 3).join(', ') || 'strategic thinking, data analysis, and team collaboration'}. I believe in taking a methodical approach that combines data-driven insights with user-centered design principles to deliver optimal results.`;
   };
 
   const copyToClipboard = async (text: string) => {
@@ -440,7 +457,7 @@ ${activeProfile?.personalInfo?.firstName || 'John'} ${activeProfile?.personalInf
                 <div>
                   <h3 className="text-lg font-medium text-gray-900 mb-3">Key Requirements</h3>
                   <div className="space-y-2">
-                    {result.keyRequirements.map((req: any, index: number) => (
+                    {result.keyRequirements?.map((req, index) => (
                       <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                         <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
                           req.match ? 'bg-green-100' : 'bg-red-100'

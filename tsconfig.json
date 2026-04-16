@@ -2,7 +2,12 @@
   "files": [],
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@apps/*": ["./src/apps/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@components/*": ["./src/components/*"],
+      "@shared/*": ["./src/components/shared/*"]
     },
 
     // support for chrome extension APIs

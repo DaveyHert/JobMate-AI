@@ -9,8 +9,8 @@
 
 import { useRef, ChangeEvent } from "react";
 import { toast } from "sonner";
-import type { UserProfile } from "../../../models/models";
-import { jobMateStore } from "../../../store/jobMateStore";
+import type { UserProfile } from "@/models/models";
+import { jobMateStore } from "@/store/jobMateStore";
 import { InlineEditRow } from "../components/InlineEditRow";
 
 interface PersonalInfoTabProps {

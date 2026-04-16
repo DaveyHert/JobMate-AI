@@ -68,7 +68,6 @@ class NotificationManager {
 
     const {
       duration = 4000,
-      position = 'top-right',
       showIcon = true
     } = options;
 

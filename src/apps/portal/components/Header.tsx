@@ -1,5 +1,5 @@
 import { TrendingUp, Settings } from "lucide-react";
-import { useThemeContext } from "../../hooks/useThemeContext";
+import { useThemeContext } from "@hooks/useThemeContext";
 
 function Header() {
   const { theme, toggleTheme } = useThemeContext();

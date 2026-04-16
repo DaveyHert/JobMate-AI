@@ -305,7 +305,7 @@ export class JobExtractor {
             };
           }
         }
-      } catch (error) {
+      } catch {
         continue;
       }
     }
@@ -457,7 +457,7 @@ export class JobExtractor {
     }
 
     // Try to extract job info from URL path
-    const pathMatch = url.match(/\/jobs?\/([^\/]+)/i);
+    const pathMatch = url.match(/\/jobs?\/([^/]+)/i);
     if (pathMatch) {
       const jobSlug = pathMatch[1].replace(/[-_]/g, ' ');
       return {

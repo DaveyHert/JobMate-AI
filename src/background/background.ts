@@ -3,6 +3,32 @@ import type { Application, ApplicationStatus, UserProfile } from "../models/mode
 import { jobMateStore } from "../store/jobMateStore";
 import { llmClient, LLMNotConfiguredError, LLMRequestError } from "../engine/LLMClient";
 
+type NewApplication = Omit<Application, "id" | "status" | "dateApplied" | "history">;
+
+type BackgroundRequest =
+  | { action: "trackApplication"; data: NewApplication }
+  | { action: "getApplications" }
+  | { action: "updateApplicationStatus"; applicationId: number; status: ApplicationStatus }
+  | { action: "generateCoverLetter"; jobDescription: string; profile: UserProfile }
+  | { action: "analyzeJobFit"; jobDescription: string; profile: UserProfile };
+
+interface ErrorResponse {
+  success?: false;
+  error: string;
+  needsConfig?: boolean;
+  status?: number;
+}
+
+type BackgroundResponse =
+  | { success: true; application: Application }
+  | { applications: Application[] }
+  | { success: true }
+  | { success: true; coverLetter: string }
+  | { success: true; analysis: unknown }
+  | ErrorResponse;
+
+type SendResponse = (response: BackgroundResponse) => void;
+
 class BackgroundManager {
   constructor() {
     this.init();
@@ -40,7 +66,11 @@ class BackgroundManager {
     }
   }
 
-  private async handleMessage(request: any, sender: any, sendResponse: (response: any) => void) {
+  private async handleMessage(
+    request: BackgroundRequest,
+    _sender: chrome.runtime.MessageSender,
+    sendResponse: SendResponse,
+  ) {
     try {
       switch (request.action) {
         case "trackApplication":
@@ -73,8 +103,8 @@ class BackgroundManager {
   }
 
   private async handleTrackApplication(
-    applicationData: Omit<Application, "id" | "status" | "dateApplied" | "history">,
-    sendResponse: (response: any) => void,
+    applicationData: NewApplication,
+    sendResponse: SendResponse,
   ) {
     try {
       const application = await jobMateStore.addApplication(applicationData);
@@ -86,7 +116,7 @@ class BackgroundManager {
     }
   }
 
-  private async getApplications(sendResponse: (response: any) => void) {
+  private async getApplications(sendResponse: SendResponse) {
     try {
       const applications = await jobMateStore.getApplications();
       sendResponse({ applications });
@@ -100,7 +130,7 @@ class BackgroundManager {
   private async updateApplicationStatus(
     applicationId: number,
     status: ApplicationStatus,
-    sendResponse: (response: any) => void,
+    sendResponse: SendResponse,
   ) {
     try {
       await jobMateStore.updateApplicationStatus(applicationId, status);
@@ -118,7 +148,7 @@ class BackgroundManager {
   private async generateCoverLetter(
     jobDescription: string,
     profile: UserProfile,
-    sendResponse: (response: any) => void,
+    sendResponse: SendResponse,
   ) {
     try {
       const coverLetter = await llmClient.generateCoverLetter(jobDescription, profile);
@@ -131,7 +161,7 @@ class BackgroundManager {
   private async analyzeJobFit(
     jobDescription: string,
     profile: UserProfile,
-    sendResponse: (response: any) => void,
+    sendResponse: SendResponse,
   ) {
     try {
       const analysis = await llmClient.analyzeJobFit(jobDescription, profile);
@@ -176,12 +206,7 @@ class BackgroundManager {
  * The `needsConfig` flag lets the UI jump straight to the API key settings
  * field instead of just showing a generic error toast.
  */
-function buildAIErrorResponse(error: unknown): {
-  success: false;
-  error: string;
-  needsConfig?: boolean;
-  status?: number;
-} {
+function buildAIErrorResponse(error: unknown): ErrorResponse {
   if (error instanceof LLMNotConfiguredError) {
     return { success: false, error: error.message, needsConfig: true };
   }

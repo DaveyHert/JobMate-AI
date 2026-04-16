@@ -9,8 +9,8 @@
 
 import { useState } from "react";
 import { X } from "lucide-react";
-import { jobMateStore } from "../../store/jobMateStore";
-import type { ApplicationStatus, JobType } from "../../models/models";
+import { jobMateStore } from "@/store/jobMateStore";
+import type { ApplicationStatus, JobType } from "@/models/models";
 
 interface AddApplicationModalProps {
   open: boolean;

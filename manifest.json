@@ -28,7 +28,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["dashboard.html", "onboarding.html"],
+      "resources": ["portal.html", "onboarding.html"],
       "matches": ["<all_urls>"]
     }
   ]

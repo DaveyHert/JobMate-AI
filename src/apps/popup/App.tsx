@@ -8,17 +8,17 @@
 
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import AIFeatures from "./AIFeatures";
-import BottomNavigation from "./BottomNavigation";
-import Header from "./Header";
-import LoadSpinner from "./LoadSpinner";
-import ApplicationsTab from "./application/ApplicationTab";
-import HomeTab from "./home/HomeTab";
-import PopupSettingsTab from "./settings/PopupSettingsTab";
-import { getDynamicFilterCounts } from "../utils/getDynamicFilterCounts";
-import type { Application, ApplicationStatus } from "../models/models";
-import { useJobMateData } from "../hooks/useJobMateData";
-import { jobMateStore } from "../store/jobMateStore";
+import AIFeatures from "./components/AIFeatures";
+import BottomNavigation from "./components/BottomNavigation";
+import Header from "./components/Header";
+import LoadSpinner from "./components/LoadSpinner";
+import ApplicationsTab from "./pages/Applications";
+import HomeTab from "./pages/Home";
+import PopupSettingsTab from "./pages/Settings";
+import { getDynamicFilterCounts } from "@/utils/getDynamicFilterCounts";
+import type { Application, ApplicationStatus } from "@/models/models";
+import { useJobMateData } from "@hooks/useJobMateData";
+import { jobMateStore } from "@/store/jobMateStore";
 
 const STATUSES = ["applied", "interviewing", "rejected", "offer", "ghosted", "withdrawn"];
 
@@ -26,12 +26,14 @@ function Popup() {
   const data = useJobMateData();
   const [activeTab, setActiveTab] = useState("home");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [showAIFeature, setShowAIFeature] = useState<string | null>(null);
+  const [showAIFeature, setShowAIFeature] = useState<
+    "cover-letter" | "job-fit" | "resume-tailor" | "answer-generator" | null
+  >(null);
   const [isLoading, setIsLoading] = useState(false);
   const isInDevMode = process.env.NODE_ENV === "development";
   const navigate = useNavigate();
 
-  const applications = data?.applications ?? [];
+  const applications = useMemo(() => data?.applications ?? [], [data]);
   const profiles = useMemo(() => (data ? Object.values(data.profiles) : []), [data]);
   const activeProfile = data ? data.profiles[data.activeProfileId] : null;
 
@@ -60,9 +62,9 @@ function Popup() {
 
   const openDashboard = () => {
     if (typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.create) {
-      chrome.tabs.create({ url: chrome.runtime.getURL("dashboard.html") });
+      chrome.tabs.create({ url: chrome.runtime.getURL("portal.html") });
     } else {
-      navigate("/dashboard.html");
+      navigate("/portal.html");
     }
   };
 
@@ -124,7 +126,7 @@ function Popup() {
       {/* AI Features Modal */}
       {showAIFeature && (
         <AIFeatures
-          feature={showAIFeature as any}
+          feature={showAIFeature}
           activeProfile={activeProfile}
           onClose={() => setShowAIFeature(null)}
         />

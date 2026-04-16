@@ -1,6 +1,6 @@
-import { Application, DashboardStats } from "../../models/models";
-import { exportData } from "../../helpers/exportData";
-import { Settings, Download, User } from "lucide-react";
+import { Application, DashboardStats } from "@/models/models";
+import { exportData } from "@/helpers/exportData";
+import { Download, User } from "lucide-react";
 
 interface QuickActions {
   applications: Application[];

@@ -1,8 +1,8 @@
 import { ExternalLink, Trash2 } from "lucide-react";
-import type { Application, ApplicationStatus } from "../../../models/models";
+import type { Application, ApplicationStatus } from "@/models/models";
 import { StatusSelect } from "./StatusSelect";
 import { getLastUpdatedDate } from "./applicationConstants";
-import { formatDetailDate } from "../../../utils/dateHelpers";
+import { formatDetailDate } from "@utils/dateHelpers";
 
 export function ApplicationListRow({
   app,

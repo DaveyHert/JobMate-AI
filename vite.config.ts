@@ -9,7 +9,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         popup: resolve(__dirname, "popup.html"),
-        dashboard: resolve(__dirname, "dashboard.html"),
+        portal: resolve(__dirname, "portal.html"),
         onboarding: resolve(__dirname, "onboarding.html"),
         background: resolve(__dirname, "src/background/background.ts"),
       },
@@ -21,8 +21,8 @@ export default defineConfig({
           if (chunkInfo.name === "popup") {
             return "popup.js";
           }
-          if (chunkInfo.name === "dashboard") {
-            return "dashboard.js";
+          if (chunkInfo.name === "portal") {
+            return "portal.js";
           }
           if (chunkInfo.name === "onboarding") {
             return "onboarding.js";
@@ -51,9 +51,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
+      "@apps": resolve(__dirname, "src/apps"),
       "@hooks": resolve(__dirname, "src/hooks"),
       "@utils": resolve(__dirname, "src/utils"),
       "@components": resolve(__dirname, "src/components"),
+      "@shared": resolve(__dirname, "src/components/shared"),
     },
   },
   optimizeDeps: {

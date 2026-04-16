@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "@tanstack/react-form";
+import { useForm, type AnyFieldApi, type AnyFormApi } from "@tanstack/react-form";
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -57,10 +57,18 @@ const baseInputStyles =
   "border-neutral-02 text-neutral-06 placeholder:text-neutral-04 focus-visible:border-brand-accent focus-visible:ring-brand-accent/30 h-auto rounded-lg bg-white px-4 py-3 text-base shadow-none placeholder:font-normal focus-visible:ring-2 transition-colors";
 
 // For simple text inputs within each entry row
-function EntryTextField({ form, name, label, placeholder, className }: any) {
+interface EntryTextFieldProps {
+  form: AnyFormApi;
+  name: string;
+  label: string;
+  placeholder: string;
+  className?: string;
+}
+
+function EntryTextField({ form, name, label, placeholder, className }: EntryTextFieldProps) {
   return (
     <form.Field name={name}>
-      {(field: any) => {
+      {(field: AnyFieldApi) => {
         const hasError = field.state.meta.errors.length > 0;
         return (
           <div className={cn("flex flex-col gap-1.5", className)}>
@@ -112,7 +120,7 @@ export function WorkExperienceStep({
         title='Work Experience'
         action={
           <form.Field name='entries' mode='array'>
-            {(field: any) => (
+            {(field: AnyFieldApi) => (
               <Button
                 type='button'
                 variant='outline'
@@ -128,9 +136,9 @@ export function WorkExperienceStep({
 
       <form noValidate onSubmit={(e) => e.preventDefault()}>
         <form.Field name='entries' mode='array'>
-          {(entriesField: any) => (
+          {(entriesField: AnyFieldApi) => (
             <div className='space-y-10'>
-              {entriesField.state.value.map((_: any, i: number) => (
+              {(entriesField.state.value as WorkEntry[]).map((_, i) => (
                 <div key={i} className='space-y-5'>
                   {i > 0 && <div className='border-t border-gray-100 pt-6' />}
 
@@ -151,7 +159,7 @@ export function WorkExperienceStep({
 
                   <div className='grid grid-cols-2 gap-4'>
                     <form.Field name={`entries[${i}].startDate`}>
-                      {(field: any) => (
+                      {(field: AnyFieldApi) => (
                         <div className='flex flex-col gap-1.5'>
                           <label className='text-neutral-06 text-base font-medium'>
                             Start date
@@ -166,8 +174,12 @@ export function WorkExperienceStep({
                       )}
                     </form.Field>
                     <form.Field name={`entries[${i}].endDate`}>
-                      {(field: any) => (
-                        <form.Subscribe selector={(s: any) => s.values.entries[i]?.isCurrent}>
+                      {(field: AnyFieldApi) => (
+                        <form.Subscribe
+                          selector={(s) =>
+                            (s.values as WorkExperienceData).entries[i]?.isCurrent
+                          }
+                        >
                           {(isCurrent: boolean) => (
                             <div className='flex flex-col gap-1.5'>
                               <label className='text-neutral-06 text-base font-medium'>
@@ -188,7 +200,7 @@ export function WorkExperienceStep({
                   </div>
 
                   <form.Field name={`entries[${i}].isCurrent`}>
-                    {(field: any) => (
+                    {(field: AnyFieldApi) => (
                       <label className='flex cursor-pointer items-center gap-3 select-none'>
                         <div
                           role='checkbox'
@@ -242,7 +254,7 @@ export function WorkExperienceStep({
                   />
 
                   <form.Field name={`entries[${i}].location`}>
-                    {(field: any) => (
+                    {(field: AnyFieldApi) => (
                       <div className='flex flex-col gap-1.5'>
                         <label className='text-neutral-06 text-base font-medium'>Location</label>
                         <Select value={field.state.value} onValueChange={field.handleChange}>
@@ -267,7 +279,7 @@ export function WorkExperienceStep({
                   </form.Field>
 
                   <form.Field name={`entries[${i}].description`}>
-                    {(field: any) => (
+                    {(field: AnyFieldApi) => (
                       <div className='flex flex-col gap-1.5'>
                         <label
                           htmlFor={field.name}

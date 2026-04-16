@@ -8,7 +8,7 @@ import {
   Briefcase,
   Tag,
 } from "lucide-react";
-import jobBoardsData from "../data/job_boards_dataset.json";
+import jobBoardsData from "@/data/job_boards_dataset.json";
 
 interface JobBoard {
   name: string;

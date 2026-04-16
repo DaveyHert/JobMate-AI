@@ -38,7 +38,7 @@ A Chrome extension is essentially a **web app with special permissions** that ca
 JobMate AI+ Extension
 ├── manifest.json          # Extension configuration
 ├── popup.html             # Entry point for popup UI
-├── dashboard.html          # Full dashboard page
+├── portal.html            # Full web portal page
 ├── background/
 │   └── background.js       # Background service worker
 ├── content/

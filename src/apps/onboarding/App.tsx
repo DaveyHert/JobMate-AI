@@ -9,13 +9,13 @@
 import { useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
-import { jobMateStore } from "../../store/jobMateStore";
+import { jobMateStore } from "@/store/jobMateStore";
 import { OnboardingSidebar } from "./components/OnboardingSidebar";
 import { PersonalInfoStep, type PersonalInfoData } from "./steps/PersonalInfoStep";
 import { CredentialsStep, type CredentialsData } from "./steps/CredentialsStep";
 import { ProfessionalInfoStep, type ProfessionalInfoData } from "./steps/ProfessionalInfoStep";
 import { WorkExperienceStep, type WorkExperienceData } from "./steps/WorkExperienceStep";
-import type { UserProfile, Education, Credential, WorkExperience } from "../../models/models";
+import type { UserProfile, Education, Credential, WorkExperience } from "@/models/models";
 
 // ── Default state ──────────────────────────────────────────────────────────
 
@@ -77,10 +77,10 @@ async function markOnboardingComplete() {
 
 function redirectToDashboard() {
   if (typeof chrome !== "undefined" && chrome.tabs) {
-    chrome.tabs.create({ url: chrome.runtime.getURL("dashboard.html") });
+    chrome.tabs.create({ url: chrome.runtime.getURL("portal.html") });
     window.close();
   } else {
-    window.location.href = "/dashboard";
+    window.location.href = "/portal.html";
   }
 }
 
