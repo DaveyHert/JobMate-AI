@@ -34,7 +34,7 @@ export function ApplicationCard({
   return (
     // No border — elevated shadow creates depth as per design
     <div
-      className='bg-app-foreground dark:border-brand-border flex cursor-pointer flex-col overflow-hidden rounded-xl shadow-[0px_2px_8px_rgba(0,0,0,0.08)] transition-shadow hover:shadow-[2px_0px_10px_rgba(0,0,0,0.08)] dark:border'
+      className='bg-app-background dark:border-brand-border flex cursor-pointer flex-col overflow-hidden rounded-xl shadow-[0px_2px_8px_rgba(0,0,0,0.08)] transition-shadow hover:shadow-[2px_0px_10px_rgba(0,0,0,0.08)] dark:border'
       onClick={() => onClick(app)}
     >
       {/* Card body */}
@@ -103,7 +103,7 @@ export function ApplicationCard({
       </div>
 
       {/* Card footer — light gray bg as per design */}
-      <div className='bg-app-background border-brand-border/60 text-secondary-text border-t px-4 py-3 text-xs'>
+      <div className='bg-app-foreground border-brand-border/60 text-secondary-text border-t px-4 py-3 text-xs'>
         Last Updated: <span className='text-primary-text'>{formatShortRelative(lastUpdated)}</span>
       </div>
     </div>

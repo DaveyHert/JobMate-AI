@@ -22,7 +22,7 @@ import { ApplicationsPagination } from "./components/ApplicationsPagination";
 import { ApplicationDetailsModal } from "./components/ApplicationDetailsModal";
 import { STATUS_CONFIG, getLastUpdatedDate } from "./components/applicationConstants";
 
-const GRID_PAGE_SIZE = 9; // 3 × 3
+const GRID_PAGE_SIZE = 12; // 3 × 4
 const LIST_PAGE_SIZE = 10;
 
 export function ApplicationsPage() {
@@ -40,7 +40,7 @@ export function ApplicationsPage() {
   const applications = useMemo(
     () =>
       [...(data?.applications ?? [])].sort(
-        (a, b) => getLastUpdatedDate(b).getTime() - getLastUpdatedDate(a).getTime(),
+        (a, b) => new Date(b.dateApplied).getTime() - new Date(a.dateApplied).getTime(),
       ),
     [data?.applications],
   );

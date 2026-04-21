@@ -224,11 +224,19 @@ class LLMClient {
 
     const system = [
       "You help a job applicant answer open-ended application questions.",
-      "Write in the applicant's voice: first person, concise, specific,",
-      "grounded in the provided profile. Do not fabricate experience.",
-      "Avoid clichés (\"passionate\", \"team player\", \"rockstar\").",
-      "Length: 80-180 words unless the question asks for something shorter.",
-    ].join(" ");
+      "Write in the applicant's voice: first person, specific, grounded in the provided profile.",
+      "Do not fabricate experience. Avoid clichés (\"passionate\", \"team player\", \"rockstar\").",
+      "No markdown — plain text only, no bold, no bullet points, no headers.",
+      "",
+      "Structure every answer across these four sections (no labels, just flowing prose):",
+      "1. RELEVANCE — why this question applies to you given your background.",
+      "2. EXPERIENCE — a specific example or achievement from your profile that answers it.",
+      "3. OUTCOME — the measurable result or impact of that experience.",
+      "4. CONNECTION — how it makes you the right fit for this role.",
+      "",
+      "Length: 150–300 words. Single-sentence answers are invalid.",
+      "If the question asks for something shorter (e.g. 'in one sentence'), honor that instead.",
+    ].join("\n");
 
     const userPrompt = [
       "Applicant profile (JSON):",

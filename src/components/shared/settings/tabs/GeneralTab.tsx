@@ -36,6 +36,10 @@ import ToggleSwitch from "../components/ToggleSwitch";
 import SettingsCard from "../components/SettingsCard";
 import ResumeRow from "../components/ResumeRow";
 import SettingRow from "../components/SettingRow";
+import { GnomeToggle } from "../../ThemeToggle";
+import LinusStyleToggle from "../../LinusStyleToggle";
+import { useMockData } from "@hooks/useMockData";
+import { IosStyleToggle } from "../../IosStyleToggle";
 
 // --- Types & Constants ---
 
@@ -60,6 +64,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
     resume: ResumeDoc;
   } | null>(null);
   const { preference, setPreference } = useThemeContext();
+  const { isMockActive, toggle: toggleMockData } = useMockData();
 
   const settings = data.settings;
   const profiles = Object.values(data.profiles);
@@ -270,7 +275,7 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
         title='Developer'
         description='Debugging tools — not intended for everyday use.'
       >
-        <SettingsCard>
+        <SettingsCard divided>
           <SettingRow
             label='Highlight detected form fields'
             description='Draw a blue outline on every input JobMate recognises when a page loads.'
@@ -279,6 +284,28 @@ export function GeneralTab({ data, context = "dashboard" }: GeneralTabProps) {
               checked={settings.highlightFormFields}
               onChange={(val) => updateSettings({ highlightFormFields: val })}
             />
+          </SettingRow>
+          <SettingRow
+            label='Populate mock application data'
+            description='Seed the app with sample applications for testing. Toggle off to remove them.'
+          >
+            <ToggleSwitch checked={isMockActive} onChange={(val) => void toggleMockData(val)} />
+          </SettingRow>
+        </SettingsCard>
+      </SettingsSection>
+
+      {/* --- Display Section --- */}
+      <SettingsSection title='Appearance' description="Customize the app's display preference.">
+        <SettingsCard divided>
+          <SettingRow label='JobMate theme' description='Toggle between light and dark modes.'>
+            <GnomeToggle />
+          </SettingRow>
+
+          <SettingRow label='JobMate theme' description='Toggle between light and dark modes.'>
+            <LinusStyleToggle />
+          </SettingRow>
+          <SettingRow label='JobMate theme' description='Toggle between light and dark modes.'>
+            <IosStyleToggle />
           </SettingRow>
         </SettingsCard>
       </SettingsSection>

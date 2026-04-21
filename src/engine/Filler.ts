@@ -21,6 +21,16 @@
 
 import type { FillOutcome, FillPlan, FillResult, FormField } from "./types";
 
+function cleanText(value: string): string {
+  return value
+    .replace(/\*\*/g, "")
+    .replace(/[_`]/g, "")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/\r?\n|\r/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 // ---------- Native setters (bypass React's value tracker) ----------
 //
 // React patches element instances with its own `value` property that
@@ -158,7 +168,7 @@ export class Filler {
 
   private fillText(field: FormField, value: string): FillOutcome {
     const el = field.element;
-    setNativeValue(el, value);
+    setNativeValue(el, cleanText(value));
     fireInputEvents(el);
 
     // Trust the setter call; do NOT verify via `el.value === value`. React
