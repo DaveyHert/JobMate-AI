@@ -11,6 +11,7 @@ import Dashboard from "./pages/home/Home";
 import { PortalLayout, PortalRoute } from "./components/PortalLayout";
 import SettingsPage from "./pages/settings/Settings";
 import { ApplicationsPage } from "./pages/applications/Applications";
+import { AnalyticsPage } from "./pages/analytics/Analytics";
 
 function parseRoute(): PortalRoute {
   const hash = window.location.hash.toLowerCase();
@@ -35,6 +36,8 @@ export default function PortalApp() {
         <SettingsPage />
       ) : route === "applications" ? (
         <ApplicationsPage />
+      ) : route === "analytics" ? (
+        <AnalyticsPage />
       ) : (
         <Dashboard />
       )}

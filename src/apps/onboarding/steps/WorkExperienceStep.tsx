@@ -1,5 +1,12 @@
 import React from "react";
-import { useForm, type AnyFieldApi, type AnyFormApi } from "@tanstack/react-form";
+import { useForm, type AnyFieldApi } from "@tanstack/react-form";
+
+// tanstack-form's FormApi generic is declared `in out` (invariant), so a
+// concrete `useForm<X>()` return cannot be assigned to any wider form type.
+// For shared helper components that only forward props to form.Field/Subscribe,
+// `any` is the documented escape hatch.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type FormApi = any;
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -58,7 +65,7 @@ const baseInputStyles =
 
 // For simple text inputs within each entry row
 interface EntryTextFieldProps {
-  form: AnyFormApi;
+  form: FormApi;
   name: string;
   label: string;
   placeholder: string;
@@ -175,12 +182,12 @@ export function WorkExperienceStep({
                     </form.Field>
                     <form.Field name={`entries[${i}].endDate`}>
                       {(field: AnyFieldApi) => (
-                        <form.Subscribe
+                        <form.Subscribe<boolean>
                           selector={(s) =>
-                            (s.values as WorkExperienceData).entries[i]?.isCurrent
+                            !!(s.values as WorkExperienceData).entries[i]?.isCurrent
                           }
                         >
-                          {(isCurrent: boolean) => (
+                          {(isCurrent) => (
                             <div className='flex flex-col gap-1.5'>
                               <label className='text-neutral-06 text-base font-medium'>
                                 End date

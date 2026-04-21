@@ -1,4 +1,11 @@
-import { useForm, type AnyFieldApi, type AnyFormApi } from "@tanstack/react-form";
+import { useForm, type AnyFieldApi } from "@tanstack/react-form";
+
+// tanstack-form's FormApi generic is declared `in out` (invariant), so a
+// concrete `useForm<X>()` return cannot be assigned to any wider form type.
+// For shared helper components that only forward props to form.Field/Subscribe,
+// `any` is the documented escape hatch.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type FormApi = any;
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -41,7 +48,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // 2. Reusable Component with clsx/cn for dynamic states
 interface FormTextFieldProps {
-  form: AnyFormApi;
+  form: FormApi;
   name: string;
   label: string;
   placeholder: string;

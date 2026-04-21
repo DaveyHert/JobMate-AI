@@ -178,6 +178,7 @@ export function PortalLayout({ currentRoute, children }: PortalLayoutProps) {
         {/* Page content */}
         <main className='bg-app-background flex-1'>
           <div className='mx-auto max-w-7xl'>{children}</div>
+          {/* <div className='mx-auto max-w-[1300px]'>{children}</div> */}
         </main>
       </div>
 
